@@ -57,7 +57,7 @@ async function renovar(request, env) {
   url.search = new URLSearchParams({
     response_type: "code", client_id: CLIENT_ID, scope: SCOPES, state: estado,
     redirect_uri: new URL("/callback", request.url).toString(),
-  });
+  }).toString();
   return Response.redirect(url.toString(), 302);
 }
 
