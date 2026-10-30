@@ -22,9 +22,10 @@ jobs:
           LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
           LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
         run: python scripts/publicar.py
-      - name: Mover a publicados/ y guardar
+      - name: Mover a publicados/ y guardar el estado
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A cola publicados
+          git add -A cola publicados estado
           git diff --cached --quiet || (git commit -m "Publicados en LinkedIn" && git pull --rebase && git push)

@@ -7,11 +7,11 @@ Variables de entorno (Secretos del repositorio en GitHub):
   LINKEDIN_VERSION     opcional, formato AAAAMM (por defecto 202608)
   DRY_RUN=1            no llama a LinkedIn, solo muestra lo que haría
 """
-import os, re, sys, json, shutil, pathlib, urllib.request, urllib.error
+import os, re, sys, json, shutil, pathlib, datetime, urllib.request, urllib.error
 
 API = "https://api.linkedin.com"
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
-COLA, PUBLICADOS = RAIZ / "cola", RAIZ / "publicados"
+COLA, PUBLICADOS, ESTADO = RAIZ / "cola", RAIZ / "publicados", RAIZ / "estado"
 TOKEN = os.environ.get("LINKEDIN_TOKEN", "")
 VERSION = os.environ.get("LINKEDIN_VERSION", "202608")
 DRY = os.environ.get("DRY_RUN") == "1"
@@ -23,6 +23,19 @@ def a_little_text(texto: str) -> str:
     """Escapa el texto al 'little text format' de LinkedIn y mantiene los hashtags clicables."""
     out = "".join("\\" + c if c in RESERVADOS else c for c in texto)
     return re.sub(r"\\#(\w+)", r"{hashtag|\\#|\1}", out)
+
+
+class ErrorLinkedIn(Exception):
+    pass
+
+
+def registrar(linea):
+    ESTADO.mkdir(exist_ok=True)
+    ahora = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    with open(ESTADO / "log.txt", "a", encoding="utf-8") as f:
+        f.write(f"{ahora} | {linea}\n")
+    (ESTADO / "ultimo.txt").write_text(f"{ahora} | {linea}\n", encoding="utf-8")
+    print(linea)
 
 
 def llamar(metodo, url, cuerpo=None, datos=None, cabeceras=None):
@@ -40,9 +53,9 @@ def llamar(metodo, url, cuerpo=None, datos=None, cabeceras=None):
     except urllib.error.HTTPError as e:
         detalle = e.read().decode(errors="replace")
         if e.code == 401:
-            sys.exit("ERROR 401: el token de LinkedIn ha caducado o no es válido. Genera uno nuevo "
-                     "y actualiza el secreto LINKEDIN_TOKEN.")
-        sys.exit(f"ERROR {e.code} en {url}: {detalle}")
+            raise ErrorLinkedIn("ERROR 401: el token de LinkedIn ha caducado o no es válido. "
+                                "Genera uno nuevo y actualiza el secreto LINKEDIN_TOKEN.")
+        raise ErrorLinkedIn(f"ERROR {e.code} en {url.split('?')[0]}: {detalle[:400]}")
 
 
 def urn_persona():
@@ -78,7 +91,16 @@ def publicar(autor, texto, imagen_urn, titulo):
     return cab.get("x-restli-id") or cab.get("X-RestLi-Id", "")
 
 
+def verificar():
+    _, _, j = llamar("GET", f"{API}/v2/userinfo")
+    registrar(f"VERIFICACION OK | token válido para {j.get('name', '?')} | urn:li:person:{j.get('sub', '?')}")
+
+
 def main():
+    if (COLA / "VERIFICAR").exists():
+        (COLA / "VERIFICAR").unlink()
+        verificar()
+        return
     pendientes = sorted(p for p in COLA.glob("*.txt"))
     if not pendientes:
         print("No hay posts en la cola."); return
@@ -87,17 +109,21 @@ def main():
     autor = "urn:li:person:DRYRUN" if DRY else urn_persona()
     PUBLICADOS.mkdir(exist_ok=True)
     for txt in pendientes:
-        img = next((txt.with_suffix(s) for s in (".png", ".jpg", ".jpeg") if txt.with_suffix(s).exists()), None)
+        img = next((txt.with_suffix(s) for s in (".jpg", ".jpeg", ".png") if txt.with_suffix(s).exists()), None)
         if img is None:
             print(f"{txt.name}: falta la imagen, se queda en cola."); continue
         texto = txt.read_text(encoding="utf-8").strip()
         imagen_urn = "urn:li:image:DRYRUN" if DRY else subir_imagen(autor, img)
         post = publicar(autor, texto, imagen_urn, f"Agente {txt.stem}")
-        print(f"Publicado {txt.stem}: {post}")
+        registrar(f"PUBLICADO {txt.stem} | {post}")
         if not DRY:
             for f in (txt, img):
                 shutil.move(str(f), PUBLICADOS / f.name)
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except ErrorLinkedIn as e:
+        registrar(str(e))
+        sys.exit(1)
