@@ -1,0 +1,23 @@
+Le preguntas a la IA "¿cuántas facturas se rechazaron en octubre?" y te escribe un SELECT perfecto.
+El problema es que la conexión que le diste también puede hacer DELETE.
+
+En más de un ERP he visto la conexión "de informes" usando el usuario sa. Y alguna vez fui yo quien la dejó así, para qué mentir.
+
+Así que el agente #95 es un servidor MCP en Python que deja a tu asistente consultar SQL Server sin poder romper nada:
+→ Expone tres herramientas: listar vistas, describir una vista y consultar.
+→ El asistente escribe el SQL; sqlglot lo analiza antes de ejecutarlo.
+→ Si no es un único SELECT, se rechaza. Un SELECT INTO también.
+→ Solo admite las vistas de una lista blanca.
+→ Ejecuta con un login de solo lectura, 10 segundos de timeout y 200 filas como máximo.
+
+Lo que NO hace: escribir, borrar ni cambiar el esquema. Tampoco ve tablas fuera de la lista, aunque el modelo las pida.
+
+Mi decisión de ingeniero: la seguridad la pone la base de datos, no el prompt. El login de solo lectura es la primera capa; el parser, la segunda. Y las tablas con datos personales no se exponen, ni con vistas.
+
+Te soy sincero: el SQL MCP Server de Microsoft (sobre Data API builder) y DBHub ya hacen esto, y DBHub tiene modo de solo lectura. Si trabajas con SQL Server, mira primero esos. Yo lo programé para entender qué pasa entre la pregunta y el SELECT. Lo que más me sorprendió: un SELECT INTO parece una consulta inocente y te crea una tabla.
+
+Ah, y crea un login nuevo para esto. No reutilices el de la aplicación "porque ya funciona".
+
+¿Le darías acceso a tu base de datos a un asistente de IA, aunque sea de solo lectura? 👇
+
+#AgentesDeIA #MCP #SQLServer #Python #IAGenerativa
