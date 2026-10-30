@@ -1,0 +1,30 @@
+name: Publicar en LinkedIn
+on:
+  push:
+    branches: [main]
+    paths: ["cola/**"]
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: publicar-linkedin
+  cancel-in-progress: false
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Publicar los posts de la cola
+        env:
+          LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
+          LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
+        run: python scripts/publicar.py
+      - name: Mover a publicados/ y guardar
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A cola publicados
+          git diff --cached --quiet || (git commit -m "Publicados en LinkedIn" && git pull --rebase && git push)
