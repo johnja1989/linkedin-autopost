@@ -11,11 +11,14 @@ const CLIENT_ID = "77e0gc3q29gkmr"; // ID del cliente de la app de LinkedIn (no 
 const SCOPES = "openid profile w_member_social";
 const RESERVADOS = "\\|{}@[]()<>#*_~";
 
-// Escapa el texto al "little text format" de LinkedIn y deja los hashtags clicables
+// Escapa el texto al "little text format" de LinkedIn. Los hashtags (# + letra) se
+// dejan como #Palabra sin escapar: LinkedIn los convierte en hashtags clicables.
+// La plantilla {hashtag|\\#|...} salía en el post tal cual, con llaves y barras.
+// Un # seguido de número ("el agente #95") se queda escapado: se ve como texto.
 function littleText(texto) {
   let out = "";
   for (const c of texto) out += RESERVADOS.includes(c) ? "\\" + c : c;
-  return out.replace(/\\#([\p{L}\p{N}_]+)/gu, "{hashtag|\\#|$1}");
+  return out.replace(/\\#(\p{L}[\p{L}\p{N}]*)/gu, "#$1");
 }
 
 // El token vigente: el renovado con /renovar (en KV) o, si no hay, el secreto inicial
