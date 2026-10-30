@@ -1,11 +1,14 @@
 // Publicador automático de LinkedIn — Cloudflare Worker (plan gratuito)
 // Cada 10 minutos lee cola/pendientes.json del repositorio público y publica
 // en LinkedIn los posts que aún no se han publicado (NNN.txt + NNN.jpg).
-// Necesita: secreto LINKEDIN_TOKEN y un espacio KV enlazado como PUBLICADOS.
+// Necesita: un espacio KV enlazado como PUBLICADOS, el secreto LINKEDIN_CLIENT_SECRET
+// (para renovar el token con un clic en /renovar) y, opcional, LINKEDIN_TOKEN como token inicial.
 
 const RAW = "https://raw.githubusercontent.com/johnja1989/linkedin-autopost/main/";
 const API = "https://api.linkedin.com";
 const VERSION = "202608"; // LinkedIn-Version (AAAAMM)
+const CLIENT_ID = "77e0gc3q29gkmr"; // ID del cliente de la app de LinkedIn (no es secreto)
+const SCOPES = "openid profile w_member_social";
 const RESERVADOS = "\\|{}@[]()<>#*_~";
 
 // Escapa el texto al "little text format" de LinkedIn y deja los hashtags clicables
@@ -15,25 +18,80 @@ function littleText(texto) {
   return out.replace(/\\#([\p{L}\p{N}_]+)/gu, "{hashtag|\\#|$1}");
 }
 
-async function linkedin(env, metodo, ruta, cuerpo) {
+// El token vigente: el renovado con /renovar (en KV) o, si no hay, el secreto inicial
+async function token(env) {
+  return (await env.PUBLICADOS.get("token")) || env.LINKEDIN_TOKEN;
+}
+
+async function linkedin(env, metodo, ruta, cuerpo, tk) {
   const r = await fetch(API + ruta, {
     method: metodo,
     headers: {
-      Authorization: `Bearer ${env.LINKEDIN_TOKEN}`,
+      Authorization: `Bearer ${tk || (await token(env))}`,
       "Content-Type": "application/json",
       "LinkedIn-Version": VERSION,
       "X-Restli-Protocol-Version": "2.0.0",
     },
     body: cuerpo ? JSON.stringify(cuerpo) : undefined,
   });
-  if (r.status === 401) throw new Error("ERROR 401: el token de LinkedIn ha caducado o no es válido. Genera uno nuevo y actualiza el secreto LINKEDIN_TOKEN.");
+  if (r.status === 401) throw new Error("ERROR 401: el token de LinkedIn ha caducado o no es válido. Renuévalo con un clic en /renovar.");
   if (!r.ok) throw new Error(`ERROR ${r.status} en ${ruta.split("?")[0]}: ${(await r.text()).slice(0, 300)}`);
   return r;
 }
 
-async function persona(env) {
-  const j = await (await linkedin(env, "GET", "/v2/userinfo")).json();
-  return { urn: `urn:li:person:${j.sub}`, nombre: j.name };
+async function persona(env, tk) {
+  const j = await (await linkedin(env, "GET", "/v2/userinfo", null, tk)).json();
+  if (!tk) await env.PUBLICADOS.put("sub", j.sub); // recuerda de quién es la cuenta
+  return { urn: `urn:li:person:${j.sub}`, nombre: j.name, sub: j.sub };
+}
+
+function fecha(ms) {
+  return new Date(ms).toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Madrid" });
+}
+
+// Paso 1 de la renovación: manda a LinkedIn a pedir permiso
+async function renovar(request, env) {
+  const estado = crypto.randomUUID();
+  await env.PUBLICADOS.put(`estado:${estado}`, "1", { expirationTtl: 600 });
+  const url = new URL("https://www.linkedin.com/oauth/v2/authorization");
+  url.search = new URLSearchParams({
+    response_type: "code", client_id: CLIENT_ID, scope: SCOPES, state: estado,
+    redirect_uri: new URL("/callback", request.url).toString(),
+  });
+  return Response.redirect(url.toString(), 302);
+}
+
+// Paso 2: LinkedIn vuelve con un código; lo cambiamos por un token y lo guardamos
+async function callback(request, env) {
+  const p = new URL(request.url).searchParams;
+  if (p.get("error")) return new Response(`LinkedIn no dio permiso: ${p.get("error_description") || p.get("error")}`, { status: 400 });
+  const estado = p.get("state") || "";
+  if (!(await env.PUBLICADOS.get(`estado:${estado}`))) return new Response("Enlace caducado o no válido. Vuelve a abrir /renovar.", { status: 400 });
+  await env.PUBLICADOS.delete(`estado:${estado}`);
+  if (!env.LINKEDIN_CLIENT_SECRET) return new Response("Falta el secreto LINKEDIN_CLIENT_SECRET en el Worker.", { status: 500 });
+
+  const r = await fetch("https://www.linkedin.com/oauth/v2/accessToken", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      grant_type: "authorization_code", code: p.get("code") || "", client_id: CLIENT_ID,
+      client_secret: env.LINKEDIN_CLIENT_SECRET, redirect_uri: new URL("/callback", request.url).toString(),
+    }),
+  });
+  const j = await r.json();
+  if (!r.ok || !j.access_token) return new Response(`No se pudo obtener el token: ${JSON.stringify(j).slice(0, 300)}`, { status: 500 });
+
+  // Seguridad: solo se acepta la misma cuenta de LinkedIn que ya publicaba
+  const quien = await persona(env, j.access_token);
+  const esperado = await env.PUBLICADOS.get("sub");
+  if (esperado && esperado !== quien.sub) return new Response("Esa cuenta de LinkedIn no es la del publicador. No se ha cambiado nada.", { status: 403 });
+
+  const caduca = Date.now() + (j.expires_in || 5184000) * 1000;
+  await env.PUBLICADOS.put("token", j.access_token);
+  await env.PUBLICADOS.put("token_caduca", String(caduca));
+  await env.PUBLICADOS.put("sub", quien.sub);
+  await registrar(env, `TOKEN RENOVADO para ${quien.nombre} | caduca el ${fecha(caduca)}`);
+  return new Response(`Listo, ${quien.nombre}: token renovado. Caduca el ${fecha(caduca)}. Ya puedes cerrar esta pestaña.`);
 }
 
 async function registrar(env, mensaje) {
@@ -54,7 +112,7 @@ async function publicarUno(env, id, autor) {
     { initializeUploadRequest: { owner: autor } })).json();
   const subida = await fetch(init.value.uploadUrl, {
     method: "PUT",
-    headers: { Authorization: `Bearer ${env.LINKEDIN_TOKEN}`, "Content-Type": "application/octet-stream" },
+    headers: { Authorization: `Bearer ${await token(env)}`, "Content-Type": "application/octet-stream" },
     body: bytes,
   });
   if (!subida.ok) throw new Error(`ERROR ${subida.status} subiendo la imagen de ${id}`);
@@ -93,17 +151,22 @@ export default {
   async fetch(request, env) {
     const ruta = new URL(request.url).pathname;
     try {
+      if (ruta === "/renovar") return renovar(request, env);
+      if (ruta === "/callback") return callback(request, env);
       if (ruta === "/verificar") {
         const p = await persona(env);
-        return new Response(`OK: token válido. Publicaré como ${p.nombre}.`);
+        const c = await env.PUBLICADOS.get("token_caduca");
+        return new Response(`OK: token válido. Publicaré como ${p.nombre}.` + (c ? ` Caduca el ${fecha(Number(c))}.` : ""));
       }
       if (ruta === "/estado") {
-        return new Response((await env.PUBLICADOS.get("ultimo")) || "Todavía no hay ejecuciones.");
+        const c = await env.PUBLICADOS.get("token_caduca");
+        const ultimo = (await env.PUBLICADOS.get("ultimo")) || "Todavía no hay ejecuciones.";
+        return new Response(ultimo + (c ? `\nToken: caduca el ${fecha(Number(c))}. Renueva en /renovar.` : ""));
       }
       if (ruta === "/publicar") {
         return new Response(await procesar(env));
       }
-      return new Response("Publicador de LinkedIn activo. Rutas: /verificar, /estado, /publicar");
+      return new Response("Publicador de LinkedIn activo. Rutas: /verificar, /estado, /publicar, /renovar");
     } catch (e) {
       return new Response(await registrar(env, e.message), { status: 500 });
     }

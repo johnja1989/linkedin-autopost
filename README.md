@@ -8,7 +8,7 @@ Publicador automático de mis posts de LinkedIn sobre agentes de IA.
    lee la cola desde este repositorio público y publica con la API oficial de LinkedIn
    (Images API + Posts API, permiso `w_member_social`). Guarda lo publicado en Workers KV para no repetir.
 
-Rutas del Worker: `/verificar` (comprueba el token), `/estado` (última ejecución), `/publicar` (fuerza una ejecución).
+Rutas del Worker: `/verificar` (comprueba el token), `/estado` (última ejecución y caducidad del token), `/publicar` (fuerza una ejecución) y `/renovar` (renueva el token de LinkedIn con un clic; solo acepta la misma cuenta).
 
-El token (`LINKEDIN_TOKEN`) vive solo como secreto del Worker y caduca a los 60 días.
+El token de LinkedIn caduca a los 60 días (límite de LinkedIn para apps de autoservicio). Se renueva abriendo `/renovar`; el Worker lo guarda en KV. Secretos del Worker: `LINKEDIN_CLIENT_SECRET` y, como respaldo inicial, `LINKEDIN_TOKEN`.
 `scripts/publicar.py` es la versión equivalente en Python (para GitHub Actions u otro entorno).
