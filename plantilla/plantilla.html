@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<style>
+:root{--bg:#0f172a;--card:#1e293b;--line:#334155;--tx:#e2e8f0;--mut:#94a3b8;
+--pink:#f472b6;--green:#4ade80;--blue:#60a5fa;--yellow:#facc15;--purple:#c084fc;--red:#f87171}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1080px;background:var(--bg);color:var(--tx);font-family:"DejaVu Sans","Liberation Sans",Arial,sans-serif;padding:40px}
+h1{font-size:46px;line-height:1.1}
+.sub{color:var(--mut);font-size:22px;margin-top:8px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.num{background:var(--purple);color:#1e1b4b;font-weight:700;font-size:30px;border-radius:14px;padding:10px 18px;white-space:nowrap}
+.tags{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.tag{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:16px;color:var(--mut)}
+.hero{margin-top:24px;background:var(--card);border-left:6px solid var(--pink);border-radius:14px;padding:20px 24px;font-size:26px;line-height:1.35}
+.hero b{color:var(--pink)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.card{background:var(--card);border-radius:14px;padding:18px 20px}
+.card h2{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-bottom:12px}
+.stat{font-size:40px;font-weight:700}
+.stat-l{color:var(--mut);font-size:17px;margin-top:4px}
+ul{list-style:none}
+li{font-size:18px;line-height:1.4;padding:5px 0 5px 22px;position:relative}
+li:before{content:"→";position:absolute;left:0;color:var(--blue)}
+.no{margin-top:12px;font-size:16px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px}
+.no b{color:var(--red)}
+.comp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cp{border-left:4px solid;padding:6px 10px;background:#0f172a;border-radius:8px}
+.cp b{font-size:17px;display:block}.cp span{font-size:14px;color:var(--mut)}
+.arch .fr{display:flex;gap:10px;margin-bottom:10px;align-items:stretch}
+.nd{flex:1;border:1px solid var(--line);border-radius:10px;padding:8px 10px;text-align:center;background:#0f172a}
+.nd b{font-size:16px;display:block}.nd span{font-size:13px;color:var(--mut)}
+.ar{color:var(--mut);align-self:center;font-size:18px}
+pre{background:#0b1120;border-radius:10px;padding:14px;font-family:"DejaVu Sans Mono",monospace;font-size:15px;line-height:1.45;color:#cbd5e1;white-space:pre}
+.nota{font-size:15px;color:var(--mut);margin-top:10px;line-height:1.4}
+ol{counter-reset:p;list-style:none}
+ol li:before{counter-increment:p;content:counter(p);background:var(--blue);color:#0f172a;border-radius:50%;width:20px;height:20px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;top:7px}
+ol li{padding-left:30px}
+.dec{margin-top:12px;font-size:17px;line-height:1.4;background:#0f172a;border-left:4px solid var(--yellow);padding:10px 12px;border-radius:8px}
+.out{font-family:"DejaVu Sans Mono",monospace;font-size:15.5px;line-height:1.7;background:#0b1120;border-radius:10px;padding:14px}
+.err li:before{content:"✕";color:var(--red)}
+.alt{display:flex;gap:14px}
+.al{flex:1;border-top:4px solid;background:#0f172a;border-radius:10px;padding:12px}
+.al b{font-size:19px;display:block;margin-bottom:4px}.al span{font-size:15px;color:var(--mut)}
+.foot{margin-top:24px;display:flex;justify-content:space-between;color:var(--mut);font-size:18px}
+.foot b{color:var(--tx)}
+</style></head><body><div id="app"></div>
+<script>
+const D=/*DATA*/null;
+const C=c=>`var(--${c||'blue'})`;
+const e=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const a=D.arquitectura;
+const fila=(f)=>`<div class="fr">${f.map((n,i)=>`${i?'<span class="ar">→</span>':''}<div class="nd" style="${n.color?`border-color:${C(n.color)}`:''}"><b style="${n.color?`color:${C(n.color)}`:''}">${e(n.t)}</b><span>${e(n.s)}</span></div>`).join('')}</div>`;
+document.getElementById('app').innerHTML=`
+<div class="top"><div><h1>${e(D.titulo)}</h1><div class="sub">${e(D.subtitulo)}</div>
+<div class="tags">${D.tags.map(t=>`<span class="tag">${e(t)}</span>`).join('')}</div></div>
+<div class="num">Agente #${e(D.numero)}</div></div>
+<div class="hero">${e(D.hero.texto)} <b>${e(D.hero.resaltado)}</b></div>
+<div class="row">${D.stats.map(s=>`<div class="card"><div class="stat" style="color:${C(s.color)}">${e(s.valor)}</div><div class="stat-l">${e(s.etiqueta)}</div></div>`).join('')}</div>
+<div class="row"><div class="card"><h2>Qué hace</h2><ul>${D.que_hace.map(x=>`<li>${e(x)}</li>`).join('')}</ul><div class="no"><b>Lo que NO hace:</b> ${e(D.no_hace)}</div></div>
+<div class="card"><h2>Componentes</h2><div class="comp">${D.componentes.map(c=>`<div class="cp" style="border-color:${C(c.color)}"><b>${e(c.nombre)}</b><span>${e(c.desc)}</span></div>`).join('')}</div></div></div>
+<div class="card arch" style="margin-top:18px"><h2>Arquitectura</h2>${fila(a.fila1)}${fila(a.fila2)}${fila(a.fila3)}</div>
+<div class="row"><div class="card"><h2>${e(D.codigo.titulo)}</h2><pre>${e(D.codigo.codigo)}</pre><div class="nota">${e(D.codigo.nota)}</div></div>
+<div class="card"><h2>Paso a paso</h2><ol>${D.pasos.map(x=>`<li>${e(x)}</li>`).join('')}</ol><div class="dec"><b>Mi decisión de ingeniero:</b> ${e(D.decision)}</div></div></div>
+<div class="row"><div class="card"><h2>Ejemplo de salida</h2><div class="out">${D.salida.map(s=>`<div style="color:${C(s.color)}">${e(s.texto)}</div>`).join('')}</div></div>
+<div class="card"><h2>Instrucción al LLM</h2><pre>${e(D.instruccion.texto)}</pre><div class="nota">${e(D.instruccion.nota)}</div></div></div>
+<div class="card err" style="margin-top:18px"><h2>Errores típicos</h2><ul>${D.errores.map(x=>`<li>${e(x)}</li>`).join('')}</ul></div>
+<div class="card" style="margin-top:18px"><h2>${e(D.alternativas.titulo)}</h2><div class="alt">${D.alternativas.items.map(i=>`<div class="al" style="border-color:${C(i.color)}"><b style="color:${C(i.color)}">${e(i.herramienta)}</b><span>${e(i.texto)}</span></div>`).join('')}</div></div>
+<div class="foot"><span><b>John Vargas</b> · Agentes de IA, explicados por un ingeniero</span><span>#AgentesDeIA</span></div>`;
+</script></body></html>

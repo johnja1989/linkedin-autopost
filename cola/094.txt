@@ -1,0 +1,23 @@
+Desde marzo, un certificado TLS público nuevo dura como máximo 200 días. En 2029 serán 47.
+Y el email de aviso de Let's Encrypt ya no va a llegar: lo quitaron en 2025.
+
+Yo me enteré una vez de que caducaba un certificado por el cliente, no por una alerta. Era el de una API de integración que "nadie tocaba".
+
+Así que el agente #94 en Python vigila tus certificados antes de que caduquen:
+→ Lee tu lista de dominios y servicios, con su responsable.
+→ Se conecta a cada uno por TLS, como un navegador, y lee el certificado.
+→ Calcula los días que le quedan y si la cadena es válida.
+→ Consulta Certificate Transparency (crt.sh) y marca certificados emitidos para tu dominio que no esperabas.
+→ Una regla pone la urgencia y el LLM redacta el aviso al equipo: qué renovar primero y quién.
+
+Lo que NO hace: renovar certificados, entrar en servidores ni ver claves privadas.
+
+Mi decisión de ingeniero: la urgencia la decide una regla, no el modelo. Un LLM puede fallar restando fechas; un "if dias < 7" no. La IA solo recibe dominios, días y estados, y su trabajo es explicar.
+
+Te soy sincero: Uptime Kuma o el blackbox_exporter de Prometheus ya avisan de esto. Si usas uno, mira primero si tienes la alerta activada. Yo lo programé para entender cómo funciona por dentro. Y porque con certificados de 47 días, olvidarse ya no será un despiste anual, sino mensual.
+
+Ah, y no vigiles solo la web: el que caduca suele ser el de la API o el panel interno que nadie recuerda.
+
+¿Cómo os enteráis vosotros de que un certificado está a punto de caducar? 👇
+
+#AgentesDeIA #DevOps #Python #Ciberseguridad #TLS #Observabilidad
