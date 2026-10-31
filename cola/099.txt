@@ -1,0 +1,23 @@
+Una oferta pide "experiencia con Kafka". Le pides a un chat que adapte tu CV y te devuelve una viñeta preciosa: "Diseñé pipelines de streaming con Kafka". Tú nunca has tocado Kafka.
+
+A mí me pasó con una versión "mejorada" de mi CV: traía una certificación que no tengo. Muy bien redactada, eso sí.
+
+Así que el agente #99 en LangGraph adapta tu CV a una oferta sin inventar nada:
+→ Saca los requisitos de la oferta, con un modelo local en Ollama.
+→ Cruza cada requisito con tu CV: lo tienes, a medias o no lo tienes.
+→ Reescribe solo tus viñetas reales, con el vocabulario de la oferta.
+→ Un verificador con reglas comprueba que cada viñeta nueva sale de una original y no trae cifras ni tecnologías nuevas.
+→ Si no cuadra, reescribe otra vez. Máximo dos intentos; luego te lo marca.
+→ Te deja un informe de huecos: lo que piden y no tienes.
+
+Lo que NO hace: enviar candidaturas ni añadir experiencia, cursos o cifras que no estén en tu CV.
+
+Mi decisión de ingeniero: el CV lleva datos personales, así que todo corre en local. Y qué se puede afirmar lo decide una regla, no el modelo. Lo que no tienes va al informe de huecos, no al CV.
+
+Te soy sincero: Jobscan y Teal ya comparan tu CV con una oferta. Si usas una, mira primero lo suyo. Yo lo programé con LangGraph para entender cómo se monta un bucle de reescribir y verificar. Creo que lo difícil no es redactar mejor. Es que lo bien redactado siga siendo verdad.
+
+Ah, y lee el CV final en voz alta antes de enviarlo. En la entrevista te pueden preguntar por cada línea.
+
+¿Adaptas el CV a cada oferta o mandas siempre el mismo? 👇
+
+#AgentesDeIA #LangGraph #Ollama #Empleo #CV #Python

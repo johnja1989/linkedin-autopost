@@ -4,3 +4,4 @@
 2026-10-31 07:45 | #96 | Agente que anonimiza datos personales (DNI, NIE, IBAN, teléfono) antes de enviar tickets a un LLM | ciberseguridad y privacidad | Python, Microsoft Presidio, spaCy (es_core_news_md), LLM
 2026-10-31 09:45 | #97 | Agente aduana de ficheros SFTP: valida CSV de proveedores antes de cargarlos en el ERP | integración de sistemas y APIs | n8n (FTP/SFTP, Extract from File, Code, IF), LLM
 2026-10-31 11:45 | #98 | Agente de regresión de prompts: prueba cada cambio de prompt o modelo con pytest y un LLM juez | evaluación y calidad de LLMs | Python, pytest, Ollama, LLM juez
+2026-10-31 13:45 | #99 | Agente que adapta el CV a una oferta sin inventar experiencia (verificador con reglas) | empleo y carrera | LangGraph, Ollama, Python
