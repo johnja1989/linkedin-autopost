@@ -1,0 +1,23 @@
+"¿Cuántos días de teletrabajo tengo?" El chatbot interno te contesta seguro: tres. La política dice dos desde enero. Había leído el PDF del año pasado.
+
+Yo he perdido más tardes buscando en la intranet la política de gastos de viaje que viajando. Y siempre aparecen tres versiones.
+
+Así que el agente #100 en Python, con Ollama y ChromaDB, responde dudas sobre políticas internas citando la fuente:
+→ Trocea solo los PDF vigentes y guarda documento y página.
+→ Calcula embeddings en local con nomic-embed-text y los guarda en ChromaDB.
+→ Con cada pregunta busca los 4 trozos más parecidos.
+→ Si ninguno pasa un umbral de similitud, contesta "no lo encuentro".
+→ Si pasan, un modelo local responde solo con esos trozos y cita documento y página.
+→ Una regla comprueba que cada cita está entre los trozos recuperados. Si no, no hay respuesta.
+
+Lo que NO hace: interpretar tu caso personal, aprobar gastos ni decidir por RRHH.
+
+Mi decisión de ingeniero: nada sale de tu red. El "no lo sé" lo decide un umbral, no el modelo, porque un modelo casi nunca admite que no sabe. Y cuando una política cambia, la antigua se borra del índice.
+
+Te soy sincero: Open WebUI y AnythingLLM ya hacen RAG sobre tus documentos, en local. Si usas uno, mira primero lo suyo. Yo lo programé a mano para entender dónde falla un RAG. Creo que casi nunca falla el modelo. Falla qué documentos le das.
+
+Ah, y nomic-embed-text espera prefijos: "search_document: " al indexar y "search_query: " al preguntar. Sin ellos busca peor y no avisa.
+
+¿Dónde vive la política de vacaciones en tu empresa: en la intranet, en un PDF o en la cabeza de alguien? 👇
+
+#AgentesDeIA #RAG #Ollama #ChromaDB #Python #IALocal
