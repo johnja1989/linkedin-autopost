@@ -1,0 +1,4 @@
+2026-10-30 13:45 | #93 | Agente revisor de facturas Facturae antes de enviarlas a FACe | facturación electrónica y documentos | Python, lxml (XSD), Ollama
+2026-10-30 15:45 | #94 | Agente vigía de caducidad de certificados TLS (+ Certificate Transparency) | DevOps y observabilidad | Python (ssl, socket), crt.sh, LLM
+2026-10-30 17:45 | #95 | Servidor MCP de solo lectura para consultar SQL Server con IA | MCP y herramientas | Python, servidor MCP (FastMCP), sqlglot, SQL Server
+2026-10-31 07:45 | #96 | Agente que anonimiza datos personales (DNI, NIE, IBAN, teléfono) antes de enviar tickets a un LLM | ciberseguridad y privacidad | Python, Microsoft Presidio, spaCy (es_core_news_md), LLM

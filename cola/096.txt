@@ -1,0 +1,22 @@
+Pegas un ticket de soporte en el LLM para que te lo resuma. Tres líneas de problema. Y, de regalo, el DNI, el IBAN y el móvil del cliente.
+
+Yo lo he hecho. Sin mala intención, con prisa, que creo que es peor: ni lo ves.
+
+Así que el agente #96 en Python limpia los datos personales antes de que el texto llegue a la IA:
+→ Lee el ticket en tu propio equipo.
+→ Presidio, con spaCy en español, busca nombres, DNI, NIE, emails, teléfonos e IBAN.
+→ Los cambia por etiquetas genéricas: persona, NIF, IBAN.
+→ Un último filtro con expresiones regulares: si aún queda algo con pinta de DNI o de email, el ticket no sale.
+→ Solo el texto limpio va al LLM, que lo clasifica y lo resume.
+
+Lo que NO hace: garantizar el 100 %. Detectar nombres es estadístico y alguno se escapa; por eso existe el último filtro, y los tickets dudosos los revisa una persona.
+
+Mi decisión de ingeniero: qué sale de tu equipo lo decide una regla, no el modelo. La IA nunca ve el texto original. Y el mapa de qué se sustituyó no se guarda junto a los resúmenes.
+
+Te soy sincero: LLM Guard, Azure AI Language y Sensitive Data Protection de Google ya detectan datos personales. Si ya trabajas en una de esas nubes, mira primero lo suyo. Yo lo programé para entender qué se le escapa a cada capa. Y algo se escapó: en la primera prueba, el móvil español pasó limpio. Presidio no reconoce teléfonos de España de serie; hay que añadir la región ES.
+
+Ah, y no lo pruebes con tickets reales: inventa diez con DNI de ejemplo válidos y mira qué se cuela.
+
+¿Tú limpias los datos antes de pasarle texto a una IA, o confías en el contrato con el proveedor? 👇
+
+#AgentesDeIA #Privacidad #RGPD #Python #Ciberseguridad
