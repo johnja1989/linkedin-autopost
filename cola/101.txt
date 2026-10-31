@@ -1,0 +1,23 @@
+"Las ventas han bajado un 9% este mes, ¿por qué?" La reunión dura una hora, cada uno trae su teoría y nadie ha mirado que octubre solo tiene cargados 27 días.
+
+Yo he sido el que lanzaba esa consulta a las 8:50, con cuatro GROUP BY distintos y un Excel al lado. Casi siempre la respuesta estaba en una región o en un canal, no en "el mercado".
+
+Así que el agente #101 en Python, con DuckDB y Ollama, explica por qué ha cambiado un KPI:
+→ Recibe el KPI y dos periodos de una lista cerrada. No escribe SQL libre.
+→ Primero comprueba que los dos periodos están completos. Si no, para y avisa.
+→ DuckDB calcula la variación total y por región, canal, producto y cliente.
+→ Una regla ordena las contribuciones y se queda con las que explican el 80% del cambio.
+→ Un modelo local redacta la explicación solo con esa tabla resumen.
+→ Otra regla comprueba que cada cifra del texto está en la tabla. Si no cuadra, no hay texto.
+
+Lo que NO hace: adivinar causas de negocio. Te dice dónde está el cambio, no por qué el cliente compró menos.
+
+Mi decisión de ingeniero: las cuentas las hace SQL, no el modelo. Un LLM puede sumar mal y decirlo con total seguridad. La IA solo pone en palabras una tabla pequeña ya calculada, y los datos de clientes no salen de tu red.
+
+Te soy sincero: el árbol de descomposición de Power BI y Explain Data de Tableau ya hacen algo parecido. Si usas uno, mira primero lo suyo. Yo lo programé con DuckDB para entender cómo funciona por dentro. Y creo que la mitad del valor está en la regla de los periodos completos, no en la IA.
+
+Ah, y en DuckDB puedes poner FILTER dentro de sum() para tener los dos periodos en la misma consulta. Te ahorras un JOIN y unos cuantos errores.
+
+¿Qué KPI te ha costado más reuniones explicar? 👇
+
+#AgentesDeIA #DuckDB #SQL #Ollama #Python #AnalisisDeDatos

@@ -6,3 +6,4 @@
 2026-10-31 11:45 | #98 | Agente de regresión de prompts: prueba cada cambio de prompt o modelo con pytest y un LLM juez | evaluación y calidad de LLMs | Python, pytest, Ollama, LLM juez
 2026-10-31 13:45 | #99 | Agente que adapta el CV a una oferta sin inventar experiencia (verificador con reglas) | empleo y carrera | LangGraph, Ollama, Python
 2026-10-31 15:45 | #100 | Agente RAG de políticas internas que cita documento y página y dice "no lo encuentro" (umbral) | RAG y documentos internos | Python, Ollama (nomic-embed-text), ChromaDB, pypdf
+2026-10-31 17:45 | #101 | Agente que explica por qué cambió un KPI (variación por dimensión, cifras verificadas) | datos y SQL | Python, DuckDB, Ollama
