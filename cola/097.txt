@@ -1,0 +1,22 @@
+Un proveedor cambia el punto decimal por una coma un viernes por la tarde. Nadie avisa. El lunes, el ERP tiene pedidos de 1.250 euros que eran de 12,50.
+
+Me pasó algo muy parecido en una integración por SFTP. El fichero se cargó sin un solo error… y estaba mal. Lo peor fue darnos cuenta tres días después.
+
+Así que el agente #97 en n8n hace de aduana entre el SFTP del proveedor y tu ERP:
+→ Cada 15 minutos lista la carpeta de entrada.
+→ Descarga cada CSV y lo convierte en filas.
+→ Un nodo de código valida columnas, importes y fechas, fila a fila.
+→ Si todo cuadra, mueve el fichero a "procesado" y sigue la carga normal.
+→ Si falla una regla, lo aparta a "rechazado" y un LLM redacta el aviso al proveedor con las filas exactas.
+
+Lo que NO hace: corregir datos ni cargar nada en el ERP. El aviso lo revisa una persona antes de enviarlo.
+
+Mi decisión de ingeniero: aceptar o rechazar lo decide una regla, nunca el modelo. La IA solo ve número de fila y tipo de error, no importes ni clientes.
+
+Te soy sincero: Frictionless o Great Expectations ya validan ficheros contra un esquema, y Azure Data Factory trae validaciones en sus flujos. Si ya usas una, mira primero lo suyo. Yo lo programé en n8n para entender dónde poner cada control. Y el que más me ha salvado es el más tonto: comprobar que la cabecera no cambió.
+
+Ah, y pide al proveedor un fichero de prueba con errores a propósito. Si no lo rechazas, aún no tienes validación.
+
+¿Validas lo que te llega por SFTP o confías en que nadie cambie nada? 👇
+
+#AgentesDeIA #n8n #IntegracionDeSistemas #SFTP #Automatizacion
