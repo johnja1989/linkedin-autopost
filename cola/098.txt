@@ -1,0 +1,22 @@
+Cambias el modelo del clasificador de tickets por uno más nuevo. En las demos va mejor. Dos semanas después, las incidencias urgentes de facturación acaban en "consultas generales".
+
+A mí me pasó con un prompt. Añadí una frase para que sonara "más amable" y empezó a devolver el JSON envuelto en texto. Lo había probado con tres ejemplos a mano. Los tres iban bien.
+
+Así que el agente #98 en Python y pytest revisa cada cambio de prompt o de modelo antes de producción:
+→ Lee 40 tickets reales, anonimizados, con la respuesta esperada.
+→ Los pasa por el prompt y el modelo nuevos, en local con Ollama.
+→ pytest comprueba lo comprobable: JSON válido, campos y categoría.
+→ Solo el resumen en texto libre lo puntúa otro modelo, con una rúbrica de 1 a 5.
+→ Te lista los casos que antes pasaban y ahora fallan.
+
+Lo que NO hace: decidir si el cambio sube ni reescribir el prompt. Decides tú.
+
+Mi decisión de ingeniero: el pasa o no pasa lo deciden reglas en pytest, no un modelo. El juez solo opina del texto libre y nunca es el modelo evaluado: nadie se pone nota a sí mismo.
+
+Te soy sincero: promptfoo y DeepEval ya hacen esto, con aserciones, LLM como juez y comparación entre modelos. Si usas una, mira primero lo suyo. Yo lo programé con pytest para entender qué parte es un test de verdad y qué parte es opinión. Creo que lo valioso no es la herramienta. Son los 40 casos.
+
+Ah, y cada ticket mal clasificado en producción, añádelo al conjunto. Así ese error no vuelve.
+
+¿Pruebas tus prompts antes de cambiarlos o cruzas los dedos? 👇
+
+#AgentesDeIA #EvaluacionLLM #Python #pytest #Ollama #MLOps
