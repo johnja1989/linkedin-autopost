@@ -1,0 +1,22 @@
+Son las 3:12 de la madrugada. Suena el móvil: "HighErrorRate". Y la primera media hora no la pasas arreglando nada, la pasas averiguando qué está pasando.
+
+Me ha tocado más de una guardia así, abriendo Grafana con un ojo cerrado y buscando el runbook en una wiki que nadie actualizaba desde hacía años. Lo peor no era el fallo. Era empezar de cero cada vez.
+
+Así que el agente #106 en Python prepara el primer parte de una alerta antes de que abras el portátil:
+→ Recibe el webhook de Alertmanager y se queda solo con las alertas disparadas.
+→ Busca el runbook de esa alerta en un YAML del repo: consultas, severidad y a quién avisar.
+→ Lanza esas consultas a la API de Prometheus.
+→ Un modelo local en Ollama resume en 5 líneas qué pasa, desde cuándo y qué mirar primero.
+→ Publica el borrador en el hilo de la guardia.
+
+Lo que NO hace: reiniciar servicios, silenciar alertas ni decidir si es un incidente.
+
+Mi decisión de ingeniero: la severidad la pone el runbook, nunca el modelo. Si una alerta no tiene runbook, el agente lo dice y pide revisarla a mano. Y el modelo solo ve nombres de métricas y cifras, ni logs ni datos de clientes.
+
+Te soy sincero: Grafana Cloud (con Sift) y PagerDuty AIOps ya hacen buena parte de esto. Si usas uno, mira primero lo que trae. Yo lo programé para entender cómo funciona por dentro, y creo que lo más útil no fue la IA: fue obligarme a escribir runbooks decentes.
+
+Ah, y empieza con tus 5 alertas más ruidosas, no con las 200.
+
+¿Qué es lo primero que miras cuando te salta una alerta de madrugada? 👇
+
+#AgentesDeIA #DevOps #Observabilidad #Prometheus #SRE #Python
