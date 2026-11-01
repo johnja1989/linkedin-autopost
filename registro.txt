@@ -10,3 +10,4 @@
 2026-11-01 09:45 | #102 | Agente que convierte pedidos de clientes en PDF en borradores para el ERP (catálogo valida, humano aprueba) | automatización de negocio | Python, pdfplumber, Ollama (structured outputs), Pydantic, Gradio
 2026-11-01 07:45 | #103 | Agente de revisión semanal del calendario: horas de reunión, solapes y huecos de foco (regla de día rojo) | productividad personal | Python, icalendar, recurring-ical-events, Ollama
 2026-11-01 11:45 | #104 | Agente que prioriza vulnerabilidades de dependencias cruzando OSV.dev, CISA KEV y EPSS (regla decide, no el modelo) | ciberseguridad y privacidad | n8n (Schedule Trigger, HTTP Request, Code), OSV.dev, CISA KEV, FIRST EPSS, Ollama
+2026-11-01 13:45 | #105 | Agente guardián de contratos OpenAPI: bloquea cambios rompedores en el PR y redacta la nota para consumidores | integración de sistemas y APIs | Python, oasdiff, Ollama, CI (pull requests)

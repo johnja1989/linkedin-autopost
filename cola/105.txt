@@ -1,0 +1,22 @@
+Cambias "importe" de number a string en el contrato de tu API. Para el ERP de un cliente, a las 3 de la mañana, es una factura que no entra.
+
+Me pasó algo parecido integrando un servicio SOAP hace años: alguien hizo obligatorio un campo "sin importancia" y nos enteramos por las llamadas a soporte, no por los tests.
+
+Así que el agente #105 en Python con oasdiff revisa cada cambio del contrato OpenAPI antes del merge:
+→ En cada pull request compara el openapi.yaml de main con el nuevo.
+→ oasdiff detecta los cambios rompedores: campos eliminados, tipos cambiados, parámetros que pasan a obligatorios.
+→ Si hay alguno de nivel ERR, la pipeline falla.
+→ Un modelo local en Ollama redacta la nota para los consumidores: qué cambia, a quién afecta y cómo adaptarse.
+→ La nota queda en el PR para que la revise una persona.
+
+Lo que NO hace: decidir si un cambio "rompe poco", versionar la API ni avisar a los clientes por su cuenta.
+
+Mi decisión de ingeniero: qué es rompedor lo decide oasdiff con reglas, no el modelo. El LLM solo ve la lista de cambios, nunca datos reales ni código. Y si el modelo falla, el PR sigue bloqueado.
+
+Te soy sincero: oasdiff ya tiene su GitHub Action, y Bump.sh detecta cambios rompedores en su changelog. Si usas una, mira primero qué reglas trae activadas. Yo lo programé para entender cómo funciona por dentro. Y creo que lo útil aquí no es la IA, es que el contrato sea el que manda.
+
+Ah, y guarda el openapi.yaml en el repo y genéralo desde el código: si vive en una wiki, ningún diff te salva.
+
+¿Cómo os enteráis vosotros de que alguien rompió un contrato: por los tests o por el cliente? 👇
+
+#AgentesDeIA #APIs #OpenAPI #IntegracionDeSistemas #Python #Ollama
