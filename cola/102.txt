@@ -1,0 +1,23 @@
+Un cliente manda un pedido de 40 líneas en PDF a las 18:55 de un viernes. Alguien lo teclea en el ERP con prisa, y la referencia 4410 acaba siendo la 4401.
+
+Llevo muchos años integrando ERPs y, la verdad, buena parte de las incidencias de pedidos que he visto no venían del sistema. Venían de copiar a mano desde un PDF. Nadie tenía la culpa: era viernes y eran 40 líneas.
+
+Así que el agente #102 en Python, con Ollama y Gradio, convierte pedidos en PDF en borradores para el ERP:
+→ pdfplumber saca el texto del PDF, en tu servidor.
+→ Un modelo local devuelve cliente, referencias y cantidades en un JSON con esquema fijo (structured outputs).
+→ Pydantic valida ese JSON. Si no cumple el esquema, el pedido va entero a revisión.
+→ Una regla cruza cada referencia con el catálogo y pone el precio del catálogo, no el del PDF.
+→ Lo que no cuadra (referencia inexistente, cantidad rara, cliente sin ficha) queda marcado en rojo.
+→ Una persona revisa en una pantalla de Gradio y aprueba. Solo entonces se crea el borrador.
+
+Lo que NO hace: crear pedidos en el ERP sin que nadie los apruebe, ni poner precios o descuentos.
+
+Mi decisión de ingeniero: el modelo solo lee, no decide. Referencias y precios los valida una regla contra el catálogo, porque un LLM puede "corregir" una referencia que no existe por otra parecida. Y los PDF de tus clientes no salen de tu red.
+
+Te soy sincero: Rossum, Nanonets o Azure AI Document Intelligence ya hacen esto, y muchos ERP traen su propio módulo de captura. Si usas uno, mira primero lo suyo. Yo lo programé para entender cómo funciona por dentro. Y creo que lo difícil no es leer el PDF, es decidir qué hacer cuando algo no cuadra.
+
+Ah, y guarda el PDF original junto al borrador. Cuando el cliente diga "yo no pedí eso", lo agradecerás.
+
+¿Cuántos pedidos al día seguís tecleando a mano desde un PDF? 👇
+
+#AgentesDeIA #Python #Ollama #ERP #Automatizacion #IntegracionDeSistemas
