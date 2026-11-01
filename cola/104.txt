@@ -1,0 +1,23 @@
+El escáner de dependencias te devuelve 23 vulnerabilidades, casi todas "altas". ¿Por cuál empiezas? Casi nunca la respuesta es "por la de CVSS más alto".
+
+Hace años, en un proyecto de integración, recibí un informe así. Todo en rojo. Acabamos actualizando por el orden de la lista. Eso no es un método.
+
+Así que el agente #104 en n8n prioriza las vulnerabilidades de tus dependencias:
+→ Cada lunes lee el requirements.txt del proyecto.
+→ Pregunta a OSV.dev, gratis y sin clave, qué vulnerabilidades tiene cada paquete y versión.
+→ Cruza los CVE con el catálogo KEV de CISA: las que ya se explotan en ataques reales.
+→ Añade EPSS de FIRST: la probabilidad estimada de explotación en los próximos 30 días.
+→ Un nodo Code aplica la regla: KEV primero, EPSS del 10 % o más después, el resto a la cola.
+→ Un modelo local en Ollama redacta el resumen para el ticket con esos datos.
+
+Lo que NO hace: actualizar paquetes, abrir pull requests ni decidir que una vulnerabilidad "no te afecta".
+
+Mi decisión de ingeniero: el orden lo pone una regla con datos públicos, no el modelo. El LLM no ve tu código, solo paquete, versión, CVE y cifras. Y un EPSS bajo no significa "ignórala", significa "después".
+
+Te soy sincero: Dependabot, pip-audit, OSV-Scanner o Snyk ya hacen esto. Si usas uno, mira primero cómo ordena las alertas. Yo lo monté en n8n para entender cómo funciona por dentro. Y creo que lo valioso no es la IA, es cruzar tres fuentes.
+
+Ah, y fija las versiones (pip freeze o un lockfile): sin eso, ningún escáner sabe qué tienes instalado de verdad.
+
+¿Cómo priorizáis vosotros: CVSS, EPSS, KEV o "lo que grite más"? 👇
+
+#AgentesDeIA #Ciberseguridad #n8n #DevSecOps #GestionDeVulnerabilidades #Ollama
