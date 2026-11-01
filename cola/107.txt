@@ -1,0 +1,22 @@
+Ingreso de 1.210,00 €. Concepto: "TRANSF PAGO FRAS OCTUBRE". Y en el ERP tienes tres facturas pendientes de exactamente 1.210,00 €.
+
+Integrando ERPs con bancos vi más de un cierre de mes así: el extracto en una pantalla, el Excel de pendientes en la otra y una tarde cruzando importes a ojo.
+
+Así que el agente #107 en Python concilia el extracto bancario con tus facturas emitidas:
+→ Lee el extracto en Norma 43 (el fichero de siempre de la banca española) con csb43.
+→ Cruza cada cobro con las facturas pendientes por importe exacto y número de factura en el concepto.
+→ Si hay una sola coincidencia clara, la concilia. Si hay varias, la deja en duda.
+→ En las dudas, un modelo local en Ollama lee el concepto y sugiere la factura más probable, con el porqué.
+→ Genera un informe: conciliados, propuestas, dudas y cobros sin factura.
+
+Lo que NO hace: contabilizar nada en el ERP, dar facturas por cobradas ni tocar el banco.
+
+Mi decisión de ingeniero: lo que se concilia solo lo decide una regla, con importe exacto y referencia. El modelo solo sugiere en los casos dudosos y una persona confirma. Los importes van en Decimal, nunca en float, y el extracto no sale de tu equipo.
+
+Te soy sincero: Odoo, Holded o el programa contable de tu gestoría ya concilian extractos. Si usas uno, mira primero sus reglas de conciliación. Yo lo programé para entender cómo funciona por dentro. Y la verdad, lo difícil no fue la IA: fue el cliente que paga tres facturas juntas con el concepto "varios".
+
+Ah, y pide a tus clientes el número de factura en la transferencia. Vale más que cualquier modelo.
+
+¿Cuánto tiempo os lleva a vosotros conciliar el banco cada mes? 👇
+
+#AgentesDeIA #Python #Finanzas #Automatizacion #Ollama #ERP
