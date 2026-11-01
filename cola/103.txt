@@ -1,0 +1,22 @@
+Mañana empieza la semana y ya tiene 19 horas de reuniones. Lo descubres el lunes a las 8:55.
+
+A mí me pasaba con las reuniones recurrentes: cada una parece pequeña, pero juntas se comen la semana. Un domingo las conté a mano: el martes no tenía ni una hora seguida libre.
+
+Así que el agente #103 en Python, con icalendar y Ollama, hace tu revisión semanal del domingo:
+→ Lee tu calendario en formato .ics, en tu ordenador.
+→ Expande las reuniones recurrentes con recurring-ical-events. Ahí fallan los scripts caseros.
+→ Calcula horas de reunión por día, solapes y huecos libres de 90 minutos o más.
+→ Una regla marca en rojo los días con más de 5 horas de reuniones o sin foco.
+→ Un modelo local redacta un resumen de 5 líneas y qué reunión revisar primero.
+
+Lo que NO hace: mover, aceptar ni rechazar reuniones, ni escribir a nadie en tu nombre.
+
+Mi decisión de ingeniero: las horas las suma Python y el "día rojo" lo decide una regla, no el modelo. El LLM solo ve títulos, horas y cifras, nunca descripciones ni asistentes. Y corre en local, porque tu calendario dice de ti más que tu correo.
+
+Te soy sincero: la Información de tiempo de Google Calendar (en cuentas de trabajo), Viva Insights de Microsoft o Reclaim.ai ya hacen esto. Si usas una, mira primero lo suyo. Yo lo programé para entender cómo funciona por dentro. Y creo que lo útil no es el resumen, es la regla de los 90 minutos.
+
+Ah, y la dirección secreta en formato iCal de Google Calendar trátala como una contraseña: quien la tenga ve todo tu calendario.
+
+¿Cuántas horas de reuniones tienes esta semana? 👇
+
+#AgentesDeIA #Productividad #Python #Ollama #GestionDelTiempo
