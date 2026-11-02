@@ -1,0 +1,23 @@
+Abres 40 ofertas. En la número 31, casi al final, lees: "alemán nativo obligatorio". Y ya llevas una hora.
+
+Me pasó buscando empleo desde Figueres. Probé a pedirle a un modelo un porcentaje de encaje y casi todas salían bien. Muy amable, poco útil.
+
+Así que el agente #110 en CrewAI me ordena las ofertas sin inventarse una nota:
+→ Python descarga ofertas de Arbeitnow y Remotive, dos APIs públicas.
+→ Una regla quita duplicados y lo que no encaja en modalidad o ubicación.
+→ Un agente con Ollama extrae los requisitos y copia la frase de la oferta que los justifica.
+→ Otro agente traduce cada requisito a una habilidad de tu lista, escrita por ti.
+→ Python comprueba que la frase exista en la oferta y cuenta los obligatorios que no cubres.
+→ Cada mañana, tres montones: leer, revisar y descartar, con el enlace original.
+
+Lo que NO hace: postular, escribir a reclutadores ni tocar tu CV.
+
+Mi decisión de ingeniero: no hay porcentaje del modelo. Un requisito sin cita literal no cuenta, y si faltan dos obligatorios o más, descarta una regla. Tu perfil no sale de tu ordenador porque el modelo corre en local.
+
+Te soy sincero: las alertas de LinkedIn e InfoJobs ya filtran ofertas, y Jobscan y Teal comparan tu CV con una oferta. Si usas una, mira primero sus filtros y sus puntuaciones. Yo lo programé para entender cómo funciona por dentro. Y creo que lo valioso no es la lista, sino ver el motivo de cada descarte.
+
+Ah, y lee las condiciones de cada API: Remotive aconseja un máximo de 4 consultas al día y pide enlazar la oferta original.
+
+¿Qué requisito os hace cerrar una oferta en cuanto lo leéis? 👇
+
+#AgentesDeIA #CrewAI #Ollama #Python #BusquedaDeEmpleo
