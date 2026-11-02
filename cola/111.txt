@@ -1,0 +1,23 @@
+La consulta tarda 8 segundos. Alguien dice "ponle un índice", lo crea en producción y al día siguiente sigue tardando 8 segundos. Solo que ahora cada escritura mantiene un índice más.
+
+Lo he vivido con SQL Server y Oracle: índices creados por si acaso que nadie volvía a mirar.
+
+Así que el agente #111 en Python prueba índices en PostgreSQL sin crear ninguno:
+→ Lee de pg_stat_statements las consultas que más tiempo acumulan, normalizadas con $1 y $2.
+→ Un modelo local en Ollama recibe la consulta y el esquema, y propone hasta 3 índices.
+→ sqlglot comprueba que cada propuesta sea un único CREATE INDEX.
+→ HypoPG crea el índice hipotético, que solo existe en esa sesión.
+→ EXPLAIN compara el coste antes y después, y confirma que el plan lo usa.
+→ Deja un informe para que lo revise un DBA.
+
+Lo que NO hace: ejecutar el DDL, lanzar las consultas ni tocar datos.
+
+Mi decisión de ingeniero: el modelo propone, pero decide una regla. Si el plan no usa el índice o el coste no baja un 30 %, se descarta. Conecta con un rol de solo lectura y la IA nunca ve filas.
+
+Te soy sincero: Dexter y el Index Advisor de pganalyze ya hacen esto. Si usas uno, mira primero cómo elige los índices. Yo lo programé para entender cómo funciona por dentro. En una tabla de prueba de 2 millones de filas, el coste estimado bajó de 32.192 a 59. Pero es una estimación, no un cronómetro, y no mide lo que encarece las escrituras. Por eso, creo, sigue decidiendo una persona.
+
+Ah, y en producción usa CREATE INDEX CONCURRENTLY: el normal bloquea las escrituras.
+
+¿Cómo decidís si un índice merece la pena antes de crearlo? 👇
+
+#AgentesDeIA #PostgreSQL #Python #Ollama #SQL #BasesDeDatos
