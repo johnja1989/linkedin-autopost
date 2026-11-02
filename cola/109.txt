@@ -1,0 +1,22 @@
+Cambias el tamaño de los chunks de tu RAG. Tres preguntas, suena mejor y lo das por bueno. Eso no es una mejora: es una impresión.
+
+Me pasó con un RAG de documentos internos. Estaba convencido de que iba mejor, hasta que lo medí y las preguntas sobre tablas habían empeorado.
+
+Así que el agente #109 en Python mide el recuperador de tu RAG antes de mirar al LLM:
+→ Ollama propone preguntas a partir de páginas de tus documentos.
+→ Las revisas en Gradio: apruebas, corriges o descartas.
+→ Cada pregunta aprobada queda ligada a su documento y página.
+→ Python consulta ChromaDB con cada configuración y calcula hit@5 y MRR.
+→ Una regla bloquea el cambio si hit@5 baja más de 2 puntos, y el modelo resume qué preguntas empeoraron.
+
+Lo que NO hace: juzgar si la respuesta final es correcta ni elegir la configuración por ti.
+
+Mi decisión de ingeniero: el acierto se etiqueta por documento y página, no por id de chunk, porque al cambiar el troceado los ids dejan de valer. Las métricas las calcula código. Y una pregunta generada no cuenta hasta que la aprueba una persona: el modelo tiende a copiar las palabras del texto, y eso infla la nota.
+
+Te soy sincero: Ragas, DeepEval y TruLens ya evalúan RAG, recuperación incluida. Si usas uno, mira primero sus métricas de contexto. Yo lo programé para entender cómo funciona por dentro. Y creo que lo difícil no son las fórmulas, sino reunir buenas preguntas.
+
+Ah, y mezcla preguntas escritas a mano o sacadas de tickets reales: son las que más cuesta acertar.
+
+¿Medís el recuperador de vuestro RAG o leéis respuestas hasta que suenan bien? 👇
+
+#AgentesDeIA #RAG #EvaluacionLLM #Python #ChromaDB #Ollama
