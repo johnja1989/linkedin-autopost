@@ -1,0 +1,22 @@
+Aprobaste una herramienta MCP el lunes. El martes cambia su descripción, y tu asistente la lee como instrucciones. Nadie te pregunta.
+
+En 12 años integrando sistemas nunca di acceso a un ERP sin lista de permisos ni logs. Y el otro día me vi conectando un servidor MCP a mi asistente con un par de clics. Me dio vergüenza.
+
+Así que el agente #108 en FastMCP es un portero entre tu asistente y tus servidores MCP:
+→ Hace de proxy: el asistente solo habla con él.
+→ Lista blanca: lo que no está en la política, ni se ve ni se ejecuta.
+→ Guarda una huella de cada descripción aprobada. Si cambia, bloquea la herramienta.
+→ Las lecturas pasan. Las escrituras se quedan en cola hasta que apruebas esa llamada.
+→ Un modelo local en Ollama te resume qué haría la llamada retenida, y todo queda auditado.
+
+Lo que NO hace: detectar herramientas maliciosas, revisar el código del servidor ni aprobar por ti.
+
+Mi decisión de ingeniero: permitir o bloquear lo decide una regla, con denegar por defecto. El modelo solo redacta el resumen y nunca toca la decisión. Un portero al que se puede convencer no es un portero.
+
+Te soy sincero: Docker MCP Gateway y Zuplo ya ofrecen gateways MCP con filtrado de herramientas. Si usas uno, mira primero qué políticas trae. Yo lo programé para entender cómo funciona por dentro. Y creo que lo que más enseña es escribir la lista blanca: descubres cuánto habías dado sin pensarlo.
+
+Ah, y quita del cliente las conexiones directas a esos servidores: si el asistente puede saltarse al portero, no hay portero.
+
+¿Revisáis qué herramientas MCP tiene vuestro asistente, o solo le dais a aprobar? 👇
+
+#AgentesDeIA #MCP #Ciberseguridad #FastMCP #Python #Ollama

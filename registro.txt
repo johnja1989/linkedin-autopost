@@ -13,3 +13,4 @@
 2026-11-01 13:45 | #105 | Agente guardián de contratos OpenAPI: bloquea cambios rompedores en el PR y redacta la nota para consumidores | integración de sistemas y APIs | Python, oasdiff, Ollama, CI (pull requests)
 2026-11-01 15:45 | #106 | Agente de primer parte de alertas: Alertmanager + Prometheus, severidad del runbook y resumen local | DevOps y observabilidad | Python (FastAPI), Alertmanager webhook, Prometheus API, Ollama
 2026-11-01 17:45 | #107 | Agente de conciliación bancaria: extracto Norma 43 vs. facturas emitidas (regla concilia, LLM solo sugiere en dudas) | facturación electrónica y documentos | Python, csb43, Ollama
+2026-11-02 13:45 | #108 | Agente portero MCP: lista blanca, huellas de descripciones y aprobación de escrituras | MCP y herramientas | FastMCP (proxy + middleware), Python, Ollama
