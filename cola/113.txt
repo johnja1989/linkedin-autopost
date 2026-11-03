@@ -1,0 +1,23 @@
+Un correo pregunta: "¿dónde está mi pedido 4471?". Tu bot contesta con la dirección y el importe. Solo que no lo escribió el cliente: alguien probó un número.
+
+En 12 años integrando ERPs he visto muchas bandejas compartidas: abrir el correo, buscar el pedido en otra pantalla, copiar lo de siempre. Automatizarlo me tentaba. Que la IA contestara sola, la verdad, no tanto.
+
+Así que el agente #113 en n8n y Ollama deja borradores en Gmail y no envía nada:
+→ Gmail Trigger recoge el correo nuevo.
+→ Text Classifier lo etiqueta: retraso, devolución, factura u otro.
+→ Information Extractor saca el número de pedido.
+→ HTTP Request consulta ese pedido en el ERP, solo lectura.
+→ Un nodo Code decide: borrador, pedir el número o pasar a una persona.
+→ Si toca, un modelo local redacta en el mismo hilo y alguien revisa.
+
+Lo que NO hace: enviar correos, tramitar devoluciones ni escribir en el ERP.
+
+Mi decisión de ingeniero: el modelo no decide quién ve qué. Si el remitente no coincide con el cliente del pedido, no hay borrador; tampoco si menciona abogados o supera 300 €. Y el modelo que redacta recibe la etiqueta y el pedido, no el correo: una instrucción escondida no le llega.
+
+Te soy sincero: el triaje inteligente de Zendesk y Freddy en Freshdesk ya hacen buena parte de esto. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Creo que lo valioso no es redactar, es saber cuándo callarse.
+
+Ah, y el remitente se puede falsificar: revisa también SPF y DKIM en la cabecera Authentication-Results.
+
+¿Dejarías que una IA respondiera sola a tus clientes? 👇
+
+#AgentesDeIA #n8n #Ollama #Automatizacion #Ciberseguridad

@@ -18,3 +18,4 @@
 2026-11-02 18:30 | #110 | Agente que ordena ofertas de empleo con citas literales: sin porcentaje del modelo, una regla descarta | empleo y carrera | CrewAI, Ollama, Python, Arbeitnow, Remotive
 2026-11-02 18:43 | #111 | Agente que prueba índices en PostgreSQL sin crearlos: HypoPG mide, una regla decide y revisa un DBA | datos y SQL | Python, pg_stat_statements, HypoPG, sqlglot, Ollama
 2026-11-03 08:51 | #112 | Agente RAG que respeta permisos: filtro por grupos dentro de la búsqueda y denegar por defecto | RAG y documentos internos | Qdrant, Ollama (nomic-embed-text), Python
+2026-11-03 11:17 | #113 | Agente de bandeja de soporte: borradores en Gmail, regla por remitente y nada se envía solo | automatización de negocio | n8n (Gmail Trigger, Text Classifier, Information Extractor, Code), Ollama
