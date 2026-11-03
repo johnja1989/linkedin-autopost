@@ -1,0 +1,22 @@
+Termina la reunión y la IA te da un acta impecable: "Marta enviará el presupuesto el viernes". Lo que Marta dijo fue "a ver si puedo".
+
+La verdad, esto no lo inventó la IA. En más de 12 años en TI he visto muchas actas con tareas que nadie había aceptado. Lo nuevo es que ahora suenan más seguras.
+
+Así que el agente #115 en Python y Ollama saca tareas solo si puede citarlas:
+→ faster-whisper transcribe el audio en tu equipo.
+→ Un modelo local propone tareas en JSON: qué, quién, cuándo y la frase exacta.
+→ Python busca esa frase en la transcripción. Si no está, va a descartadas.
+→ Si el nombre o la fecha no salen en la frase, quedan "sin confirmar".
+→ Gradio te enseña tarea, cita y minuto, y tú apruebas lo que va al acta.
+
+Lo que NO hace: enviar el acta, crear tareas en Jira ni saber quién habla, porque Whisper no separa voces.
+
+Mi decisión de ingeniero: el modelo propone, pero una regla decide qué llega a revisión. Y el audio y el texto no salen de tu equipo.
+
+Te soy sincero: Otter y Fireflies ya sacan tareas de las reuniones, y Meetily resume en local con Whisper y Ollama. Si usas uno, mira primero si te enseña la frase de origen. Yo lo programé para entender cómo funciona por dentro. Creo que lo difícil no es transcribir: una cita real demuestra que alguien lo dijo, no que se comprometiera. Eso lo sigue juzgando una persona.
+
+Ah, y avisa a todos antes de grabar: que sea local no te ahorra esa conversación.
+
+¿Te ha llegado alguna vez un acta con una tarea que nunca aceptaste? 👇
+
+#AgentesDeIA #Productividad #Python #Ollama #Whisper #Reuniones
