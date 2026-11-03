@@ -1,0 +1,23 @@
+Lunes, 412 mensajes en la cola de muertos de RabbitMQ. Alguien pulsa "reenviar todos". La mitad vuelve a fallar y otros crean pedidos duplicados.
+
+La verdad, esa tentación la conozco. En más de 12 años integrando sistemas, reprocesar todo y a ver qué pasa siempre parece la salida rápida.
+
+Así que el agente #117 en LangGraph revisa la DLQ antes de que nadie reenvíe nada:
+→ Lee los mensajes sin confirmarlos: al cerrar el canal, vuelven a la cola.
+→ Una regla los separa en reenviable, cuarentena o revisar.
+→ Esquema roto o 3 reenvíos ya hechos: cuarentena, porque reintentar no lo arregla.
+→ Sin message_id: a revisar, porque no se puede detectar un duplicado.
+→ Ollama resume los fallos por motivo, cola y cantidad.
+→ El grafo se pausa con interrupt() y solo sigue cuando una persona aprueba los IDs.
+
+Lo que NO hace: corregir mensajes, borrar nada de la DLQ ni reenviar sin aprobación.
+
+Mi decisión de ingeniero: la regla decide y el modelo solo redacta. La IA no ve el cuerpo del mensaje, solo motivos y contadores. Y el checkpoint guarda IDs, no datos de clientes.
+
+Te soy sincero: el plugin Shovel de RabbitMQ ya mueve mensajes entre colas, y Amazon SQS trae su propio redrive. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Creo que mover mensajes es lo fácil; lo difícil es decidir cuáles merecen volver.
+
+Ah, y comprueba antes que tu consumidor sea idempotente: si el proceso cae entre publicar y confirmar, ese mensaje llega dos veces.
+
+¿Vuestra DLQ se revisa con criterio o solo cuando alguien se queja? 👇
+
+#AgentesDeIA #LangGraph #RabbitMQ #Ollama #Integracion #Python
