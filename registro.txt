@@ -17,3 +17,4 @@
 2026-11-02 16:52 | #109 | Agente que mide el recuperador de un RAG con hit@5 y MRR: preguntas aprobadas por humano y regla que bloquea | evaluación y calidad de LLMs | Python, ChromaDB, Ollama, Gradio
 2026-11-02 18:30 | #110 | Agente que ordena ofertas de empleo con citas literales: sin porcentaje del modelo, una regla descarta | empleo y carrera | CrewAI, Ollama, Python, Arbeitnow, Remotive
 2026-11-02 18:43 | #111 | Agente que prueba índices en PostgreSQL sin crearlos: HypoPG mide, una regla decide y revisa un DBA | datos y SQL | Python, pg_stat_statements, HypoPG, sqlglot, Ollama
+2026-11-03 08:51 | #112 | Agente RAG que respeta permisos: filtro por grupos dentro de la búsqueda y denegar por defecto | RAG y documentos internos | Qdrant, Ollama (nomic-embed-text), Python

@@ -1,0 +1,22 @@
+Le preguntas al chatbot interno cuánto cobra el equipo. Y te lo dice. La carpeta de nóminas estaba bien protegida; la copia en el índice vectorial, no.
+
+En 12 años integrando sistemas, los permisos los ponía siempre el sistema de origen. Por eso mi agente #100 cita documento y página, pero no se pregunta quién está preguntando. Se me pasó, la verdad.
+
+Así que el agente #112 en Qdrant y Ollama responde solo con lo que cada persona puede leer:
+→ Sincroniza documentos y permisos, y guarda los grupos en cada fragmento.
+→ El backend valida el token y saca de ahí los grupos del usuario.
+→ Qdrant busca solo entre los fragmentos de esos grupos.
+→ Si no queda nada por encima del umbral, contesta "no lo encuentro" sin llamar al modelo.
+→ Si queda, un modelo local redacta, cita la fuente y se registra la consulta.
+
+Lo que NO hace: conceder permisos, arreglar carpetas mal compartidas ni decidir quién ve qué.
+
+Mi decisión de ingeniero: el filtro va en código y dentro de la búsqueda. El modelo no lo construye y no recibe nada ajeno, así que no lo puede revelar aunque le insistan. Un fragmento sin grupos no aparece: lo probé en local y es denegar por defecto.
+
+Te soy sincero: Microsoft 365 Copilot y la seguridad a nivel de documento de Elastic ya hacen esto. Si usas uno, mira primero cómo sincroniza los permisos. Yo lo programé para entender cómo funciona por dentro. Y creo que lo difícil no es el filtro, es mantener los permisos al día.
+
+Ah, y mide cuánto tarda una revocación en llegar al índice: hasta entonces, esa persona sigue viendo el documento.
+
+¿Vuestro RAG interno sabe quién pregunta? 👇
+
+#AgentesDeIA #RAG #Qdrant #Ollama #Ciberseguridad #Python
