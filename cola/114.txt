@@ -1,0 +1,23 @@
+Un compañero te reenvía un correo: "¿esto es de verdad?". Logo correcto, español impecable. El dominio del enlace se registró hace seis días.
+
+En más de 12 años en TI me han llegado muchos de esos. Y reconozco que la última vez mi primer impulso fue pegarlo en un chat de IA. Hasta que pensé: si el correo esconde una instrucción, ¿a quién le está hablando?
+
+Así que el agente #114 en Python y Ollama revisa el .eml sin abrir un solo enlace:
+→ Lee SPF, DKIM y DMARC de la cabecera Authentication-Results.
+→ Compara From, Reply-To y Return-Path.
+→ Compara el dominio que muestra cada enlace con el real, sin visitarlo.
+→ Consulta por RDAP la antigüedad de esos dominios.
+→ Una regla da el veredicto: rojo, ámbar o sin señales.
+→ Un modelo local lo explica en lenguaje claro.
+
+Lo que NO hace: visitar enlaces, abrir adjuntos, borrar correos ni decirte que un mensaje es seguro.
+
+Mi decisión de ingeniero: el modelo recibe los hechos ya extraídos, nunca el cuerpo del correo, así que una instrucción escondida no le llega. Solo me fío de la cabecera con el identificador de mi servidor; las demás las puede escribir el remitente. Y si RDAP no responde, queda "sin dato", no "limpio".
+
+Te soy sincero: Microsoft Defender for Office 365 y Sublime Security ya hacen esto, y mucho más. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Creo que lo más útil no es el veredicto, es ver qué señales lo justifican.
+
+Ah, y un DMARC correcto no significa correo legítimo: el atacante también puede configurar bien su dominio falso.
+
+¿Le pasarías a una IA el texto completo de un correo sospechoso? 👇
+
+#AgentesDeIA #Ciberseguridad #Phishing #Python #Ollama
