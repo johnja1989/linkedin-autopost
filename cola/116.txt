@@ -1,0 +1,22 @@
+123.40 y 123.4 son el mismo importe. Para la huella de Verifactu, no: cambia un carácter y sale otro SHA-256.
+
+La verdad, me suena. En más de 12 años integrando facturación y ERPs he perdido tardes con errores que no estaban en la factura, sino en cómo viajaba un dato entre sistemas.
+
+Así que el agente #116 en Python y Ollama audita la cadena de huellas de tus registros:
+→ Lee un export de tus registros de alta, en tu equipo.
+→ Recalcula cada SHA-256 con el texto exacto, sin normalizar nada.
+→ Comprueba que cada registro lleva la huella del anterior.
+→ Si algo falla, una regla lo marca con código y número de factura.
+→ Un modelo local redacta la nota y Gradio se la enseña a quien revisa.
+
+Lo que NO hace: enviar nada a la AEAT, reparar la cadena ni decirte si cumples la normativa.
+
+Mi decisión de ingeniero: el veredicto lo da una comparación de hashes, no el modelo. La IA recibe códigos de error y números de serie, nunca NIF ni importes. Y es de solo lectura: reescribir registros para que cuadren sería peor que el fallo.
+
+Te soy sincero: un programa de facturación adaptado ya genera y encadena las huellas, y librerías como VeriFactu para .NET también. Si usas uno, mira primero si te deja verificar la cadena exportada. Yo lo programé para entender cómo funciona por dentro. Creo que lo difícil no es el hash, es saber qué texto exacto se usó.
+
+Ah, y prueba tu script con los ejemplos de la AEAT: si no te sale su huella, el fallo está en el script.
+
+¿Verificarías la cadena desde fuera o confiarías en tu programa? 👇
+
+#AgentesDeIA #Verifactu #FacturacionElectronica #Python #Ollama #SHA256

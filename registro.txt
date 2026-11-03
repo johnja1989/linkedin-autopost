@@ -21,3 +21,4 @@
 2026-11-03 11:17 | #113 | Agente de bandeja de soporte: borradores en Gmail, regla por remitente y nada se envía solo | automatización de negocio | n8n (Gmail Trigger, Text Classifier, Information Extractor, Code), Ollama
 2026-11-03 11:48 | #114 | Agente que revisa correos sospechosos (.eml) sin abrir enlaces: la regla da el veredicto y el modelo no ve el cuerpo | ciberseguridad y privacidad | Python (email), BeautifulSoup, tldextract, RDAP, Ollama
 2026-11-03 13:52 | #115 | Agente que saca tareas de reuniones solo si puede citarlas: regla de cita literal y aprobación humana | productividad personal | Python, faster-whisper, Ollama (structured outputs), Pydantic, Gradio
+2026-11-03 15:59 | #116 | Agente que audita la cadena de huellas Verifactu: una comparación de hashes da el veredicto, solo lectura | facturación electrónica y documentos | Python (hashlib), Ollama, Gradio
