@@ -23,3 +23,4 @@
 2026-11-03 13:52 | #115 | Agente que saca tareas de reuniones solo si puede citarlas: regla de cita literal y aprobación humana | productividad personal | Python, faster-whisper, Ollama (structured outputs), Pydantic, Gradio
 2026-11-03 15:59 | #116 | Agente que audita la cadena de huellas Verifactu: una comparación de hashes da el veredicto, solo lectura | facturación electrónica y documentos | Python (hashlib), Ollama, Gradio
 2026-11-03 17:53 | #117 | Agente que revisa la DLQ de RabbitMQ antes de reenviar: una regla clasifica y una persona aprueba | integración de sistemas y APIs | LangGraph (interrupt), RabbitMQ (pika), jsonschema, Ollama
+2026-11-04 07:59 | #118 | Agente revisor de terraform plan: una regla bloquea borrados críticos y el modelo no ve valores | DevOps y observabilidad | Python, terraform show -json, Ollama

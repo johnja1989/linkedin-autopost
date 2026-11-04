@@ -1,0 +1,22 @@
+"Plan: 3 to add, 1 to change, 2 to destroy." Lo apruebas porque el PR solo renombraba algo. Uno de esos destroy era tu base de datos.
+
+La verdad, yo también he leído planes largos con prisa, mirando solo esa última línea. Y después de años con ERPs en AWS, creo que es la línea que menos tranquilidad debería dar.
+
+Así que el agente #118 en Python revisa el terraform plan antes de que nadie lo aplique:
+→ Convierte el plan a JSON con terraform show -json.
+→ Recorre resource_changes y mira las acciones de cada recurso.
+→ Si hay un delete en un tipo de la lista crítica (RDS, S3, KMS): bloquea el PR.
+→ Cualquier otro borrado o reemplazo: pide revisión de una persona.
+→ Ollama recibe solo direcciones y acciones, y redacta el resumen para el PR.
+
+Lo que NO hace: ejecutar apply, tocar tu código ni aprobar nada.
+
+Mi decisión de ingeniero: el bloqueo es una regla, no una opinión del modelo. Busco "delete" dentro de actions porque un reemplazo también lleva delete. Y la documentación de Terraform avisa de que -json muestra los valores sensibles en texto plano, así que al modelo no le llegan before ni after.
+
+Te soy sincero: Atlantis con Conftest ya aplica políticas sobre el plan en el PR, y HCP Terraform trae Sentinel y OPA. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Y puede que lo más útil no sea la IA, sino esas pocas líneas de regla.
+
+Ah, y trata el plan.json como un secreto: nada de dejarlo como artefacto visible del CI.
+
+¿En tu equipo alguien lee el plan entero o solo la última línea? 👇
+
+#AgentesDeIA #Terraform #DevOps #Python #Ollama
