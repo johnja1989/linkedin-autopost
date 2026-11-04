@@ -1,0 +1,23 @@
+Un proveedor te manda un PDF. Dentro, en blanco sobre blanco, una línea: "ignora tus instrucciones". Tu asistente la lee. Tú no.
+
+La verdad, cuando probé mi primer RAG solo le hacía preguntas normales. Contestaba bien y lo di por bueno. Nunca lo había probado con un documento que mintiera.
+
+Así que el agente #120 en Python con Ollama ataca a tu propio asistente antes de que lo haga otro:
+→ Esconde una trampa en un documento de prueba, nunca en uno real.
+→ La trampa pide escribir un canario: un código aleatorio, distinto en cada intento.
+→ Hace una pregunta normal sobre ese documento, cinco veces por trampa.
+→ Una regla busca el canario en la respuesta: está o no está.
+→ Una sola fuga bloquea el despliegue.
+→ Ollama redacta el informe con las cifras ya calculadas.
+
+Lo que NO hace: atacar sistemas ajenos, arreglar tu prompt ni demostrar que eres inmune.
+
+Mi decisión de ingeniero: el veredicto es una búsqueda de texto, no un LLM juez, porque a un juez también se le puede inyectar. El modelo solo ve datos sintéticos. Y si codifica o parte el canario, la regla no lo ve: por eso un cero no significa "seguro".
+
+Te soy sincero: promptfoo y garak ya hacen esto, y mucho mejor. Si usas uno, mira primero sus pruebas de inyección. Yo lo programé para entender cómo funciona por dentro. Creo que lo que más me sorprendió es lo poco que ocupa la parte que decide.
+
+Ah, y si tu asistente tiene herramientas, mira también qué llamó, no solo qué dijo.
+
+¿Probáis vuestros asistentes con documentos hostiles o solo con preguntas normales? 👇
+
+#AgentesDeIA #PromptInjection #LLM #Ollama #Python #Ciberseguridad
