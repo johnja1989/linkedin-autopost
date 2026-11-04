@@ -1,0 +1,22 @@
+Hicimos, montamos, decidimos. Cinco minutos hablando en plural. Y el entrevistador: "Vale, ¿y tú qué hiciste?"
+
+Me pasó, y me quedé en blanco con un proyecto que conocía de memoria. Luego practiqué con un chatbot: todo le parecía "muy buena respuesta".
+
+Así que el agente #122 en Gradio y Ollama te hace un simulacro de entrevista y no te pone nota:
+→ Pegas la oferta y el modelo propone 5 preguntas, cada una citando un requisito.
+→ Una regla descarta la pregunta si ese requisito no aparece en la oferta.
+→ Respondes por escrito y el modelo busca tus frases de situación, acción y resultado.
+→ Python comprueba que cada cita está literal en tu respuesta. Si no, ese bloque "falta".
+→ También avisa si el resultado no lleva cifra y cuenta tus verbos en plural.
+
+Lo que NO hace: poner nota, predecir si te contratan ni escribirte las respuestas.
+
+Mi decisión de ingeniero: el modelo no opina sobre ti. Solo señala frases, y una regla comprueba que existen. Todo corre en local, porque al practicar cuentas cosas de clientes y de antiguas empresas. El precio: la lista de verbos es corta y se le escapan cosas.
+
+Te soy sincero: Yoodli, Big Interview y Gemini Live ya hacen simulacros, y los dos primeros analizan también cómo hablas, cosa que esto no toca. Si usas una, mira primero lo que te da. Yo lo programé para entender cómo funciona por dentro. Creo que un "te falta la acción" sirve más que un 8 sobre 10.
+
+Ah, y apunta hoy las cifras de tus proyectos: dentro de dos años no las vas a recordar.
+
+¿Qué pregunta de entrevista os sigue costando? 👇
+
+#AgentesDeIA #Entrevistas #Empleo #Gradio #Ollama #Python
