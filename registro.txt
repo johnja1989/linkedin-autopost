@@ -26,3 +26,4 @@
 2026-11-04 07:59 | #118 | Agente revisor de terraform plan: una regla bloquea borrados críticos y el modelo no ve valores | DevOps y observabilidad | Python, terraform show -json, Ollama
 2026-11-04 10:06 | #119 | Servidor MCP del BOE que solo cita lo que ha leído: una regla compara citas e identificadores | MCP y herramientas | FastMCP, API de datos abiertos del BOE, Ollama, Python
 2026-11-04 11:49 | #120 | Agente que ataca a tu propio asistente con inyección de prompts: un canario y una regla deciden, sin LLM juez | evaluación y calidad de LLMs | Python, Ollama, secrets (canario)
+2026-11-04 13:55 | #121 | Agente que documenta una base de datos heredada sin ver valores: una regla separa lo apoyado de la hipótesis | datos y SQL | Python, SQLAlchemy (Inspector), Ollama, Git

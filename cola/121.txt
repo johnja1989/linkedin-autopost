@@ -1,0 +1,23 @@
+La columna se llama FLG_X1. Quien sabía qué significaba se fue en 2019. Le preguntas a un LLM y te contesta, muy seguro, algo que suena perfecto.
+
+Me pasó con un ERP heredado: nombres crípticos y ni un comentario. Pedí ayuda a un modelo y casi copio su respuesta en la documentación. Era pura suposición, bien redactada.
+
+Así que el agente #121 en Python con SQLAlchemy y Ollama documenta una base de datos heredada sin ver ni un dato:
+→ Lee del catálogo tipos, claves foráneas y comentarios.
+→ Cuenta filas, llenos y distintos de cada columna, sin sacar valores.
+→ Las columnas vacías van aparte, sin describir.
+→ Ollama redacta una frase solo con esos metadatos.
+→ Una regla etiqueta: con clave foránea o comentario, "apoyada"; si no, "hipótesis".
+→ El dueño de los datos aprueba y el diccionario se guarda en Git.
+
+Lo que NO hace: leer filas, escribir en la base de datos ni dar nada por bueno sin revisión.
+
+Mi decisión de ingeniero: el modelo redacta, pero no decide qué es fiable. Eso sale de hechos del catálogo. Y como no ve valores, un DNI en una columna mal nombrada no sale de la base de datos. El precio: muchas se quedan en "hipótesis".
+
+Te soy sincero: SchemaSpy, OpenMetadata y DataHub ya cubren buena parte de esto. Si usas uno, mira primero lo que te da. Yo lo programé para entender cómo funciona por dentro. Creo que lo más útil no es la frase, sino la lista de lo que nadie sabe.
+
+Ah, y lanza los COUNT DISTINCT en una réplica: en una tabla grande pueden doler.
+
+¿Tenéis columnas que ya nadie se atreve a tocar? 👇
+
+#AgentesDeIA #SQL #Metadatos #Python #Ollama #SQLAlchemy
