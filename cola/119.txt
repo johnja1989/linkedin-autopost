@@ -1,20 +1,20 @@
 Un real decreto que toca tu facturación sale en el BOE un martes. Te enteras tres semanas después, por un correo reenviado.
 
-La verdad, en mis años con facturación electrónica los cambios de norma me han llegado así más de una vez: tarde y de rebote. Y preguntarle a un chatbot no me tranquiliza, porque una referencia legal inventada suena igual de seria que una real.
+La verdad, en mis años con facturación electrónica los cambios de norma me han llegado así más de una vez. Y un chatbot no me tranquiliza: una referencia inventada suena igual de seria que una real.
 
 Así que el agente #119 en un servidor MCP con FastMCP consulta el BOE y no puede citar lo que no ha leído:
-→ Expone una sola herramienta de solo lectura: sumario(fecha, palabra).
-→ Pide el sumario a la API de datos abiertos del BOE y filtra en local por palabra en el título.
-→ Ollama resume lo encontrado citando cada identificador BOE-A-…
-→ Una regla compara esas citas con los identificadores que devolvió la API.
-→ Si cita algo que no estaba, o no cita nada, la respuesta se descarta.
-→ Si pasa, el código añade título y enlace oficial, copiados de la API.
+→ Una sola herramienta de solo lectura: sumario(fecha, palabra).
+→ Pide el sumario a la API de datos abiertos del BOE y filtra en local.
+→ Ollama resume citando cada identificador BOE-A-…
+→ Una regla compara esas citas con lo que devolvió la API.
+→ Si cita algo que no estaba, o nada, la respuesta se descarta.
+→ Si pasa, el código añade título y enlace oficial.
 
-Lo que NO hace: interpretar la norma, darte asesoramiento legal ni decirte si te aplica.
+Lo que NO hace: interpretar la norma, dar asesoramiento legal ni decirte si te aplica.
 
-Mi decisión de ingeniero: quien da por buena la respuesta es una comparación de conjuntos, no el modelo. Un 404 se trata como "no hay nada ese día", no como un fallo. Y la palabra que buscas no sale de tu equipo: al BOE solo le llega la fecha.
+Mi decisión de ingeniero: la respuesta la valida una comparación de conjuntos, no el modelo. Un 404 significa "nada ese día", no un fallo. Y tu búsqueda no sale de tu equipo: al BOE solo le llega la fecha.
 
-Te soy sincero: Mi BOE ya te avisa por correo gratis, y boe-mcp en PyPI es un servidor más completo. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Y creo que lo que más me llevo no es el MCP, sino esas tres líneas de verificación.
+Te soy sincero: Mi BOE ya avisa por correo gratis, y boe-mcp en PyPI es más completo. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Creo que lo que más me llevo son esas tres líneas de verificación.
 
 Ah, y el filtro solo mira títulos: prueba sinónimos antes de fiarte de un "nada hoy".
 
