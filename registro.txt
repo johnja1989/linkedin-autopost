@@ -28,3 +28,4 @@
 2026-11-04 11:49 | #120 | Agente que ataca a tu propio asistente con inyección de prompts: un canario y una regla deciden, sin LLM juez | evaluación y calidad de LLMs | Python, Ollama, secrets (canario)
 2026-11-04 13:55 | #121 | Agente que documenta una base de datos heredada sin ver valores: una regla separa lo apoyado de la hipótesis | datos y SQL | Python, SQLAlchemy (Inspector), Ollama, Git
 2026-11-04 15:49 | #122 | Simulacro de entrevista sin nota: una regla comprueba citas literales de situación, acción y resultado | empleo y carrera | Gradio, Ollama (structured outputs), Pydantic, Python
+2026-11-04 17:56 | #123 | Agente que impide a un RAG citar documentos caducados: manifiesto con fecha firmada y prefiltro en cada búsqueda | RAG y documentos internos | Python, LanceDB, Ollama (nomic-embed-text), hashlib

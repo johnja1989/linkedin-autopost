@@ -1,0 +1,22 @@
+El chatbot interno te dice que tienes 22 días de vacaciones, y cita documento y página. La cita es perfecta. El PDF es de 2023.
+
+Yo caí en algo parecido montando un RAG: medía si encontraba el documento y nunca me pregunté si seguía vigente.
+
+Así que el agente #123 en Python, LanceDB y Ollama controla qué documentos puede citar tu RAG:
+→ Cada documento entra con responsable y fecha de revisión en un manifiesto. Sin fecha, no entra.
+→ Python calcula el SHA-256 de cada archivo y solo reindexa lo que ha cambiado.
+→ Añade la versión nueva y luego borra la vieja, para no dejar huecos.
+→ Cada búsqueda filtra por fecha antes de comparar vectores: lo caducado ni compite.
+→ El modelo local redacta el aviso al responsable, solo con título y fecha.
+
+Lo que NO hace: decidir si un documento sigue siendo válido, corregirlo ni detectar contradicciones.
+
+Mi decisión de ingeniero: la vigencia la decide una fecha que firma una persona, no el modelo, que ni siquiera lee el contenido. El precio: a veces dirá "no lo encuentro" aunque el documento siguiera siendo bueno. Prefiero eso a una respuesta antigua muy bien citada.
+
+Te soy sincero: LangChain (index con RecordManager) y LlamaIndex (IngestionPipeline con docstore) ya sincronizan cambios y limpian lo viejo. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Creo que lo difícil no es técnico: es conseguir que alguien firme esa fecha.
+
+Ah, y no uses la fecha de modificación del archivo: copiarlo puede cambiarla sin que nadie lo haya revisado.
+
+¿Quién responde en tu empresa de que un documento siga vigente? 👇
+
+#AgentesDeIA #RAG #LanceDB #Ollama #Python
