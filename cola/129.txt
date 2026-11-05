@@ -1,0 +1,23 @@
+Tu carpeta Descargas tiene factura.pdf, factura (1).pdf y factura (2).pdf. Le pides a un agente que borre los duplicados. Y resulta que la (2) era la rectificativa.
+
+La verdad, mi carpeta Descargas da un poco de vergüenza. Más de 12 años integrando sistemas de otros con mucho orden, y en la mía conviven instaladores viejos con facturas que nunca encuentro cuando hacen falta.
+
+Así que el agente #129 en Python y Ollama ordena Descargas sin poder perder nada:
+→ Python lista los archivos y aparta lo que sigue bajando (.part, .crdownload).
+→ Una regla marca como duplicado solo lo que tiene el mismo SHA-256. El nombre no cuenta.
+→ Un modelo local recibe solo el nombre y elige carpeta de una lista cerrada, con "Revisar" como salida.
+→ Te enseña el plan completo. Sin tu sí, nada se mueve.
+→ Las copias van a la papelera con Send2Trash y nunca pisa un archivo que ya exista.
+→ Cada movimiento queda en un diario JSONL para poder deshacerlo.
+
+Lo que NO hace: enseñar el contenido de tus archivos al modelo, borrar nada de forma definitiva ni actuar sin tu permiso.
+
+Mi decisión de ingeniero: el modelo solo clasifica, y solo con un nombre. Lo que puede hacer daño, decidir qué sobra, lo decide un hash. Y las carpetas van en el esquema de salida, así que no puede inventarse otra.
+
+Te soy sincero: Hazel en Mac, File Juggler en Windows y organize, gratis y con modo simulación, ya hacen esto con reglas. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Y creo que para la mayoría de archivos basta una regla por extensión: el modelo solo aporta algo con los nombres ambiguos.
+
+Ah, y ojo con os.rename: en Linux y macOS sobrescribe sin avisar si el destino ya existe.
+
+¿Cuántos archivos tienes ahora mismo en Descargas? 👇
+
+#AgentesDeIA #Productividad #Python #Ollama #Automatizacion
