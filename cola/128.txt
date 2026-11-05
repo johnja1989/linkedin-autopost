@@ -7,12 +7,12 @@ Así que el agente #128 en Python propone ese mapeo sin ver tus datos:
 → Ollama, con salida estructurada, propone qué ruta va a cada campo del JSON.
 → Una regla rechaza cualquier ruta que no exista en ese catálogo.
 → Aplica el mapa a 20 XML de muestra y valida cada resultado con jsonschema.
-→ Gradio enseña a una persona origen, destino y valor de ejemplo, campo a campo.
+→ Gradio enseña a una persona origen, destino y valor de ejemplo.
 → El mapa aprobado va a Git y producción ya no llama al modelo.
 
 Lo que NO hace: cargar nada en el ERP ni aprobarse a sí mismo.
 
-Mi decisión de ingeniero: el modelo trabaja una vez, en diseño, y solo ve nombres de campos. Lo que corre cada día es un JSON revisado, sin IA de por medio. La regla caza lo imposible, no lo plausible: dos fechas bien formadas pasan el esquema, por eso firma una persona.
+Mi decisión de ingeniero: el modelo trabaja una vez, en diseño, y solo ve nombres de campos. Lo que corre cada día es un JSON revisado. La regla caza lo imposible, no lo plausible: dos fechas bien formadas pasan el esquema, por eso firma una persona.
 
 Te soy sincero: Altova MapForce y Boomi Suggest ya proponen mapeos. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Y creo que el esquema da una falsa tranquilidad: valida la forma, no el significado.
 
