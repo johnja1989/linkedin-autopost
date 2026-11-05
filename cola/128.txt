@@ -1,0 +1,23 @@
+El modelo confunde FecVto con FecEmi. El JSON valida, el esquema da verde y tu ERP carga el vencimiento como fecha de emisión. Sin un solo error.
+
+He pasado años mapeando XML de proveedores contra ERPs, con un Excel de dos columnas y mucha paciencia. Cuando probé a pedírselo a un modelo, me sorprendió lo rápido que iba. Y lo seguro que sonaba cuando se equivocaba.
+
+Así que el agente #128 en Python propone ese mapeo sin ver tus datos:
+→ lxml saca del XML las rutas de los campos, sin valores.
+→ Ollama, con salida estructurada, propone qué ruta va a cada campo del JSON.
+→ Una regla rechaza cualquier ruta que no exista en ese catálogo.
+→ Aplica el mapa a 20 XML de muestra y valida cada resultado con jsonschema.
+→ Gradio enseña a una persona origen, destino y valor de ejemplo, campo a campo.
+→ El mapa aprobado va a Git y producción ya no llama al modelo.
+
+Lo que NO hace: cargar nada en el ERP ni aprobarse a sí mismo.
+
+Mi decisión de ingeniero: el modelo trabaja una vez, en diseño, y solo ve nombres de campos. Lo que corre cada día es un JSON revisado, sin IA de por medio. La regla caza lo imposible, no lo plausible: dos fechas bien formadas pasan el esquema, por eso firma una persona.
+
+Te soy sincero: Altova MapForce y Boomi Suggest ya proponen mapeos. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Y creo que el esquema da una falsa tranquilidad: valida la forma, no el significado.
+
+Ah, y parsea los XML de terceros con resolve_entities=False: te ahorras sorpresas con XXE.
+
+¿Quién firma hoy los mapeos de datos en tu empresa? 👇
+
+#AgentesDeIA #Python #XML #Integracion #Ollama #Gradio
