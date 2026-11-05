@@ -31,3 +31,4 @@
 2026-11-04 17:56 | #123 | Agente que impide a un RAG citar documentos caducados: manifiesto con fecha firmada y prefiltro en cada búsqueda | RAG y documentos internos | Python, LanceDB, Ollama (nomic-embed-text), hashlib
 2026-11-05 09:38 | #124 | Agente que tría claves filtradas en Git: una regla decide rotar o reescribir y el modelo no ve el secreto | ciberseguridad y privacidad | Python, gitleaks, git, Ollama
 2026-11-05 09:49 | #125 | Agente que frena correos con un IBAN nuevo de proveedor: una regla retiene y se llama al teléfono del maestro | automatización de negocio | n8n (Gmail Trigger, Google Sheets, Code, Basic LLM Chain), Ollama
+2026-11-05 11:57 | #126 | Agente que revisa el NIF-IVA en VIES antes de emitir: tres estados y un 200 OK nunca se da por bueno | facturación electrónica y documentos | Python, python-stdnum, API REST de VIES, Ollama

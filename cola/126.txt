@@ -1,0 +1,23 @@
+VIES responde 200 OK. Tu script marca el NIF-IVA del cliente como inválido y alguien le añade el IVA a la factura. Pero el cliente estaba bien: lo que estaba saturado era el servicio de su país.
+
+Llevo años integrando facturación electrónica y este tipo de fallo me pone nervioso. No da error, no salta ninguna alerta. Simplemente deja un dato equivocado con cara de dato correcto.
+
+Así que el agente #126 en Python revisa el NIF-IVA antes de emitir la factura:
+→ Lee del ERP el país y el NIF-IVA de los borradores intracomunitarios.
+→ python-stdnum comprueba formato y dígito de control, en local.
+→ Consulta la API REST de VIES con tu propio NIF como solicitante.
+→ Mira actionSucceed y errorWrappers antes de leer el campo valid.
+→ Una regla asigna VÁLIDO, INVÁLIDO, FORMATO_MALO o SIN_COMPROBAR.
+→ Ollama redacta el correo para el cliente y una persona lo revisa.
+
+Lo que NO hace: decidir qué IVA aplica, emitir facturas ni enviar correos.
+
+Mi decisión de ingeniero: el estado sale de un campo de la respuesta, nunca del modelo. Si VIES no contesta, no se concluye nada: se reintenta. Y la IA solo ve el país y el estado, ni importes ni datos de la factura.
+
+Te soy sincero: el portal de VIES y ERPs como Odoo ya hacen esta comprobación. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Y creo que la lección vale para cualquier integración: "no lo sé" también es una respuesta, y hay que guardarla como tal.
+
+Ah, y guarda la fecha y el número de consulta con la factura: VIES no siempre lo devuelve, y sin solicitante no lo tendrás.
+
+¿Tu integración distingue entre "inválido" y "no se pudo comprobar"? 👇
+
+#AgentesDeIA #Python #FacturacionElectronica #IVA #Ollama #APIs
