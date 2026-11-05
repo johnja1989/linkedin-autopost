@@ -1,0 +1,23 @@
+"Hemos cambiado de banco, este es el nuevo IBAN." Mismo logo, misma firma, tu proveedor de siempre. Cuentas lo actualiza y la siguiente factura se paga a un desconocido.
+
+Llevo años integrando ERPs y siempre me llama la atención: protegemos el login con dos factores, y el dato que decide adónde va el dinero se cambia con un correo amable.
+
+Así que el agente #125 en n8n frena los correos que traen un IBAN distinto:
+→ Gmail Trigger recoge los correos de proveedores.
+→ Google Sheets busca el dominio exacto en el maestro.
+→ Un nodo Code compara cada IBAN del texto con el guardado.
+→ IBAN distinto o dominio desconocido: RETENER. Adjunto o mención de cuenta sin IBAN: REVISAR.
+→ Ollama resume qué pide el correo, con los IBAN enmascarados.
+→ Cuentas recibe el aviso con el teléfono del maestro.
+
+Lo que NO hace: cambiar el maestro, bloquear pagos, leer adjuntos ni responder al remitente.
+
+Mi decisión de ingeniero: el veredicto lo da una comparación de texto, no el modelo, porque el correo puede escribirlo quien te engaña. Si el resumen sale raro, la retención sigue igual. Y nunca se usa el teléfono del correo: si es un fraude, llamarías al estafador.
+
+Te soy sincero: Trustpair y la verificación de beneficiario (VoP), que los bancos de la zona euro deben ofrecer desde octubre de 2025, ya hacen buena parte de esto. Si los tienes, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Creo que lo difícil no es el código, es que alguien llame cuando hay prisa.
+
+Ah, y apaga Simplify en el Gmail Trigger: si no, no llega el cuerpo del correo.
+
+¿Quién valida en tu empresa un cambio de cuenta de proveedor? 👇
+
+#AgentesDeIA #n8n #Ciberseguridad #Automatizacion #Ollama #Finanzas
