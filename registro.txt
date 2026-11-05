@@ -29,3 +29,4 @@
 2026-11-04 13:55 | #121 | Agente que documenta una base de datos heredada sin ver valores: una regla separa lo apoyado de la hipótesis | datos y SQL | Python, SQLAlchemy (Inspector), Ollama, Git
 2026-11-04 15:49 | #122 | Simulacro de entrevista sin nota: una regla comprueba citas literales de situación, acción y resultado | empleo y carrera | Gradio, Ollama (structured outputs), Pydantic, Python
 2026-11-04 17:56 | #123 | Agente que impide a un RAG citar documentos caducados: manifiesto con fecha firmada y prefiltro en cada búsqueda | RAG y documentos internos | Python, LanceDB, Ollama (nomic-embed-text), hashlib
+2026-11-05 09:38 | #124 | Agente que tría claves filtradas en Git: una regla decide rotar o reescribir y el modelo no ve el secreto | ciberseguridad y privacidad | Python, gitleaks, git, Ollama

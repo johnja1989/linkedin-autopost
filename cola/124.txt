@@ -1,0 +1,22 @@
+Borras la clave de AWS del repo, haces commit y respiras tranquilo. La clave sigue en el historial. Y sigue funcionando.
+
+A mí me pasó con una contraseña de pruebas en un fichero de configuración. La quité, hice commit y me olvidé. Tardé en entender que el commit anterior seguía ahí, a un git log de distancia.
+
+Así que el agente #124 en Python y gitleaks te dice qué hacer con cada clave filtrada:
+→ gitleaks recorre todo el historial y deja un informe JSON en local.
+→ Python se queda solo con regla, archivo, commit y fecha. El secreto no pasa.
+→ Tras un git fetch, una regla mira si ese commit ya está en una rama remota.
+→ Si está subido: ROTAR. Si solo está en local: REESCRIBIR.
+→ Ollama redacta la tarea para el responsable, sin tocar la acción.
+
+Lo que NO hace: comprobar si la clave sigue viva, revocarla ni reescribir el historial.
+
+Mi decisión de ingeniero: lo que importa es si la clave salió de tu máquina, y eso lo responde git, no un modelo. Uso una lista blanca de campos, porque el informe trae el secreto y el mensaje del commit también puede llevarlo. Si git no puede comprobar un commit, cuenta como subido.
+
+Te soy sincero: GitHub secret scanning y TruffleHog ya hacen esto, y TruffleHog además comprueba si la clave está activa. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Creo que la regla es tan corta que da un poco de vergüenza llamarla agente.
+
+Ah, y limpiar el historial no sustituye a revocar: primero la clave, después el historial.
+
+¿Tenéis gitleaks o similar en pre-commit, o lo descubrís cuando ya está subido? 👇
+
+#AgentesDeIA #Ciberseguridad #DevSecOps #Git #Ollama #Python
