@@ -1,0 +1,23 @@
+El correo del backup lleva 14 meses diciendo OK. Llega el día de restaurar y la carpeta que importa llevaba todo ese tiempo excluida.
+
+Llevo más de 12 años entre ERPs y bases de datos, y reconozco que muchas veces me quedé tranquilo con ese correo sin haber restaurado nada. Un OK dice que el proceso terminó. No dice que puedas volver.
+
+Así que el agente #127 en Python comprueba tus copias de restic restaurándolas:
+→ Antes de cada copia, escribe un canario nuevo en la carpeta que importa y guarda su huella SHA-256 fuera del repositorio.
+→ Lee con restic snapshots --json la edad y los archivos de las dos últimas copias.
+→ Lanza restic check --read-data-subset=5% para leer datos reales.
+→ Restaura el canario en una carpeta temporal y compara la huella.
+→ Una regla da VERDE, ÁMBAR o ROJO.
+→ Ollama redacta el parte con esos datos.
+
+Lo que NO hace: restaurar la base entera, arrancar tu aplicación ni tocar snapshots.
+
+Mi decisión de ingeniero: el color sale de códigos de salida y de una comparación de hashes, nunca del modelo. Si Ollama se cae, la alerta sale igual. Y la IA solo ve estado, edad y conteos: ni nombres de archivo ni contraseña.
+
+Te soy sincero: borgmatic tiene su spot check y Veeam tiene SureBackup. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Y creo que el canario es modesto: prueba la cadena, no todos tus datos. El simulacro completo sigue haciendo falta.
+
+Ah, y guarda la contraseña del repositorio fuera de esa máquina: sin ella, restic no recupera nada.
+
+¿Cuándo fue la última vez que restauraste una copia de verdad? 👇
+
+#AgentesDeIA #Python #restic #Backups #DevOps #Ollama
