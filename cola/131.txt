@@ -1,0 +1,22 @@
+Cambias el modelo de tu agente por uno más nuevo. Las respuestas salen igual de bien. Pero ante "¿se puede anular este pedido?", ahora llama directamente a anular_pedido.
+
+La verdad, durante un tiempo evalué mis agentes leyendo sus respuestas. Bien redactadas, siguiente. Tardé en caer en que el daño no lo hace el texto: lo hace la herramienta.
+
+Así que el agente #131 en Python con Ollama examina qué herramienta elige tu modelo antes de que lo cambies:
+→ Escribes preguntas con la llamada correcta, incluidas las que deben resolverse sin llamar a nada.
+→ Cada una va al modelo cinco veces, con semillas distintas.
+→ Las herramientas solo están declaradas: se lee qué pide y nada se ejecuta.
+→ Una regla compara nombres y argumentos: OK, FALLO o CRÍTICO.
+→ CRÍTICO es pedir una escritura que el caso no esperaba. Uno solo bloquea el cambio.
+
+Lo que NO hace: juzgar la redacción, reparar el prompt ni prometer que el modelo acertará en producción.
+
+Mi decisión de ingeniero: no hay LLM juez, el veredicto es una comparación exacta. La media tampoco salva: 99 % de aciertos con un CRÍTICO sigue siendo no. Y el examen usa datos sintéticos, así que el modelo no ve nada real.
+
+Te soy sincero: promptfoo (tool-call-f1) y DeepEval (ToolCorrectnessMetric) ya hacen esto. Si usas uno, mira primero esas métricas. Yo lo programé para entender cómo funciona por dentro. Creo que tener mi propia lista de preguntas me ha enseñado más que la puntuación.
+
+Ah, y no fijes la temperatura a 0 con una sola semilla: verás siempre la misma respuesta y creerás que es estable.
+
+¿Cómo compruebas qué herramientas llama tu agente cuando cambias de modelo? 👇
+
+#AgentesDeIA #LLM #Ollama #Python #EvaluacionDeLLMs #ToolCalling
