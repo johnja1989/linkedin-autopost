@@ -1,0 +1,22 @@
+Tu web tiene HTTPS y el certificado al día. Luego miras las cabeceras: sin HSTS, sin CSP y la cookie de sesión sin Secure.
+
+Me pasó con una web pequeña que mantenía hace años. El certificado lo vigilaba al día; las cabeceras no las había mirado nunca.
+
+Así que el agente #135 en LangGraph revisa las cabeceras de seguridad de tus propias webs:
+→ Hace un GET a cada dominio de tu lista y solo sigue redirecciones dentro de tu dominio.
+→ Guarda las cabeceras y, de cada cookie, solo el nombre y sus atributos.
+→ Una regla en Python pone el color: sin HSTS o cookie sin Secure, rojo; sin CSP o con 'unsafe-inline', ámbar.
+→ Ollama redacta el ticket para el equipo web: cabecera, hallazgo y cómo corregirlo.
+→ Un interrupt de LangGraph detiene el grafo y una persona aprueba antes de abrir el ticket.
+
+Lo que NO hace: escanear webs ajenas, atacar nada ni tocar la configuración del servidor. No sustituye a un pentest.
+
+Mi decisión de ingeniero: el color lo pone la regla, no el modelo. El modelo nunca ve el valor de una cookie, porque puede ser una sesión viva. Solo ve nombres, atributos y hallazgos.
+
+Te soy sincero: MDN HTTP Observatory y securityheaders.com ya hacen esto, y gratis. Si usas Observatory, mira primero su API: puedes lanzarla sobre tu lista de dominios cada semana. Yo lo programé para entender cómo funciona por dentro. Creo que lo útil no es la nota, es un ticket que alguien entienda y cierre.
+
+Ah, y no sumes puntos por X-XSS-Protection: los navegadores actuales ya no la usan.
+
+¿Revisáis las cabeceras en cada despliegue o solo cuando lo pide una auditoría? 👇
+
+#AgentesDeIA #LangGraph #Ciberseguridad #SeguridadWeb #Python
