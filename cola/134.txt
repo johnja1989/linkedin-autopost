@@ -1,0 +1,23 @@
+Tu PDF de vacaciones dice 23 días. El asistente interno responde 30. Abres el documento: 23. La otra frase está en blanco sobre blanco.
+
+Hice la prueba con un PDF de juguete. Añadí una frase en letra blanca y el extractor la sacó como otra cualquiera. Yo no la veía; el RAG, sí.
+
+Así que el agente #134 en Haystack con PyMuPDF revisa cada PDF antes de indexarlo:
+→ Extrae cada fragmento de texto con su posición y tamaño.
+→ Renderiza esa zona y mira los píxeles: sin contraste, ahí no se ve nada.
+→ Una regla marca también letra de menos de 3 puntos, texto fuera de la página y Unicode invisible.
+→ Con un hallazgo, el documento va a cuarentena y no se indexa.
+→ Ollama redacta la nota al revisor solo con página, motivo y caracteres.
+→ Una persona abre el PDF y decide.
+
+Lo que NO hace: juzgar si lo visible es verdad ni detectar instrucciones a plena vista. Y el texto oculto sobre una foto se le escapa.
+
+Mi decisión de ingeniero: miro píxeles y no el color, porque un título blanco sobre una banda oscura es legítimo. El modelo nunca lee el texto oculto: podría ser justo el ataque.
+
+Te soy sincero: Prompt Shields de Azure y LLM Guard ya cubren parte de esto. Si usas uno, mira primero qué analiza: Prompt Shields, ataques en el texto; InvisibleText de LLM Guard, Unicode. Yo lo programé para entender cómo funciona por dentro. Creo que la página renderizada es la prueba más honesta.
+
+Ah, y PyMuPDF es AGPL o licencia comercial: revísalo antes de meterlo en un producto cerrado.
+
+¿Revisáis lo que entra en vuestro índice o solo lo que sale del modelo? 👇
+
+#AgentesDeIA #RAG #Haystack #PromptInjection #Ciberseguridad #Python
