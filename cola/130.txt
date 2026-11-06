@@ -1,0 +1,23 @@
+Conviertes la API de tu ERP en herramientas MCP con una línea. Muy cómodo. Y tu asistente acaba de recibir también DELETE /pedidos/{id}.
+
+La verdad, llevo más de 12 años integrando APIs REST y SOAP, y se diseñaron para programas que no improvisan. Un modelo sí improvisa.
+
+Así que el agente #130 en FastMCP convierte tu OpenAPI en herramientas con lista blanca:
+→ Lee el openapi.json del ERP.
+→ Solo los GET de las rutas que tú apuntas pasan a ser herramientas. Todo lo demás se excluye.
+→ El token vive en el cliente HTTP del servidor: el modelo no lo ve.
+→ Cada respuesta se recorta a los campos permitidos antes de salir del servidor.
+→ Un modelo local en Ollama elige herramienta y contesta con esos datos.
+→ Cada llamada queda en un log JSONL.
+
+Lo que NO hace: escribir en el ERP, enseñar campos fuera de la lista ni arreglar una API mal documentada.
+
+Mi decisión de ingeniero: por defecto, denegar. Lo que no está en la lista no existe para el modelo. Y el recorte es código, no una instrucción en el prompt.
+
+Te soy sincero: Speakeasy y Stainless ya generan servidores MCP desde OpenAPI. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Y la propia documentación de FastMCP avisa de que los modelos rinden bastante mejor con servidores pensados a mano. Creo que tiene razón: esto sirve para arrancar.
+
+Ah, y si recortas un campo obligatorio, la validación de salida hace fallar la llamada: usa validate_output=False.
+
+¿Qué endpoint de tu API no le darías nunca a un modelo? 👇
+
+#AgentesDeIA #MCP #FastMCP #OpenAPI #Python #Ollama
