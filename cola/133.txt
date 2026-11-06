@@ -1,0 +1,23 @@
+Un reclutador técnico abre el repo que enlazas en tu CV. README de dos líneas, ni rastro de cómo ejecutarlo. Y tu CV dice "LangGraph", pero en las dependencias no aparece.
+
+Me pasó algo parecido buscando trabajo: miré mis repos con ojos de otro y el que más enseñaba no explicaba ni cómo arrancarlo. Yo sabía que funcionaba. Nadie más podía saberlo.
+
+Así que el agente #133 en Python con la API de GitHub revisa tu portafolio antes de que lo mandes:
+→ Le das los repos que enseñas y las tecnologías que declaras en el CV.
+→ Lee por la API pública el README, las dependencias, los workflows, la licencia y el último push.
+→ Una regla bloquea: sin README o sin cómo ejecutarlo, ese repo aún no se enseña.
+→ Sin licencia, sin CI o sin push en 18 meses: solo aviso.
+→ Cada tecnología se busca en requirements, pyproject y package.json: apoyada o sin evidencia.
+→ Ollama convierte los hallazgos en una lista de tareas.
+
+Lo que NO hace: poner nota, escribirte el README ni decidir si tu experiencia es real. "Sin evidencia" no es "mentira": tu mejor trabajo puede estar en repos privados.
+
+Mi decisión de ingeniero: el modelo no decide nada y no lee tu código. Recibe el resultado de las reglas. Y nada de nota de 0 a 100: sonaría objetiva y solo sería mi opinión.
+
+Te soy sincero: Community Standards de GitHub y OpenSSF Scorecard ya hacen parte de esto. Si usas uno, mira primero sus comprobaciones. Yo lo programé para entender cómo funciona por dentro. Creo que comparar mi CV con mis dependencias me incomodó más que cualquier nota.
+
+Ah, y sin token GitHub da 60 peticiones por hora: un 403 o 429 es el límite, no un README que falta.
+
+¿Qué miras primero cuando abres el GitHub de un candidato? 👇
+
+#AgentesDeIA #GitHub #Python #Ollama #Empleo #IngenieriaDeSoftware
