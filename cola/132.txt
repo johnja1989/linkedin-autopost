@@ -1,0 +1,22 @@
+Tu migración es una línea: un ALTER TABLE que tarda milisegundos. Pero espera su bloqueo detrás de un informe de 20 minutos, y todas las consultas a esa tabla hacen cola detrás de ella.
+
+Yo venía de SQL Server y Oracle, y en un cambio de esquema miraba cuánto iba a tardar. Me costó entender que el problema puede ser lo que espera, no lo que dura.
+
+Así que el agente #132 en Python con Squawk revisa cada migración de PostgreSQL antes de que llegue a producción:
+→ Squawk analiza el archivo .sql sin ejecutarlo y devuelve sus avisos en JSON.
+→ Una regla separa: sin lock_timeout, borrar una columna o NOT NULL sin default bloquean siempre.
+→ Un índice sin CONCURRENTLY depende del tamaño: consulta las filas estimadas en pg_class.
+→ Por encima de 100.000 filas, o si no lo sabe, bloquea el PR. Por debajo, solo avisa.
+→ Ollama redacta la nota para quien revisa.
+
+Lo que NO hace: ejecutar la migración, reescribirla ni aprobarla. Eso sigue siendo de una persona.
+
+Mi decisión de ingeniero: el modelo no decide nada. Recibe regla, tabla y número de filas, pero no el SQL, porque una migración puede llevar datos en un INSERT. La conexión solo lee el catálogo, nunca las filas. Y el umbral es mío y discutible.
+
+Te soy sincero: Squawk en CI, Atlas (migrate lint) y strong_migrations en Rails ya hacen esto. Si usas uno, mira primero sus reglas. Yo lo programé para entender cómo funciona por dentro. Creo que lo que más me enseñó es que un mismo aviso no pesa igual en 50 filas que en 50 millones.
+
+Ah, y reltuples vale -1 si la tabla nunca se ha analizado: trátalo como grande, no como vacía.
+
+¿Cómo revisas tú las migraciones antes de lanzarlas a producción? 👇
+
+#AgentesDeIA #PostgreSQL #SQL #Python #Ollama #DevOps

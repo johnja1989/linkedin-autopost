@@ -37,3 +37,4 @@
 2026-11-05 17:52 | #129 | Agente que ordena Descargas sin poder perder nada: el SHA-256 decide los duplicados y el modelo solo ve el nombre | productividad personal | Python, Ollama (structured outputs), Pydantic, Send2Trash
 2026-11-06 08:40 | #130 | Servidor MCP que convierte tu OpenAPI en herramientas con lista blanca: solo GET apuntados y campos recortados | MCP y herramientas | FastMCP (from_openapi, RouteMap), httpx2, Ollama, Python
 2026-11-06 09:48 | #131 | Agente que examina qué herramientas elige tu modelo antes de cambiarlo: una comparación decide y nada se ejecuta | evaluación y calidad de LLMs | Python, Ollama (tool calling)
+2026-11-06 11:48 | #132 | Agente que revisa migraciones de PostgreSQL antes de producción: Squawk avisa, una regla pesa el tamaño y bloquea | datos y SQL | Python, Squawk, PostgreSQL (pg_class), Ollama
