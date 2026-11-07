@@ -1,0 +1,22 @@
+La documentación del proveedor dice que "importe" es un número. La API devuelve "12,50". Con coma. Y te enteras en producción.
+
+Me pasó en una integración con un proveedor externo: nos fiamos de su OpenAPI y descubrimos las diferencias a base de tickets.
+
+Así que el agente #139 en Python y Schemathesis prueba la API de un proveedor antes de integrarla:
+→ Schemathesis lee el OpenAPI que publica el proveedor y genera cientos de peticiones contra su entorno de pruebas.
+→ Solo GET y máximo 60 peticiones por minuto: no escribe ni satura.
+→ El informe JSON da, por cada fallo, un código, un título y el endpoint.
+→ Una regla decide: un 5xx, una respuesta fuera del esquema o un JSON inválido bloquean; lo demás pasa con aviso.
+→ Ollama recibe solo códigos y endpoints y redacta la nota al proveedor.
+
+Lo que NO hace: probar escrituras, tocar producción ni decidir quién tiene razón.
+
+Mi decisión de ingeniero: el bloqueo lo decide una lista de tres códigos, no el modelo. La IA no ve los cuerpos de respuesta: podrían llevar datos reales. Y si la prueba no termina o da error, tampoco pasa.
+
+Te soy sincero: Schemathesis solo, en tu CI, ya hace lo importante, y si el proveedor colabora, Pact también. Si usas uno, mira primero qué comprueba de verdad. Yo lo programé para entender cómo funciona por dentro. Creo que lo que más ahorra no es encontrar el fallo, sino explicarlo bien.
+
+Ah, y guarda en Git el OpenAPI del proveedor con fecha: cuando lo cambie sin avisar, tendrás con qué comparar.
+
+¿Os fiáis de la documentación de las APIs de terceros o las probáis antes? 👇
+
+#AgentesDeIA #APIs #OpenAPI #Integracion #Testing #Python
