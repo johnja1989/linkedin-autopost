@@ -46,3 +46,4 @@
 2026-11-07 11:52 | #138 | Agente que valida facturas UBL con las reglas EN 16931 antes de enviarlas: un fatal bloquea y el modelo no ve importes | facturación electrónica y documentos | Python, Saxon (saxonche), artefactos de validación EN 16931, Ollama
 2026-11-07 13:49 | #139 | Agente que prueba la API de un proveedor antes de integrarla: Schemathesis genera casos, tres códigos bloquean y el modelo no ve respuestas | integración de sistemas y APIs | Python, Schemathesis, OpenAPI, Ollama
 2026-11-07 15:55 | #140 | Agente que encuentra suscripciones olvidadas en el extracto: una regla de fechas decide y el modelo no ve importes | productividad personal | Python, pandas, Ollama
+2026-11-07 17:54 | #141 | Servidor MCP que deja a la IA leer logs enmascarados: Zod pone el tope, una regla oculta emails, IPs y tokens | MCP y herramientas | TypeScript, SDK MCP oficial, Zod

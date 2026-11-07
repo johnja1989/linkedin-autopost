@@ -1,0 +1,22 @@
+Le pides a tu asistente que mire por qué falla el pago y le pegas 300 líneas de log. Con ellas van, de regalo, emails de clientes, IPs y algún token Bearer.
+
+Yo lo hice más de una vez cuando integraba ERPs: copiar el log entero al chat era lo más rápido. Y lo más tonto.
+
+Así que el agente #141 es un servidor MCP en TypeScript que deja a tu asistente leer los logs sin ver datos personales:
+→ Expone una sola herramienta, buscar_logs, y solo sobre el log que tú configuras.
+→ Zod valida la entrada: un texto de 3 a 80 caracteres y como mucho 200 líneas.
+→ Busca texto literal. Nada de expresiones regulares escritas por el modelo.
+→ Antes de devolver nada, una regla enmascara emails, IPs y tokens.
+→ El asistente recibe las líneas limpias y te explica el error.
+
+Lo que NO hace: escribir, borrar ni rotar logs, ni leer ningún otro archivo.
+
+Mi decisión de ingeniero: lo que sale lo decide el servidor, no el modelo. Las máscaras se aplican siempre, aunque el asistente pida "el log completo". El tope de líneas también es una regla. Y no acepto regex del modelo: una mal escrita puede dejar el servidor colgado.
+
+Te soy sincero: Datadog ya enmascara en origen con su Sensitive Data Scanner, y Grafana tiene su propio servidor MCP oficial. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Creo que la mejor máscara se pone al escribir el log; esto es solo la red.
+
+Ah, y prueba las máscaras con un log antiguo de verdad: siempre aparece un formato que no esperabas.
+
+¿Qué es lo más delicado que has visto aparecer en un log de producción? 👇
+
+#AgentesDeIA #MCP #TypeScript #Ciberseguridad #Privacidad
