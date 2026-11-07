@@ -43,3 +43,4 @@
 2026-11-06 17:50 | #135 | Agente que revisa las cabeceras de seguridad de tus webs: una regla pone el color y el modelo no ve cookies | ciberseguridad y privacidad | LangGraph (interrupt), httpx, Ollama, Python
 2026-11-07 08:37 | #136 | Agente que revisa Dockerfiles en cada PR: hadolint señala, una regla de cuatro códigos bloquea y el modelo no ve las líneas | DevOps y observabilidad | Python, hadolint, Ollama
 2026-11-07 10:21 | #137 | Agente que cruza pedido, albarán y factura antes de pagar: una consulta SQL retiene y la IA solo propone parejas | automatización de negocio | Python, DuckDB, Ollama (structured outputs)
+2026-11-07 11:52 | #138 | Agente que valida facturas UBL con las reglas EN 16931 antes de enviarlas: un fatal bloquea y el modelo no ve importes | facturación electrónica y documentos | Python, Saxon (saxonche), artefactos de validación EN 16931, Ollama

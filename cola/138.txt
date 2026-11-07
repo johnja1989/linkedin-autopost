@@ -1,0 +1,22 @@
+El XML pasa el XSD sin un solo error. Y aun así la factura vuelve rechazada: el importe a pagar no cuadra con el total.
+
+Me pasó integrando un ERP: validábamos el esquema y dábamos la factura por buena. Pero el esquema mira la forma, no las cuentas.
+
+Así que el agente #138 en Python y Saxon valida tus facturas UBL con las reglas oficiales de EN 16931 antes de enviarlas:
+→ Saxon ejecuta los artefactos oficiales de validación de EN 16931 y devuelve un informe SVRL.
+→ Python lee cada fallo: el código de la regla (por ejemplo BR-CO-16) y su gravedad.
+→ Una regla decide: cualquier "fatal" bloquea el envío; los "warning" pasan con aviso.
+→ Ollama recibe solo el código, el texto de la regla y la ruta del campo, y explica qué mirar.
+→ Nadie corrige el XML a mano: se arregla en el ERP y se vuelve a validar.
+
+Lo que NO hace: corregir la factura, enviarla ni decirte si el tipo de IVA es el correcto para tu caso.
+
+Mi decisión de ingeniero: el bloqueo lo decide la gravedad que marca la norma, no el modelo. La IA no ve importes, NIF ni nombres de clientes. Y si Saxon falla, la factura no sale.
+
+Te soy sincero: tu proveedor Peppol, el validador de KoSIT o phive ya hacen esto. Si usas uno, mira primero qué reglas aplica. Yo lo programé para entender cómo funciona por dentro. Creo que lo difícil no es validar, sino que alguien entienda el error.
+
+Ah, y si envías por Peppol, usa las reglas de Peppol BIS: añaden las suyas a EN 16931.
+
+¿Vosotros validáis solo el esquema o también las reglas de negocio? 👇
+
+#AgentesDeIA #FacturaElectronica #Peppol #EN16931 #Python
