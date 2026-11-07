@@ -1,0 +1,22 @@
+Pagas 4,99 € al mes por una app que no abres desde marzo. No lo sabes porque 4,99 no llama la atención en un extracto de 200 movimientos.
+
+A mí me pasó con una app de entrenamiento: la seguí pagando casi un año después de dejarla.
+
+Así que el agente #140 en Python y pandas busca tus suscripciones olvidadas en el extracto del banco:
+→ Lee el CSV que exportas de tu banco, en tu ordenador.
+→ Normaliza los conceptos para agrupar el mismo cobro.
+→ Una regla marca como recurrente lo que se repite 3 veces, cada 27-33 días y con importe estable (o una vez al año, si exportas 13 meses).
+→ Python calcula el coste anual y avisa si el último cargo subió.
+→ Ollama recibe solo los nombres y la frecuencia y te escribe una pregunta por cada uno: "¿sigues usando esto?".
+
+Lo que NO hace: cancelar nada, conectarse al banco ni decidir por ti qué sobra.
+
+Mi decisión de ingeniero: qué es recurrente lo decide una regla de fechas e importes, no el modelo. Las cifras las calcula Python, porque un LLM sumando importes es mala idea. Y la IA no ve ni importes, ni IBAN, ni el resto de tus gastos.
+
+Te soy sincero: apps como Emma y muchas apps de banco ya detectan suscripciones. Si usas una, mira primero esa pestaña. Yo lo programé para entender cómo funciona por dentro. Creo que lo valioso no es encontrar el cobro, sino la pregunta.
+
+Ah, y exporta 13 meses, no 3: las suscripciones anuales son las que más se olvidan.
+
+¿Cuándo fue la última vez que revisaste lo que pagas cada mes sin darte cuenta? 👇
+
+#AgentesDeIA #Python #FinanzasPersonales #Productividad #Ollama
