@@ -1,6 +1,6 @@
 La factura cuadra con el pedido: 500 tornillos a 0,12 €. El problema es que al almacén solo llegaron 400.
 
-Me lo encontré integrando un ERP: los albaranes llegaban por SFTP horas después, y nadie volvía a cruzarlos.
+Me lo encontré integrando un ERP: los albaranes llegaban por SFTP horas después que la factura, y nadie volvía a cruzarlos.
 
 Así que el agente #137 en Python y DuckDB cruza pedido, albarán y factura antes de pagar:
 → DuckDB une las tres exportaciones en CSV por número de pedido y referencia.
