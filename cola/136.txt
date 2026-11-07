@@ -1,0 +1,22 @@
+El Dockerfile compila, la imagen arranca y el PR tiene dos aprobaciones. Luego lo abres: FROM python:latest, USER root y un ENV DB_PASSWORD en la línea 2.
+
+Me pasó revisando un servicio de integración en AWS. La contraseña estaba en un ENV y se veía con docker inspect.
+
+Así que el agente #136 en Python y hadolint revisa los Dockerfiles en cada pull request:
+→ Ejecuta hadolint con salida JSON sobre cada Dockerfile cambiado.
+→ Una regla bloquea cuatro códigos: USER root al final, imagen sin etiqueta, :latest y datos sensibles en ARG o ENV.
+→ El resto (ADD en vez de COPY, pip sin --no-cache-dir…) queda como sugerencia.
+→ Ollama recibe solo código, línea y mensaje, y redacta el comentario del PR con cómo corregirlo.
+→ Si algo bloquea, sale con código 1 y el merge espera.
+
+Lo que NO hace: buscar vulnerabilidades en la imagen, reescribir el Dockerfile ni aprobar el PR.
+
+Mi decisión de ingeniero: qué bloquea lo decide una lista de cuatro códigos, no el modelo. El modelo nunca ve el contenido de las líneas: si hay una contraseña en un ENV, no llega a la IA. Y Ollama corre en el propio runner.
+
+Te soy sincero: hadolint ya hace casi todo esto solo, y docker build --check trae la comprobación SecretsUsedInArgOrEnv. Si usas hadolint, mira primero su opción --failure-threshold. Yo lo programé para entender cómo funciona por dentro. Creo que lo valioso es el linter; la IA solo traduce DL3002 a algo que se entiende.
+
+Ah, y quitar el ENV en un commit posterior no arregla las imágenes ya publicadas: rota la contraseña y usa RUN --mount=type=secret.
+
+¿Pasáis un linter a los Dockerfiles en el PR o solo al código? 👇
+
+#AgentesDeIA #Docker #DevOps #Hadolint #Python
