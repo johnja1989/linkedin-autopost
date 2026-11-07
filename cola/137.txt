@@ -1,0 +1,22 @@
+La factura cuadra con el pedido: 500 tornillos a 0,12 €. El problema es que al almacén solo llegaron 400.
+
+Me lo encontré integrando un ERP: los albaranes llegaban por SFTP horas después, y nadie volvía a cruzarlos.
+
+Así que el agente #137 en Python y DuckDB cruza pedido, albarán y factura antes de pagar:
+→ DuckDB une las tres exportaciones en CSV por número de pedido y referencia.
+→ Una regla retiene la línea si se factura más de lo recibido o el precio supera el del pedido en más de un 2 %.
+→ Si una referencia no aparece en el pedido, Ollama propone con qué línea encaja solo por la descripción.
+→ Esa propuesta no aprueba nada: la línea queda en "revisar" y la confirma una persona.
+→ Ollama redacta el borrador de la nota al proveedor con las cifras que dio la regla.
+
+Lo que NO hace: pagar, tocar el ERP ni enviar la nota al proveedor.
+
+Mi decisión de ingeniero: la tolerancia la fija finanzas en un número, no el modelo. La IA no cambia ningún estado. Y nunca ve datos bancarios.
+
+Te soy sincero: los ERP ya hacen esto. SAP lo resuelve en MIRO con tolerancias y Odoo tiene el control de facturas sobre cantidades recibidas. Si usas uno, mira primero si lo tienes activado. Yo lo programé para entender cómo funciona por dentro. Creo que el problema casi nunca es la regla, sino el albarán que llega tarde o con otra referencia.
+
+Ah, y pon la tolerancia en porcentaje y también en euros: un 2 % de una factura de 40.000 € son 800 €.
+
+¿En vuestra empresa alguien mira el albarán antes de pagar? 👇
+
+#AgentesDeIA #DuckDB #Python #Automatizacion #Finanzas
