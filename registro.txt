@@ -48,3 +48,4 @@
 2026-11-07 15:55 | #140 | Agente que encuentra suscripciones olvidadas en el extracto: una regla de fechas decide y el modelo no ve importes | productividad personal | Python, pandas, Ollama
 2026-11-07 17:54 | #141 | Servidor MCP que deja a la IA leer logs enmascarados: Zod pone el tope, una regla oculta emails, IPs y tokens | MCP y herramientas | TypeScript, SDK MCP oficial, Zod
 2026-11-08 11:02 | #142 | Agente que mide si tu extractor LLM es estable: promptfoo repite cada caso cinco veces y una regla bloquea si no pasa 5 de 5 | evaluación y calidad de LLMs | promptfoo, Ollama, JavaScript (aserciones), Python
+2026-11-08 11:50 | #142 | Agente que evalúa tu text-to-SQL por resultados: DuckDB ejecuta, una comparación de filas decide y no hay LLM juez | evaluación y calidad de LLMs | Python, DuckDB, sqlglot, Ollama

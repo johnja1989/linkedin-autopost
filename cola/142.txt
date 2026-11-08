@@ -1,22 +1,22 @@
-Tu extractor de facturas pasa todas las pruebas. Lo vuelves a lanzar y el mismo documento trae otro total.
+Le pides a tu asistente "ventas por país del último trimestre" y te da una consulta impecable. Se ejecuta, devuelve números… y ha sumado también los pedidos cancelados.
 
-Me pasó con un extractor que probé una sola vez: todo en verde. Al repetir, casi por curiosidad, una factura de 121,00 € salió como 12,10. Mismo texto, mismo modelo, mismo prompt.
+Me pasó con informes de un ERP, sin IA: la consulta corría y estaba mal. Creo que es el peor fallo, porque nadie lo ve.
 
-Así que el agente #142 en promptfoo mide si tu extractor es estable antes de producción:
-→ 20 facturas anonimizadas con NIF, fecha y total esperados, escritos a mano
-→ promptfoo eval --repeat 5 lanza cada caso cinco veces contra un modelo local en Ollama
-→ is-json valida el formato y una aserción en JavaScript compara cada campo
-→ promptfoo agrupa las repeticiones y marca los casos inestables
-→ una regla en Python: si un caso no pasa 5 de 5, bloquea el cambio y dice cuál
+Así que el agente #142 en Python y DuckDB mide tu text-to-SQL por lo que devuelve, no por cómo se escribe:
+→ Parte de 50 preguntas con su SQL de referencia, revisadas por una persona.
+→ El modelo local (Ollama) recibe la pregunta y el esquema, nunca los datos.
+→ sqlglot descarta todo lo que no sea una única SELECT.
+→ DuckDB ejecuta las dos consultas sobre una base de prueba en solo lectura.
+→ Compara las filas sin mirar el orden y con decimales redondeados.
 
-Lo que NO hace: no arregla el prompt, no elige modelo y no usa otro LLM como juez.
+Lo que NO hace: juzgar si una SQL "se parece" a la buena. Dos consultas distintas pueden ser correctas.
 
-Mi decisión de ingeniero: el veredicto lo da una comparación exacta con valores que escribió una persona, no otro modelo opinando. Las facturas no salen del ordenador. Y 4 de 5 no es "casi bien": en un total, es un error que acabará llegando.
+Mi decisión de ingeniero: decide una comparación de resultados, no un LLM juez. Si la exactitud baja del 90 % o falla una pregunta que antes acertaba, el cambio de prompt o de modelo no pasa. Y la base es sintética: ningún dato real.
 
-Te soy sincero: LangSmith o Braintrust ya permiten repetir cada caso de una evaluación. Si usas una, mira primero ahí. Yo lo monté con promptfoo para entender cómo funciona por dentro, y creo que lo que más me enseñó fue escribir los valores esperados a mano.
+Te soy sincero: los benchmarks Spider y BIRD ya miden así (execution accuracy), y promptfoo tiene una guía para evaluar text-to-SQL. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Y sorprende lo poco código que necesita.
 
-Ah, y si repites la prueba otro día, usa --no-cache: si no, mides la caché y no el modelo.
+Ah, y mete casos trampa en la base de prueba: si cada cliente tiene un solo pedido, SUM y MAX dan lo mismo y el error pasa.
 
-¿Cuántas veces ejecutas una prueba antes de fiarte de un LLM? 👇
+¿Cómo compruebas que una SQL generada por IA es correcta, además de que se ejecute? 👇
 
-#AgentesDeIA #LLM #promptfoo #Ollama #EvaluacionDeLLMs #Python
+#AgentesDeIA #TextToSQL #DuckDB #Python #LLM #Datos
