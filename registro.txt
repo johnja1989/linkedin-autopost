@@ -47,3 +47,4 @@
 2026-11-07 13:49 | #139 | Agente que prueba la API de un proveedor antes de integrarla: Schemathesis genera casos, tres códigos bloquean y el modelo no ve respuestas | integración de sistemas y APIs | Python, Schemathesis, OpenAPI, Ollama
 2026-11-07 15:55 | #140 | Agente que encuentra suscripciones olvidadas en el extracto: una regla de fechas decide y el modelo no ve importes | productividad personal | Python, pandas, Ollama
 2026-11-07 17:54 | #141 | Servidor MCP que deja a la IA leer logs enmascarados: Zod pone el tope, una regla oculta emails, IPs y tokens | MCP y herramientas | TypeScript, SDK MCP oficial, Zod
+2026-11-08 11:02 | #142 | Agente que mide si tu extractor LLM es estable: promptfoo repite cada caso cinco veces y una regla bloquea si no pasa 5 de 5 | evaluación y calidad de LLMs | promptfoo, Ollama, JavaScript (aserciones), Python

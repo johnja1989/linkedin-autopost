@@ -1,0 +1,22 @@
+Tu extractor de facturas pasa todas las pruebas. Lo vuelves a lanzar y el mismo documento trae otro total.
+
+Me pasó con un extractor que probé una sola vez: todo en verde. Al repetir, casi por curiosidad, una factura de 121,00 € salió como 12,10. Mismo texto, mismo modelo, mismo prompt.
+
+Así que el agente #142 en promptfoo mide si tu extractor es estable antes de producción:
+→ 20 facturas anonimizadas con NIF, fecha y total esperados, escritos a mano
+→ promptfoo eval --repeat 5 lanza cada caso cinco veces contra un modelo local en Ollama
+→ is-json valida el formato y una aserción en JavaScript compara cada campo
+→ promptfoo agrupa las repeticiones y marca los casos inestables
+→ una regla en Python: si un caso no pasa 5 de 5, bloquea el cambio y dice cuál
+
+Lo que NO hace: no arregla el prompt, no elige modelo y no usa otro LLM como juez.
+
+Mi decisión de ingeniero: el veredicto lo da una comparación exacta con valores que escribió una persona, no otro modelo opinando. Las facturas no salen del ordenador. Y 4 de 5 no es "casi bien": en un total, es un error que acabará llegando.
+
+Te soy sincero: LangSmith o Braintrust ya permiten repetir cada caso de una evaluación. Si usas una, mira primero ahí. Yo lo monté con promptfoo para entender cómo funciona por dentro, y creo que lo que más me enseñó fue escribir los valores esperados a mano.
+
+Ah, y si repites la prueba otro día, usa --no-cache: si no, mides la caché y no el modelo.
+
+¿Cuántas veces ejecutas una prueba antes de fiarte de un LLM? 👇
+
+#AgentesDeIA #LLM #promptfoo #Ollama #EvaluacionDeLLMs #Python
