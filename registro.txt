@@ -50,3 +50,4 @@
 2026-11-08 11:02 | #142 | Agente que mide si tu extractor LLM es estable: promptfoo repite cada caso cinco veces y una regla bloquea si no pasa 5 de 5 | evaluación y calidad de LLMs | promptfoo, Ollama, JavaScript (aserciones), Python
 2026-11-08 11:51 | #143 | Agente que evalúa tu text-to-SQL por resultados: DuckDB ejecuta, una comparación de filas decide y no hay LLM juez | datos y SQL | Python, DuckDB, sqlglot, Ollama
 2026-11-08 12:21 | #144 | Agente que compara las fechas de tu CV con tu LinkedIn: una resta de meses decide y el modelo debe citar el CV | empleo y carrera | Python, Ollama (structured outputs), difflib
+2026-11-08 13:55 | #145 | Agente que encuentra versiones casi iguales antes de indexar el RAG: una regla manda a cuarentena y una persona elige la vigente | RAG y documentos internos | Python, datasketch (MinHash LSH), difflib, Ollama

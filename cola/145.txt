@@ -1,0 +1,22 @@
+Dos PDFs de la política de vacaciones en la carpeta del RAG. Se parecen en un 92%. El 8% que cambia es justo el número de días.
+
+Lo vi montando un RAG de prueba con documentos internos: "vacaciones_v1" y "vacaciones_final" convivían en la misma carpeta. El asistente contestaba 22 días o 25 según qué trozo recuperaba. Las dos, con su cita.
+
+Así que el agente #145 en Python revisa la carpeta antes de indexar:
+→ Parte cada documento en grupos de 5 palabras y calcula una firma MinHash con datasketch.
+→ MinHashLSH busca parejas candidatas sin comparar todos contra todos.
+→ Para cada pareja, Python calcula el parecido exacto y el SHA-256.
+→ Una regla decide: copia idéntica, se indexa una sola. Parecidos pero distintos, los dos van a cuarentena.
+→ Un modelo local con Ollama recibe solo las líneas que cambian y escribe en qué se diferencian. Una persona elige la vigente.
+
+Lo que NO hace: no decide qué versión es la buena ni borra nada.
+
+Mi decisión de ingeniero: la IA no elige, porque "final" en el nombre del archivo no significa nada. Ve solo las frases que cambian, no los documentos enteros. Y mientras nadie elige, ninguna de las dos entra en el índice.
+
+Te soy sincero: NeMo Curator o datatrove de Hugging Face ya hacen deduplicación con MinHash, pensada para datos de entrenamiento. Si manejas ese volumen, mira primero esas. Yo lo programé para entender cómo funciona por dentro. Y creo que en un RAG de empresa el problema no son los duplicados exactos, son las versiones casi iguales.
+
+Ah, y LSH es probabilístico: con un umbral bajo, como 0,5, se te escapan menos parejas.
+
+¿Cuántas versiones "final" de un mismo documento tiene tu carpeta compartida? 👇
+
+#AgentesDeIA #RAG #Python #Ollama #IngenieriaDeIA
