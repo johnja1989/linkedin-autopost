@@ -1,0 +1,22 @@
+Tu CV dice que entraste en marzo de 2016. Tu LinkedIn dice junio. Tú ni te habías dado cuenta, pero el reclutador que tiene las dos pestañas abiertas sí.
+
+Me pasó algo parecido: al ajustar el CV para una oferta cambié una fecha de fin y se me olvidó tocar LinkedIn. Nada grave, pero queda raro justo cuando quieres transmitir confianza.
+
+Así que el agente #144 en Python compara tu CV con tu LinkedIn antes de enviar una candidatura:
+→ Lee Positions.csv del export oficial de LinkedIn (Obtener una copia de tus datos).
+→ Un modelo local con Ollama extrae del CV empresa, puesto y fechas en un JSON con esquema fijo.
+→ Cada fecha llega con su cita literal del CV. Si la cita no aparece tal cual, ese puesto va a revisión manual.
+→ difflib empareja empresas aunque una diga "S.L." y la otra no.
+→ Una regla resta meses: más de uno de diferencia, o un puesto que solo está en un lado, es una alerta.
+
+Lo que NO hace: no edita tu CV ni tu perfil, ni decide qué fecha es la verdadera.
+
+Mi decisión de ingeniero: el export de LinkedIn no pasa por el modelo, lo lee Python. La IA solo extrae del CV y tiene que demostrarlo con la cita. La diferencia la calcula una resta, no una opinión.
+
+Te soy sincero: Teal o Resume Worded ya revisan tu CV y tu perfil de LinkedIn. Si usas uno, mira primero si te compara las fechas puesto a puesto. Yo lo programé para entender cómo funciona por dentro. Y creo que lo que más vale es la cita literal: sin ella, un modelo puede "rellenar" un mes que no está.
+
+Ah, y cuando encuentres una diferencia, corrige primero la fecha que no coincide con tu contrato o tu vida laboral, no la que te quede más bonita.
+
+¿Tú compruebas que tu CV y tu LinkedIn digan lo mismo antes de enviar una candidatura? 👇
+
+#AgentesDeIA #Python #Ollama #BusquedaDeEmpleo #IngenieriaDeIA
