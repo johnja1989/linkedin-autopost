@@ -1,0 +1,22 @@
+Tu contrato de mantenimiento termina el 31 de diciembre. Pero si no avisas antes del 2 de octubre, se renueva solo otro año.
+
+Lo vi en un proyecto de ERP. Alguien apuntó la fecha de fin y se olvidó del preaviso de 90 días. Cuando quiso cancelar, ya pagaba el año siguiente.
+
+Así que el agente #147 en n8n vigila las renovaciones automáticas de contratos:
+→ Cada lunes, un Schedule Trigger lee los PDF nuevos de la carpeta.
+→ Extract from File saca el texto y un modelo local con Ollama devuelve fecha de fin, días de preaviso y la frase literal de la cláusula.
+→ Un nodo Code comprueba que esa frase está tal cual en el contrato. Si no, revisión manual.
+→ El mismo nodo resta el preaviso a la fecha de fin. Menos de 45 días para avisar, rojo.
+→ Crea un evento en Google Calendar con la fecha límite y la cita.
+
+Lo que NO hace: no cancela contratos ni escribe al proveedor.
+
+Mi decisión de ingeniero: el modelo solo lee y cita; la resta de fechas la hace el código. Si la cita no cuadra, no me fío de la fecha. Con n8n en tu servidor y Ollama en local, los contratos no salen de casa.
+
+Te soy sincero: herramientas de gestión de contratos como Ironclad o Juro ya avisan de renovaciones. Si usas una, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y creo que el problema casi nunca es la fecha de fin, es el preaviso que nadie leyó.
+
+Ah, y si Extract from File devuelve texto vacío, el PDF es un escaneo: necesitas OCR antes.
+
+¿Cuántos contratos tuyos se renuevan solos sin que nadie lo decida? 👇
+
+#AgentesDeIA #n8n #Ollama #Automatizacion #Contratos
