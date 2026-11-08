@@ -1,0 +1,22 @@
+Tu dominio tiene dos registros SPF. Para el servidor que recibe tu correo no hay ninguno válido: con dos, el estándar dice error permanente.
+
+Me pasó en una integración de facturación. Los correos con las facturas empezaron a llegar a spam. Había un SPF del proveedor antiguo y otro del nuevo. Nadie tocaba ese DNS desde hacía años.
+
+Así que el agente #146 en Python revisa la autenticación de correo de tus dominios:
+→ Consulta con dnspython el SPF, el DMARC y los selectores DKIM que le indicas.
+→ Cuenta las consultas DNS del SPF, incluidos los include. El límite es 10.
+→ Una regla pone el color: SPF ausente, duplicado o con +all, rojo. DMARC en p=none, amarillo.
+→ Un modelo local con Ollama recibe solo los códigos de hallazgo y redacta la nota para quien gestiona el DNS.
+→ Te avisa solo si un dominio cambia de color.
+
+Lo que NO hace: no toca el DNS ni manda correos de prueba.
+
+Mi decisión de ingeniero: el color lo decide la regla, porque el estándar ya dice qué es válido. El modelo no ve los registros ni propone uno nuevo: un SPF inventado puede dejarte sin correo. El cambio lo escribe y lo aplica una persona.
+
+Te soy sincero: MxToolbox, dmarcian o la librería checkdmarc ya hacen esto. Si usas una, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y creo que el error típico no es no tener DMARC, es dejarlo años en p=none.
+
+Ah, y desde febrero de 2024 Gmail exige SPF, DKIM y DMARC a quien envía más de 5.000 correos al día a sus cuentas. Yahoo pide algo parecido.
+
+¿Cuánto tiempo lleva tu DMARC en p=none? 👇
+
+#AgentesDeIA #Ciberseguridad #Python #Ollama #DMARC
