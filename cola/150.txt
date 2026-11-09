@@ -1,0 +1,22 @@
+La migración termina, el COUNT(*) da lo mismo en Oracle y en PostgreSQL, y alguien escribe en el chat "todo migrado". Pero el COUNT no mira dentro de las filas.
+
+En una migración en la que trabajé, el conteo cuadraba al cien por cien. Lo que no cuadraba lo vimos semanas después, en los informes. Y ahí ya cuesta mucho más.
+
+Así que el agente #150 en Python comprueba una migración de Oracle a PostgreSQL fila a fila:
+→ Lee cada tabla en los dos lados por su clave primaria, por tramos.
+→ datacompy une por clave y compara columna a columna, con tolerancia solo donde la pongo yo (medio céntimo en importes, cero en códigos).
+→ Cuenta filas que solo están en un lado y columnas con diferencias.
+→ Una regla decide: si hay una diferencia que nadie ha firmado como aceptada, el corte no se aprueba.
+→ Un modelo local con Ollama recibe solo nombres de tabla, columnas y conteos, y redacta la nota para el comité de cambios.
+
+Lo que NO hace: no corrige datos, no relanza la migración y no decide que una diferencia "da igual".
+
+Mi decisión de ingeniero: el modelo nunca ve un NIF ni un importe, solo cifras y nombres de columna. Las diferencias aceptadas van en un archivo de excepciones que firma una persona. La IA escribe, pero no aprueba.
+
+Te soy sincero: AWS DMS ya valida datos entre origen y destino, y Google tiene Data Validation Tool, de código abierto. Si migras con uno de ellos, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y creo que el COUNT(*) es la prueba que más tranquilidad da y menos dice.
+
+Ah, y ojo con las cadenas vacías: en Oracle '' es NULL y en PostgreSQL no. Decide antes cuál es la buena o te saldrán miles de diferencias en la primera pasada.
+
+¿Cómo compruebas tú que una migración ha ido bien, más allá del COUNT? 👇
+
+#AgentesDeIA #MigracionDeDatos #Oracle #PostgreSQL #Python #Ollama
