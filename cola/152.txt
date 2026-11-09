@@ -1,0 +1,22 @@
+Tu LLM juez acierta el 90 % y puede no servir para nada. Si 9 de cada 10 respuestas son buenas, un juez que lo aprueba todo saca esa misma nota.
+
+Me pasó con las pruebas de regresión de prompts del agente #98. El juez aprobaba casi todo y yo lo celebraba. Hasta que revisé unas 30 a mano: dejaba pasar justo las que inventaban datos.
+
+Así que el agente #152 en Python y Gradio calibra al juez antes de fiarse de él:
+→ Una persona etiqueta 100 respuestas reales (ok o mal) en Gradio, sin ver qué dijo el juez.
+→ El juez, un modelo local en Ollama, evalúa esas mismas 100.
+→ scikit-learn calcula el kappa de Cohen y la matriz de confusión.
+→ Una regla decide: kappa de al menos 0,6 y que no apruebe más del 10 % de lo que la persona suspendió.
+→ Si no pasa, enseña los desacuerdos; ajustas el prompt y mides con otras 50 nuevas.
+
+Lo que NO hace: corregir las etiquetas humanas, reescribir el prompt por su cuenta ni dejar usar un juez que no pasa la regla.
+
+Mi decisión de ingeniero: kappa y no porcentaje de acierto, porque descuenta el acierto por casualidad. Y miro aparte los suspensos que se cuelan, que son los que duelen. La persona etiqueta a ciegas; si ve antes al juez, acaba copiándolo.
+
+Te soy sincero: LangSmith ya tiene Align Evals y Arize explica cómo alinear evaluadores con etiquetas humanas. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro, y creo que el kappa debería salir en cualquier informe de evaluación.
+
+Ah, y no ajustes el prompt con las mismas 100 con las que mides: acabarías midiendo tu memoria, no el juez.
+
+¿Habéis comparado alguna vez vuestro LLM juez con etiquetas humanas? 👇
+
+#AgentesDeIA #Python #LLM #EvaluacionDeLLMs #Gradio #MachineLearning

@@ -57,3 +57,4 @@
 2026-11-09 09:50 | #149 | Agente que revisa facturas Factur-X antes de contabilizarlas: el PDF y el XML deben decir lo mismo, una regla retiene y el modelo no ve importes | facturación electrónica y documentos | Python, factur-x, pdfplumber, lxml, Ollama
 2026-11-09 11:48 | #150 | Agente que valida una migración de Oracle a PostgreSQL fila a fila: datacompy compara por clave, una regla bloquea el corte y el modelo no ve valores | datos y SQL | Python, datacompy, SQLAlchemy, Ollama
 2026-11-09 13:50 | #151 | Agente aduana de webhooks: la firma HMAC y el webhook-id deciden, un repetido no se procesa y el modelo no ve payloads | integración de sistemas y APIs | Python, FastAPI, standardwebhooks, SQLite, Pydantic, Ollama
+2026-11-09 16:10 | #152 | Agente que calibra a tu LLM juez con etiquetas humanas: el kappa de Cohen y los suspensos colados deciden, no el juez | evaluación y calidad de LLMs | Python, Gradio, scikit-learn, Ollama
