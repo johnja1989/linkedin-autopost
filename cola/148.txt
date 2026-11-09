@@ -1,0 +1,22 @@
+En marzo de 2025 alguien movió las etiquetas de la action tj-actions/changed-files a un commit malicioso. Los workflows que la usaban por etiqueta no cambiaron ni una línea y empezaron a imprimir sus secretos en los logs.
+
+Esa semana revisé mis repos. Tenía actions ancladas a @v4 y un workflow con pull_request_target copiado de un blog. Funcionaba, que es lo peligroso.
+
+Así que el agente #148 en Python revisa los workflows de GitHub Actions en cada PR:
+→ Ejecuta zizmor sobre .github/workflows y lee su salida en JSON.
+→ Agrupa los hallazgos por tipo: inyección de plantillas, disparadores peligrosos, actions sin anclar, permisos de más.
+→ Una regla bloquea el PR si hay un hallazgo de severidad alta con confianza media o alta.
+→ Un modelo local con Ollama recibe solo el tipo, el job y una anotación corta, y redacta el comentario para el PR.
+→ El arreglo lo propone zizmor o una persona, nunca el modelo.
+
+Lo que NO hace: no ejecuta workflows ni cambia el YAML por su cuenta.
+
+Mi decisión de ingeniero: el modelo no ve el YAML ni el título del PR. Ese texto es justo el que controla un atacante, y también podría intentar engañar a la IA. Bloquear lo decide una regla de dos líneas que puedo auditar.
+
+Te soy sincero: CodeQL ya analiza workflows de Actions, y están actionlint y OpenSSF Scorecard. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y creo que el problema no es la herramienta, es que nadie mira la carpeta .github hasta que pasa algo.
+
+Ah, y ancla cada action al SHA completo de un commit, no a @v4: una etiqueta se puede mover, un SHA no.
+
+¿Cuándo fue la última vez que alguien revisó tu carpeta .github? 👇
+
+#AgentesDeIA #DevOps #GitHubActions #Python #Ollama #Ciberseguridad
