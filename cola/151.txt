@@ -1,0 +1,22 @@
+Un webhook sin firma es un POST que cualquiera puede mandarte. Y tu ERP lo procesa como si viniera del proveedor.
+
+Hace años, en una integración de pagos, vi el mismo aviso entrar dos veces. Nadie atacaba nada: nuestro endpoint tardó, el proveedor reintentó y el pedido se marcó como pagado dos veces. Lo arreglamos a mano un viernes por la tarde, claro.
+
+Así que el agente #151 en Python recibe webhooks con FastAPI y no se fía de ninguno:
+→ Verifica la firma HMAC sobre el cuerpo crudo con la librería standardwebhooks.
+→ Rechaza el mensaje si el timestamp se aleja más de 5 minutos (reenvíos viejos fuera).
+→ Guarda el webhook-id con clave única: si se repite, responde 200 y no hace nada más.
+→ Valida el evento con Pydantic; lo que no cuadra va a cuarentena.
+→ Un modelo local en Ollama resume la cuarentena del día solo con motivos y recuentos.
+
+Lo que NO hace: procesar nada sin firma válida, reintentar contra el proveedor ni ver el secreto o el contenido de los eventos.
+
+Mi decisión de ingeniero: la firma, el reloj y los duplicados los decide código, no el modelo. La IA nunca ve payloads, porque ahí van importes, clientes e IBAN. Y si de golpe fallan muchas firmas, una regla avisa; creo que casi siempre será un secreto rotado en un solo lado, pero eso lo mira una persona.
+
+Te soy sincero: Hookdeck ya hace esto como pasarela de entrada, y proveedores como Stripe traen su propia función para verificar la firma. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro, y me sorprendió lo fácil que es romperlo sin querer.
+
+Ah, y verifica antes de parsear el JSON: si lo reserializas, la firma deja de cuadrar. Lo probé y sí, 401.
+
+¿Tus integraciones comprueban la firma de los webhooks o confían en que nadie conoce la URL? 👇
+
+#AgentesDeIA #Python #Webhooks #APIs #IntegracionDeSistemas #FastAPI
