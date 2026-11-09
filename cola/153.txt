@@ -1,6 +1,6 @@
-Un proveedor jura que subió el fichero de pedidos a las 6:00. Abres FileZilla y sí, ahí está. Con una columna menos.
+Un proveedor jura que subió el fichero de pedidos a las 6:00. Lo abres y sí, está. Con una columna menos.
 
-En integraciones con ERPs me ha pasado mil veces: media mañana entrando al SFTP solo para mirar. Y la tentación de pasarle a una IA el usuario y la contraseña la he tenido. Creo que ahí hay que frenar.
+En integraciones con ERPs me ha pasado mil veces: media mañana entrando al SFTP solo para mirar. Y la tentación de pasarle a una IA las credenciales la he tenido. Creo que ahí hay que frenar.
 
 Así que el agente #153 es un servidor MCP en Python (FastMCP + paramiko) que deja a la IA mirar el SFTP sin tocarlo:
 → Dos herramientas: listar una carpeta y leer las primeras líneas de un fichero.
