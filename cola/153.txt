@@ -1,0 +1,22 @@
+Un proveedor jura que subió el fichero de pedidos a las 6:00. Abres FileZilla y sí, ahí está. Con una columna menos.
+
+En integraciones con ERPs me ha pasado mil veces: media mañana entrando al SFTP solo para mirar. Y la tentación de pasarle a una IA el usuario y la contraseña la he tenido. Creo que ahí hay que frenar.
+
+Así que el agente #153 es un servidor MCP en Python (FastMCP + paramiko) que deja a la IA mirar el SFTP sin tocarlo:
+→ Dos herramientas: listar una carpeta y leer las primeras líneas de un fichero.
+→ El propio servidor SFTP resuelve cada ruta: los ../ y los enlaces quedan al descubierto.
+→ Una regla compara esa ruta real con una lista blanca. Si no encaja, error.
+→ Tope de 50 líneas y 64 KB por lectura.
+→ Un modelo local en Ollama responde: ¿llegó el de hoy con las columnas de siempre?
+
+Lo que NO hace: subir, borrar, renombrar ni mover. Esas herramientas no existen.
+
+Mi decisión de ingeniero: la clave SSH vive en el entorno del servidor y el modelo nunca la ve. Si la huella del host no coincide con known_hosts, no conecta. Y el usuario SFTP también es de solo lectura: si falla mi código, que frene el permiso.
+
+Te soy sincero: ya hay servidores MCP para SFTP, como el de CData, de solo lectura y con consultas SQL. Si ya lo usas, mira primero eso. Yo lo programé para entender dónde se rompe una lista blanca. Spoiler: comparando la ruta como texto, sin resolverla.
+
+Ah, y readOnlyHint es solo una pista para el cliente MCP, no un permiso.
+
+¿Le darías a una IA acceso a tu SFTP de producción, aunque sea solo para leer? 👇
+
+#AgentesDeIA #MCP #SFTP #Python #IntegracionDeSistemas #Ciberseguridad
