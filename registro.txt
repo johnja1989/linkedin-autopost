@@ -54,3 +54,4 @@
 2026-11-08 15:57 | #146 | Agente que revisa SPF, DKIM y DMARC de tus dominios: una regla pone el color y el modelo no escribe registros | ciberseguridad y privacidad | Python, dnspython, Ollama
 2026-11-08 18:06 | #147 | Agente que vigila renovaciones automáticas de contratos: el modelo cita la cláusula y una resta en código fija la fecha límite | automatización de negocio | n8n (Schedule Trigger, Extract from File, Code, Google Calendar), Ollama (structured outputs)
 2026-11-09 09:22 | #148 | Agente que revisa los workflows de GitHub Actions en cada PR: zizmor señala, una regla bloquea y el modelo no ve el YAML | DevOps y observabilidad | Python, zizmor, Ollama
+2026-11-09 09:50 | #149 | Agente que revisa facturas Factur-X antes de contabilizarlas: el PDF y el XML deben decir lo mismo, una regla retiene y el modelo no ve importes | facturación electrónica y documentos | Python, factur-x, pdfplumber, lxml, Ollama

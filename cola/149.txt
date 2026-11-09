@@ -1,0 +1,22 @@
+Una factura Factur-X son dos facturas en un mismo archivo: el PDF que lee una persona y el XML que lee tu ERP. Y nada técnico impide que digan cosas distintas.
+
+En un proyecto de integración vi algo parecido: contabilidad revisaba el PDF y el ERP importaba el XML. Cada uno daba por hecho que el otro miraba.
+
+Así que el agente #149 en Python revisa las facturas Factur-X de proveedores antes de contabilizarlas:
+→ La librería factur-x extrae el XML embebido y lo valida contra el XSD.
+→ Sin XML válido, retenida. Ojo: la librería no lanza error, solo no devuelve nada.
+→ Una regla con Decimal comprueba que base + IVA = total.
+→ Otra busca ese total en el texto visible del PDF con pdfplumber.
+→ Un modelo local con Ollama recibe solo los códigos de fallo y redacta el correo al proveedor. Lo envía una persona.
+
+Lo que NO hace: no contabiliza, no paga y no decide cuál de las dos versiones es la buena.
+
+Mi decisión de ingeniero: el modelo no ve importes ni el XML. Si dos cifras coinciden lo decide el código, no una IA que "lee" la factura. Ante la duda, se retiene.
+
+Te soy sincero: Mustang ya valida Factur-X y ZUGFeRD, y Odoo importa Factur-X. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y creo que pasar el XSD da una falsa tranquilidad: valida la forma, no que el PDF diga lo mismo.
+
+Ah, y en tus pruebas mete una factura con PDF y XML distintos a propósito. Si tu flujo no la para, ahí tienes trabajo.
+
+¿En tu empresa quién mira el PDF y quién el XML? 👇
+
+#AgentesDeIA #FacturaElectronica #FacturX #Python #Ollama #Contabilidad
