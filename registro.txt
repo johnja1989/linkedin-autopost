@@ -59,3 +59,4 @@
 2026-11-09 13:50 | #151 | Agente aduana de webhooks: la firma HMAC y el webhook-id deciden, un repetido no se procesa y el modelo no ve payloads | integración de sistemas y APIs | Python, FastAPI, standardwebhooks, SQLite, Pydantic, Ollama
 2026-11-09 16:10 | #152 | Agente que calibra a tu LLM juez con etiquetas humanas: el kappa de Cohen y los suspensos colados deciden, no el juez | evaluación y calidad de LLMs | Python, Gradio, scikit-learn, Ollama
 2026-11-09 17:58 | #153 | Servidor MCP que deja a la IA mirar tu SFTP sin tocarlo: el servidor resuelve la ruta, una lista blanca decide y la clave no la ve el modelo | MCP y herramientas | Python, FastMCP, paramiko, Ollama
+2026-11-10 09:18 | #154 | Agente que revisa ofertas de empleo antes de responder: RDAP da la edad del dominio, una regla pone el color y el modelo solo cita | empleo y carrera | Python, RDAP (rdap.org), Ollama (structured outputs)

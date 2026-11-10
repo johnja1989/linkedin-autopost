@@ -1,0 +1,22 @@
+Te escribe una "recruiter": ingeniero de IA en remoto, 4.000 € al mes, sin entrevista técnica. Solo necesita tu DNI "para el alta". El dominio de su correo tiene diez días.
+
+Buscando trabajo me han llegado un par de ofertas así. Una la abrí con más ganas que cabeza, la verdad. Luego pensé: esto lo puede mirar una regla antes que yo.
+
+Así que el agente #154 en Python revisa una oferta de empleo antes de que respondas:
+→ Lee el mensaje que pegas, sin abrir ningún enlace.
+→ Consulta por RDAP cuándo se registró el dominio del remitente.
+→ Un modelo local en Ollama extrae empresa, web y peticiones de dinero o documentos, con cita literal.
+→ Python comprueba que cada cita está en el texto. Si no, se descarta.
+→ Una regla pone el color: rojo si piden pago o datos antes de entrevistarte, o si el dominio tiene menos de 30 días.
+
+Lo que NO hace: responder al reclutador, abrir enlaces ni decirte que una oferta es real.
+
+Mi decisión de ingeniero: el modelo no opina si es estafa, solo cita. La fecha la da el registro, no la IA. Y si RDAP no responde, que pasa con algunos dominios de país, el agente dice "sin dato" y nunca pone verde.
+
+Te soy sincero: INCIBE tiene una guía sobre falsas ofertas de empleo y la línea 017, y LinkedIn muestra qué perfiles y empresas están verificados. Si dudas, mira primero eso. Yo lo programé para entender qué señales se pueden comprobar con datos. Creo que son menos de las que parece.
+
+Ah, y verde no significa segura: significa que ninguna regla ha saltado.
+
+¿Te ha llegado alguna oferta que olía raro? ¿Qué te hizo sospechar? 👇
+
+#AgentesDeIA #Ciberseguridad #Empleo #Python #Ollama #BusquedaDeEmpleo
