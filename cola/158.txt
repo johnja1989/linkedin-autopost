@@ -1,0 +1,22 @@
+Tu canario lleva 10 minutos en producción con un 0 % de errores. Parece perfecto. Hasta que miras y ha recibido 12 peticiones.
+
+Me pasó algo parecido con un script de despliegue. Daba por bueno el canario porque la consulta de errores no devolvía nada. Y "nada", en Prometheus, no es cero. Es que no hay datos.
+
+Así que el agente #158 en Python hace de juez del despliegue canario:
+→ Consulta la API HTTP de Prometheus para la versión nueva y para la estable, en la misma ventana de 10 minutos.
+→ Saca tres números de cada una: peticiones, tasa de errores 5xx y latencia p95.
+→ Una regla decide: sin datos o con menos de 500 peticiones, esperar.
+→ Si el canario duplica los errores de la estable (con un mínimo del 1 %) o sube el p95 más de un 20 %, revertir. Si no, promover.
+→ Un modelo local con Ollama redacta el resumen para el equipo con esas cifras, sin poder cambiar el veredicto.
+
+Lo que NO hace: desplegar ni revertir por su cuenta. Devuelve el veredicto y lo ejecuta tu pipeline.
+
+Mi decisión de ingeniero: comparar contra la versión estable en la misma ventana, no contra ayer. Un lunes a las 9 no es un domingo a las 3. El veredicto lo pone una regla y el modelo solo ve números agregados, nunca logs ni payloads.
+
+Te soy sincero: Argo Rollouts y Flagger ya hacen este análisis con Prometheus. Si usas uno de ellos, mira primero ahí. Yo lo programé para entender qué hay detrás de "análisis automático del canario". Y creo que lo difícil no es la consulta, son los umbrales.
+
+Ah, y añade "or vector(0)" a la consulta de errores: si la versión nueva nunca dio un 5xx, esa serie no existe y la consulta vuelve vacía.
+
+¿Cuántas peticiones le das a tu canario antes de fiarte de él? 👇
+
+#AgentesDeIA #DevOps #Prometheus #Python #SRE

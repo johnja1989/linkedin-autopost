@@ -63,3 +63,4 @@
 2026-11-11 08:34 | #155 | Agente que revisa los metadatos de un documento antes de enviarlo: una regla bloquea GPS y rutas con usuario y el modelo no ve valores | ciberseguridad y privacidad | Python, ExifTool, Ollama
 2026-11-11 09:48 | #156 | Agente vigía de garantías: el modelo cita la fecha de la factura, una regla la verifica y una suma en código fija el aviso | productividad personal | Python, pdfplumber, Ollama (structured outputs), icalendar
 2026-11-11 12:40 | #157 | Agente que busca los huecos de tu documentación en los "no lo encuentro" del RAG: HDBSCAN agrupa, una regla cuenta personas y el modelo solo titula con citas | RAG y documentos internos | Python, Ollama (nomic-embed-text), scikit-learn (HDBSCAN)
+2026-11-11 13:49 | #158 | Agente juez del despliegue canario: Prometheus da las cifras, una regla promueve o revierte y un vacío no cuenta como cero | DevOps y observabilidad | Python, Prometheus (API HTTP), Ollama
