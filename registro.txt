@@ -65,3 +65,4 @@
 2026-11-11 12:40 | #157 | Agente que busca los huecos de tu documentación en los "no lo encuentro" del RAG: HDBSCAN agrupa, una regla cuenta personas y el modelo solo titula con citas | RAG y documentos internos | Python, Ollama (nomic-embed-text), scikit-learn (HDBSCAN)
 2026-11-11 13:49 | #158 | Agente juez del despliegue canario: Prometheus da las cifras, una regla promueve o revierte y un vacío no cuenta como cero | DevOps y observabilidad | Python, Prometheus (API HTTP), Ollama
 2026-11-11 17:17 | #159 | Agente de recordatorios de cobro: una regla elige el nivel, una incidencia abierta no se reclama y el modelo no escribe cifras | automatización de negocio | Python, pandas, Ollama (structured outputs), email (.eml)
+2026-11-11 17:58 | #160 | Agente que revisa la numeración de facturas antes del cierre: una consulta con LAG marca huecos y duplicados por serie y el modelo no ve importes | facturación electrónica y documentos | Python, DuckDB, Ollama

@@ -1,0 +1,22 @@
+La factura A-0418 existe. La A-0420 también. ¿Y la A-0419? "Creo que se anuló" no es una respuesta.
+
+Me pasó en una migración de ERP: dos semanas con el ERP viejo y el nuevo a la vez, cada uno con su contador. Al cerrar el trimestre había dos facturas con el mismo número en la misma serie. Nadie lo vio hasta que preguntó el asesor.
+
+Así que el agente #160 en Python revisa la numeración antes de cerrar el periodo:
+→ Lee con DuckDB el export de facturas emitidas: serie, número, fecha y, en las rectificativas, a cuál corrigen.
+→ Una consulta con LAG compara cada factura con la anterior de su serie: salto mayor que 1, hueco; salto 0, duplicado.
+→ Si un número mayor lleva fecha anterior, lo marca para revisar.
+→ Comprueba que cada rectificativa va en su serie y apunta a una factura que existe.
+→ Un modelo local con Ollama redacta la nota para el asesor.
+
+Lo que NO hace: renumerar, anular ni emitir rectificativas.
+
+Mi decisión de ingeniero: los avisos los da una consulta, no el modelo. La IA no ve clientes, NIF ni importes, solo cosas como "HUECO, serie A, 1 caso". Y un hueco no se arregla renumerando: se explica.
+
+Te soy sincero: cualquier programa de facturación serio, y más con Verifactu, numera solo y tiene su informe de series. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y creo que esto falla en las costuras: migraciones, facturas hechas a mano o un segundo sistema que nadie recuerda.
+
+Ah, y la numeración es correlativa dentro de cada serie (artículo 6 del RD 1619/2012): agrupa por serie o te llenarás de falsos positivos.
+
+¿Cuántas series de facturación tenéis, y alguien sabe para qué sirve cada una? 👇
+
+#AgentesDeIA #FacturacionElectronica #Python #DuckDB #Ollama
