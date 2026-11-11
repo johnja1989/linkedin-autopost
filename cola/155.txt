@@ -1,0 +1,22 @@
+Mandas a un cliente un PDF con tarifas. El documento está perfecto. Pero en sus propiedades va tu nombre, el de tu empresa y "C:\Users\ana\Desktop\tarifas_v3_INTERNO".
+
+Integrando sistemas he visto de todo en las propiedades de archivos ajenos: nombres de otros clientes, rutas de red internas. Nadie lo había mirado antes de enviarlo.
+
+Así que el agente #155 en Python revisa los metadatos de un documento antes de que salga de casa:
+→ Lee PDF, Word y fotos con ExifTool, sin abrir el contenido.
+→ Python marca los campos de autoría, las rutas con nombre de usuario y la ubicación GPS.
+→ Una regla pone el estado: bloquea si hay GPS o una ruta con usuario, revisa si hay autoría, OK si no hay nada.
+→ Un modelo local en Ollama redacta la nota con los nombres de campo que han saltado.
+→ Tú decides si lo limpias o lo envías igual.
+
+Lo que NO hace: limpiar el archivo por su cuenta ni leer el texto del documento.
+
+Mi decisión de ingeniero: el modelo nunca ve los valores, solo que "PDF:Author" tiene algo. El veredicto lo da una regla, no la IA. Y si ExifTool falla, el estado es "sin dato", nunca OK.
+
+Te soy sincero: mat2, FOCA o el propio ExifTool ya hacen esto, y Word tiene el Inspector de documento. Si usas uno, mira primero eso. Yo lo programé para entender dónde se esconde cada dato. Creo que el problema no es la herramienta, es acordarse de pasarla.
+
+Ah, y en PDF "exiftool -all=" no borra de verdad: añade una revisión y lo anterior se recupera. Pásale qpdf --linearize después.
+
+¿Has encontrado alguna vez algo raro en las propiedades de un documento ajeno? 👇
+
+#AgentesDeIA #Ciberseguridad #Privacidad #Python #ExifTool #Ollama
