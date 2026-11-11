@@ -1,0 +1,22 @@
+Tu cliente lleva 20 días sin pagar y tú llevas 20 días sin escribirle. No por olvido: es que ese correo da pereza. Y cuando por fin lo automatizas, el riesgo cambia de lado.
+
+Lo vi en un proyecto de facturación: un recordatorio automático reclamó una factura que el cliente ya tenía en disputa. Se arregló en una llamada, pero el cliente se acordó durante meses.
+
+Así que el agente #159 en Python prepara los recordatorios de cobro:
+→ Cada mañana lee con pandas el CSV de facturas pendientes que exporta el ERP.
+→ Una regla calcula los días de retraso y elige el nivel: amable (1 a 15 días), firme (16 a 45) o "llama una persona" (más de 45 días, más de 10.000 € o una incidencia abierta).
+→ Si esa factura ya tuvo recordatorio en los últimos 7 días, no hace nada.
+→ Un modelo local con Ollama redacta el cuerpo con huecos: {contacto}, {factura}, {importe} y {vencimiento}.
+→ Otra regla descarta el borrador si trae un solo dígito o le falta un hueco. El código lo rellena con los datos del ERP y lo guarda como borrador .eml.
+
+Lo que NO hace: enviar correos, llamar a nadie ni mencionar intereses o abogados. Eso lo decide una persona.
+
+Mi decisión de ingeniero: el modelo no escribe ni un número. Importes y fechas salen del ERP, no de la IA, que solo ve el nivel, el idioma y cuántas facturas hay. Y con una incidencia abierta no se reclama, lo diga quien lo diga.
+
+Te soy sincero: Odoo (seguimiento de facturas), Chaser o Upflow ya hacen esto. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y creo que lo delicado no es el texto, es saber a quién no escribir.
+
+Ah, y cruza con el extracto bancario del día antes de reclamar: no hay correo más incómodo que pedir lo que ya te pagaron.
+
+¿Cuántos días esperas antes de escribir a un cliente que no ha pagado? 👇
+
+#AgentesDeIA #Automatizacion #Python #Ollama #Finanzas
