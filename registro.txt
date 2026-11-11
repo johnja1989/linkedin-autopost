@@ -61,3 +61,4 @@
 2026-11-09 17:58 | #153 | Servidor MCP que deja a la IA mirar tu SFTP sin tocarlo: el servidor resuelve la ruta, una lista blanca decide y la clave no la ve el modelo | MCP y herramientas | Python, FastMCP, paramiko, Ollama
 2026-11-10 09:18 | #154 | Agente que revisa ofertas de empleo antes de responder: RDAP da la edad del dominio, una regla pone el color y el modelo solo cita | empleo y carrera | Python, RDAP (rdap.org), Ollama (structured outputs)
 2026-11-11 08:34 | #155 | Agente que revisa los metadatos de un documento antes de enviarlo: una regla bloquea GPS y rutas con usuario y el modelo no ve valores | ciberseguridad y privacidad | Python, ExifTool, Ollama
+2026-11-11 09:48 | #156 | Agente vigía de garantías: el modelo cita la fecha de la factura, una regla la verifica y una suma en código fija el aviso | productividad personal | Python, pdfplumber, Ollama (structured outputs), icalendar

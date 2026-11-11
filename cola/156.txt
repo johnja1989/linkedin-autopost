@@ -1,0 +1,22 @@
+Se te para la lavadora. Tiene dos años y diez meses. Estaba en garantía y no lo sabías, porque la factura dormía en un correo de 2024.
+
+Me pasó con un portátil: busqué la factura cuando ya era tarde. Desde 2022, en España la garantía legal de un producto nuevo son tres años. Lo difícil no es la ley. Es acordarse.
+
+Así que el agente #156 en Python vigila las garantías de lo que compras:
+→ pdfplumber saca el texto de tus facturas PDF, en local.
+→ Python tapa los importes antes de que nada llegue a la IA.
+→ Un modelo local en Ollama devuelve producto, fecha y la frase exacta donde la ha leído.
+→ Una regla comprueba que esa frase existe y contiene la fecha. Si no, "revisar a mano".
+→ Python suma tres años y crea un .ics que avisa 30 días antes.
+
+Lo que NO hace: reclamar a la tienda ni decirte si la avería entra en la garantía.
+
+Mi decisión de ingeniero: el modelo lee, pero no calcula. La fecha final sale de una suma en código, no de la IA. Y si la factura dice "reacondicionado" o "segunda mano", no aplica los tres años: ahí el plazo puede ser menor y lo miras tú.
+
+Te soy sincero: Paperless-ngx ya guarda y etiqueta tus facturas, y hay apps de garantías. Si usas una, mira primero ahí. Yo lo programé para entender cómo se valida lo que extrae un modelo. Creo que es el menos vistoso y puede que el más útil.
+
+Ah, y el plazo cuenta desde la entrega, no desde el pago. Guarda también el albarán.
+
+¿Tienes alguna garantía que se te pasó por no encontrar la factura? 👇
+
+#AgentesDeIA #Python #Ollama #Productividad #IALocal
