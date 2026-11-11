@@ -1,0 +1,22 @@
+Tu asistente RAG ha dicho "no lo encuentro" 40 veces este mes. Bien: no se inventó nada. Pero nadie ha leído esas 40 preguntas.
+
+Me pasó montando uno de políticas internas. Estaba contento con el umbral. Hasta que miré el log: muchos "no lo encuentro" eran la misma duda con palabras distintas. Y el documento, sencillamente, no existía.
+
+Así que el agente #157 en Python busca los huecos de tu documentación:
+→ Lee las preguntas que el RAG no supo responder, con un hash en vez del usuario.
+→ Ollama (nomic-embed-text) convierte cada pregunta en un vector, en local.
+→ HDBSCAN, de scikit-learn, agrupa las que preguntan lo mismo y deja fuera las sueltas.
+→ Una regla decide: 5 preguntas o más, de al menos 3 personas distintas, es un hueco.
+→ Un modelo local le pone título y cita 2 preguntas literales. Si la cita no está en el log, no hay ticket.
+
+Lo que NO hace: escribir el documento que falta ni responder esas preguntas.
+
+Mi decisión de ingeniero: el modelo nombra el hueco, pero no decide si importa. Eso lo dice una regla que cuenta personas. La IA ve las preguntas, nunca quién las hizo, y el ticket va al dueño del documento: escribe él, no el modelo.
+
+Te soy sincero: Arize Phoenix ya agrupa embeddings con UMAP y HDBSCAN. Si lo usas, mira primero ahí. Yo lo programé para entender cómo se pasa de un log a tareas. Creo que un "no lo encuentro" es el mejor feedback que da un RAG, y casi nadie lo lee.
+
+Ah, y con nomic-embed-text pon el prefijo "clustering: " a cada pregunta. Está pensado para esto.
+
+¿Qué pregunta crees que tu documentación interna no sabe responder? 👇
+
+#AgentesDeIA #RAG #Python #Ollama #IALocal
