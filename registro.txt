@@ -69,3 +69,4 @@
 2026-11-12 10:34 | #161 | Agente vigía de APIs que se apagan: lee Deprecation (RFC 9745) y Sunset (RFC 8594), una regla de días pone el color y el modelo no escribe fechas | integración de sistemas y APIs | Python, httpx, Ollama
 2026-11-12 10:45 | #162 | Agente vigía de regresiones de plan en SQL Server: Query Store da las cifras, una regla marca la regresión y forzar el plan lo decide el DBA | datos y SQL | Python, pyodbc, Query Store, Ollama
 2026-11-12 11:48 | #163 | Agente que evalúa tu clasificador de tickets por clase: exact() compara sin LLM juez, una regla bloquea un fallo en seguridad y la media no decide | evaluación y calidad de LLMs | Inspect AI, Ollama, Python
+2026-11-12 13:50 | #164 | Agente que vigila qué ve Internet de tus IPs: InternetDB da los puertos, una regla pone el color y el modelo no ve IPs | ciberseguridad y privacidad | n8n, InternetDB (Shodan), Ollama

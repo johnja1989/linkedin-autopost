@@ -1,0 +1,22 @@
+Abriste el 3389 un viernes "solo para una prueba". Tres meses después sigue abierto, y quien más lo visita no eres tú.
+
+A mí me pasó con la consola de administración de un entorno de pruebas. Semanas expuesta. La vi por casualidad, buscando otra cosa.
+
+Así que el agente #164 en n8n vigila qué ve Internet de tus IPs públicas:
+→ Cada lunes lee tu lista: alias, IP y los puertos que esperas abiertos.
+→ Un HTTP Request pregunta a InternetDB de Shodan qué ve de cada IP: puertos, CVE y etiquetas. Sin clave y gratis para uso no comercial.
+→ Un nodo Code aplica la regla: un puerto fuera de tu lista, rojo. CVE sin puerto nuevo, ámbar. Sin datos, gris, que no es lo mismo que cerrado.
+→ Ollama recibe solo alias, color y puertos, y redacta el aviso.
+→ Te llega por correo.
+
+Lo que NO hace: escanear tus IPs, cerrar puertos ni confirmar que una CVE te afecte.
+
+Mi decisión de ingeniero: el color lo pone una regla, no el modelo. El modelo nunca ve una IP, ve "vpn-oficina". Y las CVE de InternetDB pueden no estar verificadas, así que son ámbar, no rojo.
+
+Te soy sincero: Shodan Monitor o un nmap programado desde fuera ya hacen esto. Si usas uno, mira primero ahí. Yo lo programé en n8n para entender cómo funciona por dentro. Creo que lo peligroso no es el puerto que abres, es el que olvidas.
+
+Ah, y InternetDB se actualiza cada semana: para comprobar un puerto que cerraste hace una hora, no te sirve.
+
+¿Cada cuánto miráis qué ve Internet de vuestras IPs? 👇
+
+#AgentesDeIA #Ciberseguridad #n8n #Shodan #Ollama #IA
