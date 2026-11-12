@@ -1,0 +1,22 @@
+Mandaste 30 candidaturas este mes. ¿A cuántas les hiciste seguimiento? Si eres como yo, a las que te acordaste.
+
+Ahora que busco trabajo como ingeniero de IA, llevo las candidaturas en una tabla. El problema no es la tabla, es acordarme de mirarla. Y escribir el tercer "¿cómo va el proceso?" de la semana da una pereza enorme.
+
+Así que el agente #165 en Python decide cuándo hacer seguimiento a una candidatura:
+→ Cada mañana lee la tabla: empresa, puesto, estado, último contacto, seguimientos hechos y email.
+→ numpy.busday_count cuenta días hábiles desde el último contacto, con tus festivos.
+→ Una regla decide: si no está "enviada", nada. Con 2 seguimientos sin respuesta, se cierra. Menos de 7 días hábiles, esperar. Sin email, solo te avisa.
+→ Si toca, Ollama redacta un borrador corto con empresa, puesto y una nota tuya.
+→ Otra regla lo revisa: debe nombrar el puesto tal cual y no llevar cifras. Si falla, no hay borrador.
+
+Lo que NO hace: enviar correos, escribir a reclutadores ni decidir qué candidatura te importa más.
+
+Mi decisión de ingeniero: el cuándo lo pone una regla, no el modelo. El modelo no ve salarios ni tu historial. Y el borrador se queda en una carpeta: lo envías tú o no se envía.
+
+Te soy sincero: Huntr o Teal ya llevan el seguimiento de candidaturas. Si usas una, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Creo que lo difícil de buscar empleo no es enviar, es no soltar.
+
+Ah, y si tras dos seguimientos nadie responde, ciérrala tú. Esa energía rinde más en una candidatura nueva.
+
+¿Cuántos días esperáis antes de preguntar? 👇
+
+#AgentesDeIA #BusquedaDeEmpleo #Python #Ollama #IA
