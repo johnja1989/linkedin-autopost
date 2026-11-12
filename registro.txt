@@ -66,3 +66,4 @@
 2026-11-11 13:49 | #158 | Agente juez del despliegue canario: Prometheus da las cifras, una regla promueve o revierte y un vacío no cuenta como cero | DevOps y observabilidad | Python, Prometheus (API HTTP), Ollama
 2026-11-11 17:17 | #159 | Agente de recordatorios de cobro: una regla elige el nivel, una incidencia abierta no se reclama y el modelo no escribe cifras | automatización de negocio | Python, pandas, Ollama (structured outputs), email (.eml)
 2026-11-11 17:58 | #160 | Agente que revisa la numeración de facturas antes del cierre: una consulta con LAG marca huecos y duplicados por serie y el modelo no ve importes | facturación electrónica y documentos | Python, DuckDB, Ollama
+2026-11-12 10:34 | #161 | Agente vigía de APIs que se apagan: lee Deprecation (RFC 9745) y Sunset (RFC 8594), una regla de días pone el color y el modelo no escribe fechas | integración de sistemas y APIs | Python, httpx, Ollama

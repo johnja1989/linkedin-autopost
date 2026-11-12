@@ -1,0 +1,22 @@
+Muchas APIs no se apagan sin avisar. Avisan en una cabecera HTTP que tu código recibe cada día y que nadie lee.
+
+En una integración me pasó: el aviso de que una versión se retiraba llegó a un buzón compartido que nadie miraba. Nos enteramos por el primer error.
+
+Así que el agente #161 en Python vigila las APIs que consumes antes de que se apaguen:
+→ Cada noche hace una llamada GET de solo lectura a cada endpoint de tu inventario.
+→ Lee las cabeceras Deprecation (RFC 9745), Sunset (RFC 8594) y sus enlaces a la documentación.
+→ Convierte las fechas en código: una cabecera mal escrita queda "ilegible", no se ignora.
+→ Una regla pone el color: menos de 30 días para el Sunset, rojo; obsoleta sin fecha, ámbar.
+→ Un modelo local con Ollama redacta la nota para el dueño del proceso.
+
+Lo que NO hace: migrar a la nueva versión ni tocar endpoints que escriben.
+
+Mi decisión de ingeniero: las fechas las pone el código, el modelo no escribe ninguna cifra. La IA no ve respuestas ni tokens, solo el endpoint, el color y el enlace. Y no tener cabecera no significa "para siempre".
+
+Te soy sincero: el changelog y los correos del proveedor siguen siendo la fuente principal, y si tu gateway guarda las cabeceras de respuesta, una alerta ahí te da casi lo mismo. Mira eso primero. Yo lo programé para entender cómo funciona por dentro. Pocos proveedores las envían todavía, pero los que lo hacen te regalan semanas.
+
+Ah, y si publicas APIs, añádelas tú también: le ahorras un susto a quien te consume.
+
+¿Cómo os enteráis vosotros de que una API que usáis se va a apagar? 👇
+
+#AgentesDeIA #APIs #IntegracionDeSistemas #Python #Ollama
