@@ -1,0 +1,22 @@
+Te llegan decenas de newsletters a la semana y abres tres. Las demás las guardas "para luego". Y luego nunca llega.
+
+Yo tenía una carpeta "Leer más tarde" con cientos de correos sin abrir. Lo difícil no era darme de baja, era decidir de cuáles.
+
+Así que el agente #166 en Python decide qué newsletters te sobran sin abrir ni una:
+→ Se conecta por IMAP en solo lectura y mira los últimos 30 días.
+→ Pide solo dos cabeceras, From y List-Unsubscribe, con BODY.PEEK: ningún correo se marca como leído.
+→ Sin List-Unsubscribe, no cuenta como newsletter.
+→ Una regla decide: 4 o más envíos y ninguno abierto, propuesta de baja. Si abriste uno, se queda.
+→ Ollama solo agrupa los remitentes (tiendas, noticias, formación) y redacta la lista del viernes.
+
+Lo que NO hace: darse de baja solo, pulsar enlaces ni borrar correos.
+
+Mi decisión de ingeniero: el modelo no ve asuntos ni cuerpos, solo el remitente y dos números. Quién se va lo decide la regla, no el modelo. Y el enlace de baja lo pulsas tú: si un remitente no te suena, puede ser spam, y darte de baja solo le confirma que tu dirección existe.
+
+Te soy sincero: Gmail ya tiene "Gestionar suscripciones" y Apple Mail te ofrece cancelar la suscripción. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Creo que lo útil no es la baja, es el criterio: "no la abrí en un mes" es más honesto que "algún día la leeré".
+
+Ah, y si usas Gmail por IMAP, necesitas una contraseña de aplicación, no la tuya. Y nunca en el código.
+
+¿Cuántas newsletters lees de verdad cada semana? 👇
+
+#AgentesDeIA #Python #Productividad #Ollama #Email #IA

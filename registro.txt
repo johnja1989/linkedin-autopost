@@ -71,3 +71,4 @@
 2026-11-12 11:48 | #163 | Agente que evalúa tu clasificador de tickets por clase: exact() compara sin LLM juez, una regla bloquea un fallo en seguridad y la media no decide | evaluación y calidad de LLMs | Inspect AI, Ollama, Python
 2026-11-12 13:50 | #164 | Agente que vigila qué ve Internet de tus IPs: InternetDB da los puertos, una regla pone el color y el modelo no ve IPs | ciberseguridad y privacidad | n8n, InternetDB (Shodan), Ollama
 2026-11-12 15:48 | #165 | Agente de seguimiento de candidaturas: días hábiles con festivos, una regla decide cuándo escribir y nada se envía solo | empleo y carrera | Python, numpy (busday_count), Ollama
+2026-11-12 17:56 | #166 | Agente de newsletters olvidadas: lee dos cabeceras por IMAP sin marcar nada como leído, una regla propone la baja y el modelo no ve correos | productividad personal | Python, imaplib (IMAP, BODY.PEEK), Ollama
