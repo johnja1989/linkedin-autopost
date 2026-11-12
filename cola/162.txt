@@ -1,0 +1,22 @@
+El viernes el informe de cierre tardaba 2 minutos. El lunes, 40. Nadie había tocado el código. Lo que cambió fue el plan de ejecución.
+
+Me pasó con un SQL Server de facturación: estadísticas actualizadas el fin de semana, plan nuevo, y una consulta que pasó de segundos a minutos. Tardamos media mañana en mirar donde había que mirar.
+
+Así que el agente #162 en Python vigila las regresiones de plan en SQL Server:
+→ Cada hora lee Query Store con un usuario de solo lectura: ejecuciones y duración media por consulta y plan.
+→ Compara el plan actual de cada consulta con el anterior.
+→ Una regla decide: con menos de 30 ejecuciones, "pocos datos" (que no es un OK); si tarda el doble y al menos 50 ms más, regresión.
+→ Prepara el EXEC sp_query_store_force_plan, sin ejecutarlo.
+→ Un modelo local con Ollama redacta la nota para el DBA.
+
+Lo que NO hace: forzar planes, crear índices ni ejecutar nada que escriba.
+
+Mi decisión de ingeniero: el modelo no ve el texto de las consultas, que puede llevar literales con datos de clientes. Y forzar un plan lo decide una persona, porque un plan forzado también envejece.
+
+Te soy sincero: SQL Server ya tiene corrección automática de planes (FORCE_LAST_GOOD_PLAN) y SSMS trae el informe de consultas con regresión. Si los tienes, mira eso primero. Yo lo programé para entender cómo funciona por dentro. Y, la verdad, prefiero que el aviso llegue con el porqué antes de que llame el usuario.
+
+Ah, y comprueba que Query Store sigue en READ_WRITE: si se llena, pasa a solo lectura y deja de capturar.
+
+¿Cómo os enteráis vosotros de que una consulta se ha vuelto lenta? 👇
+
+#AgentesDeIA #SQLServer #QueryStore #Python #Ollama #BasesDeDatos
