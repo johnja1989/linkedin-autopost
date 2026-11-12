@@ -1,0 +1,22 @@
+Tu clasificador de tickets acierta el 93% en las pruebas. Y el phishing que reportó alguien el martes acabó en facturación.
+
+Me pasó con un modelo local. 93% y yo contento. Luego miré por clase: de los 18 tickets de seguridad, fallaba 4. Eran pocos, y la media los escondía.
+
+Así que el agente #163 en Inspect AI evalúa un clasificador por clase, no por la media:
+→ Lee un CSV de tickets reales, anonimizados y etiquetados por una persona.
+→ Inspect AI los lanza contra tu modelo de Ollama, con el prompt de producción.
+→ El scorer exact() compara la respuesta con la etiqueta. No hay LLM juez.
+→ El código cuenta aciertos por clase.
+→ Una regla decide: un fallo en seguridad bloquea, otra clase por debajo del 90% bloquea, y con menos de 20 casos dice "pocos datos", que no es un OK.
+
+Lo que NO hace: reclasificar tickets en producción, tocar tu prompt ni etiquetar casos por ti.
+
+Mi decisión de ingeniero: la nota la pone una regla por clase, porque fallar un phishing no cuesta lo mismo que fallar una duda de facturación. Y todo corre en local: los tickets no salen de tu equipo.
+
+Te soy sincero: classification_report de scikit-learn te da el acierto por clase en una línea, y promptfoo o DeepEval ya hacen esto. Si usas alguno, mira primero ahí. Yo lo programé con Inspect AI para entender cómo funciona por dentro. Creo que la media es el número más cómodo y el que más engaña.
+
+Ah, y guarda los logs: con inspect view comparas un modelo con otro.
+
+¿Vosotros miráis la media o el acierto por clase cuando evaluáis un modelo? 👇
+
+#AgentesDeIA #EvaluacionDeLLMs #InspectAI #Ollama #Python #IA

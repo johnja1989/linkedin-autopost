@@ -68,3 +68,4 @@
 2026-11-11 17:58 | #160 | Agente que revisa la numeración de facturas antes del cierre: una consulta con LAG marca huecos y duplicados por serie y el modelo no ve importes | facturación electrónica y documentos | Python, DuckDB, Ollama
 2026-11-12 10:34 | #161 | Agente vigía de APIs que se apagan: lee Deprecation (RFC 9745) y Sunset (RFC 8594), una regla de días pone el color y el modelo no escribe fechas | integración de sistemas y APIs | Python, httpx, Ollama
 2026-11-12 10:45 | #162 | Agente vigía de regresiones de plan en SQL Server: Query Store da las cifras, una regla marca la regresión y forzar el plan lo decide el DBA | datos y SQL | Python, pyodbc, Query Store, Ollama
+2026-11-12 11:48 | #163 | Agente que evalúa tu clasificador de tickets por clase: exact() compara sin LLM juez, una regla bloquea un fallo en seguridad y la media no decide | evaluación y calidad de LLMs | Inspect AI, Ollama, Python
