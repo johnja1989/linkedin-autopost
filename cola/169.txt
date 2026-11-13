@@ -1,0 +1,21 @@
+Una tarea programada que falla manda un error. Una que deja de ejecutarse no manda nada. Y ese silencio se parece mucho a "todo bien".
+
+Tengo una tarea de Windows que sube cosas a GitHub cada 10 minutos. Si el PC se queda apagado, ¿quién se queja? Nadie. El log simplemente deja de crecer.
+
+Así que el agente #169 en Python vigila las tareas programadas que fallan en silencio:
+→ Cada tarea, al terminar, escribe un latido: la hora y si salió bien.
+→ croniter calcula, con su cron y la zona horaria de Madrid, cuándo debió ejecutarse por última vez.
+→ Una regla compara: sin latido desde entonces más un margen, RETRASADA; última ejecución con error, FALLA; nunca ha escrito, SIN DATOS, que también es alerta.
+→ Ollama recibe solo nombre, estado y minutos de retraso, y redacta el aviso.
+
+Lo que NO hace: reintentar la tarea ni leer sus logs.
+
+Mi decisión de ingeniero: el silencio cuenta como fallo, no como éxito. El estado lo pone la regla y el modelo solo redacta, sin ver logs que pueden llevar rutas o datos. Y el vigía corre en otra máquina: si vive en el mismo PC, se apaga con él.
+
+Te soy sincero: Healthchecks.io, Cronitor o Dead Man's Snitch ya hacen esto, y Healthchecks es open source. Si usas uno, mira primero cómo configuras el margen. Yo lo programé para entender cómo funciona por dentro. Creo que lo valioso es la idea: vigilar la ausencia.
+
+Ah, y no programes tareas entre las 2 y las 3 de la madrugada en España: el día del cambio de hora de marzo esa hora no existe.
+
+¿Cómo te enteras tú de que un cron dejó de ejecutarse? 👇
+
+#AgentesDeIA #DevOps #Observabilidad #Python #Ollama #Cron
