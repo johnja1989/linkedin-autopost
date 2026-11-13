@@ -1,0 +1,21 @@
+Alguien puede saber mucho de ti solo con los títulos de tu calendario. "Oncología 9:00", "Abogado divorcios", "Entrevista en la competencia". Sin abrir un solo evento.
+
+Quería que un asistente me buscara huecos para reuniones. Pero darle el calendario entero es darle mis títulos, mis asistentes y dónde estoy cada tarde. Y eso no se desdice.
+
+Así que el agente #170 en un servidor MCP deja a la IA ver tu agenda sin leer de qué va:
+→ icalendar lee tu .ics en tu propio equipo y recurring-ical-events expande los eventos que se repiten.
+→ De cada evento sale solo la hora de inicio y fin. Nunca el título, ni los asistentes.
+→ Una regla fija la jornada (9 a 19h) y calcula los huecos libres de al menos lo que pidas.
+→ La herramienta MCP devuelve "11:00-13:00". La IA propone cuándo quedar, sin saber qué hay dentro.
+
+Lo que NO hace: crear eventos, mover reuniones ni enseñar de qué va ninguna cita.
+
+Mi decisión de ingeniero: el modelo recibe huecos, no eventos. Lo que sale del .ics lo decide el servidor, no el prompt: solo horas. Así una inyección escondida en la descripción de una cita no tiene nada que leer.
+
+Te soy sincero: Cal.com o el propio Google Calendar ya dan libre/ocupado a terceros. Si usas uno, mira primero qué comparte de verdad tu enlace. Yo lo monté en MCP para entenderlo por dentro. Creo que el truco está en recortar en el servidor, no en pedirle al modelo que "no mire".
+
+Ah, y revisa qué expone tu enlace público de disponibilidad: a veces filtra más de lo que crees.
+
+¿Dejarías que una IA viera tu calendario entero para buscarte un hueco? 👇
+
+#AgentesDeIA #MCP #Privacidad #Python #Calendario
