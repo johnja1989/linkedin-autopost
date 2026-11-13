@@ -1,0 +1,22 @@
+La unidad de red no montó esa noche. El cargador leyó una carpeta vacía y la sincronización del RAG hizo lo que le pediste: borrar todo lo que ya no veía.
+
+Lo probé: con el indexador de LangChain y cleanup="full", una pasada sin documentos borró los 5 que había. Está documentado. Lo que faltaba era un freno.
+
+Así que el agente #168 en Python sincroniza el índice del RAG con un freno antes de borrar:
+→ Carga la carpeta y anota de qué archivo sale cada documento.
+→ Compara con la lista de fuentes de la última pasada buena.
+→ Si la carpeta viene vacía o desaparece más del 10 % de las fuentes, retiene y no toca nada.
+→ Si pasa, el indexador solo recalcula embeddings de lo que cambió (un hash por documento) y quita lo que ya no está.
+→ Ollama resume para el equipo qué entró, cambió y salió, con nombres de archivo y cifras.
+
+Lo que NO hace: decidir qué versión es la vigente ni recuperar lo que ya se borró.
+
+Mi decisión de ingeniero: el umbral está en el código, no en el modelo. Una retención la libera una persona que mira la lista. Y el modelo no ve el contenido de los documentos.
+
+Te soy sincero: LangChain (index con un record manager) y LlamaIndex (IngestionPipeline con docstore) ya hacen la sincronización incremental. Si usas uno, mira primero cómo borra. Yo lo programé para entender cómo funciona por dentro. Creo que lo difícil no es indexar, es saber cuándo no hacerlo.
+
+Ah, y haz una copia del índice antes de la primera pasada con borrado.
+
+¿Tu RAG se sincroniza solo o alguien lo revisa antes de borrar? 👇
+
+#AgentesDeIA #RAG #LangChain #Python #Ollama #IA
