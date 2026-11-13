@@ -1,0 +1,22 @@
+Alguien registra "tuempresa.co" un martes. El viernes tu cliente recibe una factura "corregida" con otro IBAN. Y nadie de tu equipo vio nacer ese dominio.
+
+Hace años vi una cadena de correos así en una integración con un proveedor: un dominio con una letra cambiada que nadie miró dos veces. Desde entonces leo los remitentes con lupa. Y la verdad, eso no escala.
+
+Así que el agente #172 en Python con dnstwist vigila los dominios parecidos al tuyo:
+→ dnstwist genera variantes (letras cambiadas u omitidas, homoglifos, otro TLD) y consulta su DNS.
+→ Quita tus propios dominios con una lista blanca.
+→ Compara con la ejecución de ayer: solo te avisa de los nuevos.
+→ Una regla pone el color: con MX, ROJO (puede recibir correo); solo web, ÁMBAR; registrado sin nada, VERDE para vigilar.
+→ Un modelo local en Ollama redacta la nota para seguridad, solo con nombres de dominio y colores.
+
+Lo que NO hace: visitar esas webs, denunciar nada ni decidir que un dominio es fraude.
+
+Mi decisión de ingeniero: el color sale de registros DNS, no de lo que le parezca al modelo. Un MX no prueba fraude, pero sí que alguien preparó ese dominio para el correo. Y el agente no abre páginas: un dominio sospechoso no se visita desde la red de la empresa.
+
+Te soy sincero: Have I Been Squatted o el propio dnstwist desde la terminal ya hacen esto. Si usas uno, mira primero sus alertas. Yo lo programé para entender cómo funciona por dentro. Creo que lo valioso no es la lista de dos mil variantes, es saber cuál apareció ayer.
+
+Ah, y registra tú mismo las dos o tres variantes más obvias de tu dominio: cuestan poco.
+
+¿Alguien vigila en tu empresa los dominios que se parecen al vuestro? 👇
+
+#AgentesDeIA #Ciberseguridad #Phishing #Python #DNS
