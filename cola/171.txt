@@ -1,0 +1,22 @@
+Un servicio SOAP devuelve "soap:Server". Tu script reintenta tres veces. Y el proveedor recibe tres altas de la misma factura.
+
+Me pasó algo parecido integrando un ERP: un reintento "inofensivo" y una mañana deshaciendo pedidos duplicados. El fallo no era el error, era quién decidía qué hacer con él.
+
+Así que el agente #171 en Python con zeep tría los errores SOAP de un servicio heredado:
+→ zeep llama al servicio y, si falla, captura el Fault con su código y su texto.
+→ Quita el prefijo del código ("soap:Server" pasa a "Server"): cada servicio usa el suyo.
+→ Una regla decide: Client o Sender se corrige, no se reintenta; Server o Receiver, solo si es una consulta y como mucho 3 veces.
+→ Un alta o un pago con error de servidor nunca se repite solo: se escala a una persona.
+→ Un modelo local en Ollama resume el error para el ticket, sin ver el XML.
+
+Lo que NO hace: reenviar altas ni decidir si un error "parece temporal".
+
+Mi decisión de ingeniero: qué se reintenta lo marca una lista escrita a mano, no el modelo. El XML lleva NIF e importes; a la IA solo le llegan el código y el texto del error. Un código desconocido queda SIN CLASIFICAR, no "reintenta por si acaso".
+
+Te soy sincero: Apache Camel o MuleSoft ya traen políticas de reintento y colas de errores. Si usas uno, mira primero su configuración de reintentos. Yo lo programé para entender cómo funciona por dentro. Creo que muchos duplicados vienen de un "reintentar 3 veces" puesto sin mirar qué operación era.
+
+Ah, y guarda el texto original del error junto al resumen: es el que vale para reclamar al proveedor.
+
+¿Tus integraciones reintentan todo igual o distinguen consultas de altas? 👇
+
+#AgentesDeIA #SOAP #IntegracionDeSistemas #Python #APIs
