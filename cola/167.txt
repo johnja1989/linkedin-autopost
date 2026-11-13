@@ -1,0 +1,22 @@
+Una factura de un proveedor de EE. UU. con fecha de sábado. Buscas el tipo de cambio del BCE de ese día y no existe: el BCE no publica en fin de semana.
+
+En mis años integrando ERPs vi facturas convertidas con el tipo del día en que se contabilizaron, no del día de la factura. Nadie lo hacía mal a propósito. Nadie lo revisaba.
+
+Así que el agente #167 en Python revisa el tipo de cambio de las facturas en divisa:
+→ Lee del ERP la fecha, la moneda y el tipo aplicado.
+→ Pide al portal de datos del BCE el tipo de referencia de esa fecha, sin clave.
+→ Si cae en fin de semana o festivo, toma el último publicado antes y lo dice: "usé el del viernes 6".
+→ Una regla compara: más de un 0,5 % de diferencia, retenida. Sin dato, también: no se adivina.
+→ Ollama redacta la nota para contabilidad con fechas y porcentaje.
+
+Lo que NO hace: corregir facturas, contabilizar ni decidir qué tipo vale.
+
+Mi decisión de ingeniero: el modelo no ve importes ni proveedores, solo moneda, fechas y un porcentaje. La tolerancia está en el código. Y el BCE publica sus tipos solo a título informativo: qué tipo aplicar lo decide contabilidad.
+
+Te soy sincero: Odoo o SAP ya pueden descargar los tipos del BCE cada día. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Creo que el valor no está en bajar el tipo, sino en decir de qué día salió.
+
+Ah, y guarda los tipos con Decimal, no con float.
+
+¿En tu empresa quién decide qué tipo de cambio se aplica a una factura en divisa? 👇
+
+#AgentesDeIA #Python #FacturacionElectronica #Ollama #Contabilidad #IA

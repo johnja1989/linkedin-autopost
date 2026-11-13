@@ -72,3 +72,4 @@
 2026-11-12 13:50 | #164 | Agente que vigila qué ve Internet de tus IPs: InternetDB da los puertos, una regla pone el color y el modelo no ve IPs | ciberseguridad y privacidad | n8n, InternetDB (Shodan), Ollama
 2026-11-12 15:48 | #165 | Agente de seguimiento de candidaturas: días hábiles con festivos, una regla decide cuándo escribir y nada se envía solo | empleo y carrera | Python, numpy (busday_count), Ollama
 2026-11-12 17:56 | #166 | Agente de newsletters olvidadas: lee dos cabeceras por IMAP sin marcar nada como leído, una regla propone la baja y el modelo no ve correos | productividad personal | Python, imaplib (IMAP, BODY.PEEK), Ollama
+2026-11-13 07:50 | #167 | Agente que revisa el tipo de cambio de facturas en divisa: el BCE da la referencia, un sábado usa el último publicado y una regla con tolerancia retiene | facturación electrónica y documentos | Python, httpx, API de datos del BCE, Ollama
