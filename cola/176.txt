@@ -1,0 +1,25 @@
+Cambias de modelo local porque en el chat responde igual de rápido.
+
+Luego le llega un prompt de verdad, con dos páginas de contexto, y tu usuario se queda mirando la pantalla.
+
+Me pasó probando un modelo nuevo en mi portátil. Con "hola" iba como un tiro. Con los prompts reales de mi RAG, casi tardaba el doble. Y yo lo había decidido a ojo.
+
+Así que el agente #176 en Python mide un modelo antes de cambiarlo:
+
+→ Lanza los mismos 40 prompts reales al modelo actual y al candidato.
+→ La API de Ollama devuelve los tiempos y tokens de cada respuesta.
+→ Resta el tiempo de carga del modelo, que no es lo que vive el usuario.
+→ Calcula el p95 de latencia y la mediana de tokens por segundo.
+→ Una regla decide: si el p95 sube más de un 20 %, rojo. Un timeout cuenta como fallo, no como dato.
+
+Lo que NO hace: decir si las respuestas son mejores. Eso lo mide otra suite.
+
+Mi decisión de ingeniero: decide una resta, no un modelo. Los prompts salen de mis logs, anonimizados, porque los de demo son cortos y mienten. Y mido en la misma máquina.
+
+Te soy sincero: ollama run --verbose ya te enseña los tokens por segundo, y llama-bench de llama.cpp mide con mucho más rigor. Si solo quieres un número, mira primero ahí. Yo lo programé para entender cómo funciona por dentro y tener un sí o un no con mis prompts. Creo que la media engaña: el usuario recuerda la respuesta lenta, no la típica.
+
+Ah, y guarda la versión de Ollama con cada informe: una actualización también mueve los números.
+
+¿Tú cómo decides si un modelo es "lo bastante rápido"? 👇
+
+#AgentesDeIA #Python #Ollama #LLMOps #ModelosLocales
