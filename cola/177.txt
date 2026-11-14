@@ -1,0 +1,25 @@
+Ese enlace de "cualquiera con el enlace" que mandaste en 2021 para algo rápido sigue funcionando.
+
+Y nadie recuerda a quién le llegó.
+
+Me pasó revisando mi Drive. Encontré la hoja de cálculo de una reforma con permiso de edición para cualquiera con el enlace. Llevaba años así. No pasó nada, creo. Pero no lo sé.
+
+Así que el agente #177 en Python revisa lo que tienes abierto en Google Drive:
+
+→ La API de Drive busca tus archivos compartidos con enlace o públicos en la web.
+→ Pide solo metadatos: tipo, fecha y permisos. No abre ningún archivo.
+→ Una regla pone el color: rojo si cualquiera puede editar o es público, ámbar si lleva más de 180 días sin tocarse.
+→ El modelo local redacta el resumen semanal con recuentos.
+→ Tú decides qué cierras.
+
+Lo que NO hace: quitar permisos. Ni uno.
+
+Mi decisión de ingeniero: usa el permiso drive.metadata.readonly, así que aunque quisiera no podría leer el contenido ni cambiar nada. El color lo pone una regla, no el modelo. Y el modelo no ve nombres ni enlaces: el nombre de un archivo ya cuenta demasiado.
+
+Te soy sincero: si usas Google Workspace, la consola de administración ya tiene registros de auditoría de Drive y reglas de prevención de pérdida de datos. Mira primero ahí. Yo lo programé para entender cómo funciona por dentro y para mi cuenta personal. Me sorprendió lo mucho que había olvidado.
+
+Ah, y cerrar el enlace no borra las copias que alguien ya descargó.
+
+¿Cuándo revisaste por última vez lo que tienes compartido? 👇
+
+#AgentesDeIA #Ciberseguridad #Privacidad #GoogleDrive #Python
