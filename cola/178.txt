@@ -1,0 +1,25 @@
+Un fichero de transferencias puede pasar el XSD del banco sin un solo error y aun así pagar dos veces al mismo proveedor.
+
+El esquema comprueba la forma. No el sentido.
+
+Me pasó en una integración con un ERP. Un reintento duplicó una línea en el lote, el fichero era válido y el banco lo aceptó. Lo vimos al conciliar.
+
+Así que el agente #178 en Python revisa el fichero de pagos SEPA (pain.001) antes de subirlo:
+
+→ lxml lo valida contra el XSD.
+→ Python cuenta las transferencias y suma los importes con Decimal: tienen que cuadrar con NbOfTxs y CtrlSum de la cabecera.
+→ schwifty comprueba los dígitos de control de cada IBAN y lo cruza con el maestro de proveedores.
+→ Una regla retiene el lote si algo no cuadra, si aparece un IBAN nuevo o si se repiten IBAN e importe.
+→ El modelo local redacta el aviso para tesorería con códigos y recuentos.
+
+Lo que NO hace: subir el fichero al banco ni firmar nada. Eso lo hace una persona.
+
+Mi decisión de ingeniero: el veredicto lo da una comparación de números, no el modelo. La IA no ve IBANs, nombres ni importes: recibe "SUMA, IBAN_NUEVO x1". Y un IBAN nuevo no se aprueba por correo: se llama al teléfono que ya estaba en el maestro.
+
+Te soy sincero: tu ERP y la banca online ya validan la remesa al generarla y al subirla. Mira primero ahí. Yo lo programé para entender cómo funciona por dentro.
+
+Ah, y suma con Decimal, nunca con float: en Python 0.1 + 0.2 da 0.30000000000000004.
+
+¿Quién revisa en tu empresa el fichero de pagos antes de subirlo al banco? 👇
+
+#AgentesDeIA #Python #SEPA #Tesoreria #XML #Integracion
