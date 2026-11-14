@@ -1,0 +1,25 @@
+Un deadlock en SQL Server dura milisegundos. El motor elige una víctima y la aplicación reintenta. Nadie se entera.
+
+Hasta que es el mismo deadlock 40 veces al día.
+
+Me pasó algo parecido con dos procesos de facturación: uno generaba facturas y otro actualizaba estados y a veces se pisaban. Cada caso suelto parecía ruido. Juntos, eran un patrón.
+
+Así que el agente #174 en Python lee los deadlocks que SQL Server ya guarda y te dice cuáles se repiten:
+
+→ Cada hora consulta la sesión system_health con pyodbc y saca los xml_deadlock_report.
+→ ElementTree extrae del grafo las tablas, los índices y los modos de bloqueo.
+→ Con eso calcula una huella: mismos objetos, índices y modos, mismo deadlock.
+→ Una regla pone el color: 3 o más veces en 24 horas con la misma huella, rojo. Menos, amarillo.
+→ Ollama, en local, redacta una hipótesis para el DBA: orden de acceso distinto o un índice que falta.
+
+Lo que NO hace: matar sesiones, crear índices ni cambiar el nivel de aislamiento.
+
+Mi decisión de ingeniero: el inputbuf (el texto de la consulta) no se lee, porque puede llevar DNIs o importes. El modelo solo ve nombres de objetos, modos y cifras. Y la gravedad la decide la regla, no el modelo.
+
+Te soy sincero: sp_BlitzLock (gratis, del First Responder Kit) y herramientas como Redgate SQL Monitor ya analizan deadlocks. Si usas una, mira primero ahí. Yo lo programé para entender cómo funciona por dentro, y creo que leer el XML de un grafo una vez enseña más que diez diagramas.
+
+Ah, y system_health rota sus ficheros: si quieres historial, guarda los deadlocks en una tabla tuya.
+
+¿Cuántos deadlocks tuvo ayer tu base de datos, y quién lo sabe? 👇
+
+#AgentesDeIA #SQLServer #Python #Ollama #BasesDeDatos
