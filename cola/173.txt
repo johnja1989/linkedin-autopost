@@ -1,0 +1,22 @@
+Una foto torcida de un ticket: pone 14,50 y el modelo lee 15,40. Nadie lo nota hasta el cierre del mes.
+
+Durante años rellené notas de gastos de viajes a clientes con tickets arrugados en la cartera. Y la verdad, siempre había uno que no cuadraba con lo que yo había apuntado.
+
+Así que el agente #173 en Python con Tesseract revisa los tickets antes de la nota de gastos:
+→ Tesseract hace el OCR de cada foto, en tu equipo.
+→ Un modelo local en Ollama saca comercio, NIF, fecha, total y tipo de gasto con salida estructurada (Pydantic).
+→ Una regla comprueba que ese total aparece tal cual en el texto del OCR. Si no está, REVISAR: el modelo no puede inventarse una cifra.
+→ Mismo NIF, misma fecha y mismo importe que otro ticket: RETENIDO por repetido.
+→ Los límites de tu política, en un YAML, marcan lo que se pasa. Lo demás queda PROPUESTO y lo firma una persona.
+
+Lo que NO hace: enviar la nota, pagar nada ni decidir si un gasto es legítimo.
+
+Mi decisión de ingeniero: el modelo lee, pero la cifra solo vale si está en el ticket. Los límites viven en un archivo que aprueba administración, no en el prompt. Y las fotos no salen de tu ordenador.
+
+Te soy sincero: Expensify o SAP Concur ya escanean tickets y aplican políticas de gastos. Si usas una, mira primero sus reglas de política. Yo lo programé para entender cómo funciona por dentro. Creo que lo difícil no es leer el ticket, es saber cuándo no fiarse de lo leído.
+
+Ah, y guarda los importes en céntimos, como enteros: con coma flotante, tarde o temprano se te escapa un céntimo.
+
+¿Cuántos tickets se te pierden o no cuadran al cerrar el mes? 👇
+
+#AgentesDeIA #Automatizacion #Python #Ollama #OCR #Finanzas
