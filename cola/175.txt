@@ -1,0 +1,26 @@
+Mandaste el CV a 30 ofertas. Era bonito: dos columnas, iconos, tu email al lado de un sobrecito.
+
+Y puede que el primer programa que lo leyó no encontrara tu email.
+
+Me pasó con mi propio CV. Lo pegué en texto plano y delante del teléfono salía un carácter raro: el icono venía de una fuente de iconos. A simple vista, imposible verlo.
+
+Así que el agente #175 en Python lee tu CV como lo leería un programa:
+
+→ pypdf extrae el texto plano de cada página.
+→ Unas regex buscan email, teléfono y fechas.
+→ Comprueba las secciones: experiencia, formación y habilidades.
+→ Cuenta los caracteres de iconos y las páginas casi sin texto.
+→ Una regla pone el color: sin texto o sin email, rojo.
+→ Ollama, en local, convierte el informe en tres arreglos.
+
+Lo que NO hace: puntuar tu CV contra una oferta ni reescribirlo.
+
+Mi decisión de ingeniero: el modelo no ve el CV, solo el informe (cifras y sí o no). Para decirte "tu email está en una imagen" no necesita tu nombre ni tu dirección. Y el color lo pone la regla.
+
+Te soy sincero: Jobscan y Resume Worded ya revisan CVs pensando en los ATS, y van bastante más allá. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Cada ATS extrae a su manera, así que esto es una aproximación, no una garantía. Pero creo que ver tu CV en texto plano una vez cambia cómo lo diseñas.
+
+Ah, y la prueba sin código: copia todo el PDF y pégalo en un bloc de notas. Lo que no salga ahí, no lo des por leído.
+
+¿Has hecho alguna vez esa prueba con tu CV? 👇
+
+#AgentesDeIA #Python #Ollama #BusquedaDeEmpleo #CV
