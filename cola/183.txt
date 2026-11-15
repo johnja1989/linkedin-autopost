@@ -1,0 +1,24 @@
+"Quiero devolverlo, me queda pequeño". Un email normal. Hasta que abres el pedido: entregado hace 23 días.
+
+Lo vi en la tienda online de un amigo. Cada lunes, alguien leyendo devoluciones, buscando la fecha en el ERP y contando días a mano.
+
+Así que el agente #183 en Python con Pydantic AI revisa cada devolución antes de que nadie la apruebe:
+
+→ Un modelo local en Ollama lee el email y devuelve un objeto tipado: pedido, motivo de una lista cerrada y la frase que lo justifica.
+→ Una regla comprueba que esa frase está literal en el email. Si no, a revisión.
+→ La fecha de entrega sale del ERP, nunca del email ni del modelo.
+→ Una resta en código: dentro de 14 días naturales, en plazo; fuera, revisión.
+→ Si el motivo es un defecto, va a la cola de garantía: otro plazo.
+→ Deja un borrador de respuesta y una persona aprueba el reembolso.
+
+Lo que NO hace: reembolsar, escribir importes ni contestar al cliente por su cuenta.
+
+Mi decisión de ingeniero: el modelo solo lee y clasifica contra un esquema de Pydantic. El plazo lo decide una fecha del ERP y una resta. Y el modelo no ve datos de pago ni el historial del cliente.
+
+Te soy sincero: Shopify ya trae devoluciones de autoservicio, y Loop Returns o AfterShip Returns lo hacen con reglas configurables. Si usas una, mira eso primero. Yo lo programé para entender cómo funciona por dentro. Creo que lo difícil no es leer el email, es fiarse de la fecha.
+
+Ah, y cuenta desde la entrega, no desde la compra: en la UE el desistimiento son 14 días naturales desde que el cliente recibe el producto.
+
+¿En tu empresa quién cuenta los días de una devolución, una persona o el sistema? 👇
+
+#AgentesDeIA #PydanticAI #Ollama #Python #Ecommerce #Automatizacion
