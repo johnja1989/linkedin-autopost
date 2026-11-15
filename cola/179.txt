@@ -1,0 +1,25 @@
+Daily de las 9:30. "¿Qué hiciste el viernes?". Y tú, mirando al techo.
+
+Tu git log sí se acuerda. Tú no.
+
+A mí me pasaba en los proyectos de integración: tres repos, cinco tickets, y el lunes solo recordaba el último. Acababa leyendo el git log en voz alta, con mensajes como "fix" y "wip".
+
+Así que el agente #179 en Python y Gradio prepara tu parte de la daily desde tus commits:
+
+→ git log saca tus commits desde el último día laborable, sin merges.
+→ Al modelo local solo le llegan hash, fecha y mensaje.
+→ Ollama devuelve de 3 a 5 puntos en JSON, y cada uno cita sus hashes.
+→ Una regla descarta el punto que cite un hash inexistente o ninguno.
+→ Los commits sin cubrir salen aparte. Gradio te enseña el borrador y lo copias tú.
+
+Lo que NO hace: leer tu código ni los diffs, ni publicar nada en Slack o Jira.
+
+Mi decisión de ingeniero: el modelo puede resumir, pero no inventarse trabajo. Si una frase no apunta a un commit real, no sale. Y no ve diffs: ahí puede colarse una clave o datos de un cliente.
+
+Te soy sincero: git standup (en git-extras y en npm) ya te lista los commits del último día laborable. Si solo quieres acordarte, mira primero ahí. Yo lo programé para entender cómo se obliga a un modelo a citar sus fuentes. Creo que es un RAG con citas, en pequeñito.
+
+Ah, y escribe commits que se entiendan dentro de un mes: ni el mejor modelo saca nada de "wip".
+
+¿Tú preparas la daily o improvisas? 👇
+
+#AgentesDeIA #Python #Git #Ollama #Gradio #Productividad
