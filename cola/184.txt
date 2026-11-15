@@ -1,0 +1,24 @@
+El pod lleva 47 reinicios. kubectl logs no dice nada. Y el problema no estaba en el código.
+
+Me pasó trasteando con un clúster de pruebas: media hora leyendo un log vacío hasta que vi el OOMKilled. Estaba mirando el contenedor nuevo, el que acababa de arrancar.
+
+Así que el agente #184 en Python, con el cliente oficial de Kubernetes, tría los pods que se reinician antes de que nadie abra una terminal:
+
+→ Lista los pods con reinicios en los namespaces que tú eliges, con un rol de solo lectura.
+→ Una regla lee el estado del contenedor: ImagePullBackOff es la imagen, CreateContainerConfigError es la configuración, OOMKilled es la memoria.
+→ Solo si ninguna encaja, pide las últimas 50 líneas del contenedor anterior (previous=True).
+→ Enmascara tokens, emails e IPs antes de pasárselas al modelo.
+→ Un modelo local en Ollama resume la causa probable y tiene que citar una línea literal. Si la cita no está en el log, se descarta.
+→ Deja un parte con pod, causa y reinicios para quien esté de guardia.
+
+Lo que NO hace: reiniciar ni borrar pods, cambiar límites de memoria ni hacer rollback.
+
+Mi decisión de ingeniero: la causa la pone el estado que ya da Kubernetes, no el modelo. El modelo solo entra cuando falla la aplicación. Y nunca ve Secrets, variables de entorno ni el YAML del pod.
+
+Te soy sincero: k8sgpt ya hace esto y funciona con Ollama, y Robusta añade logs y contexto a tus alertas. Si usas una, mira eso primero. Yo lo programé para entender cómo funciona por dentro. Creo que muchos CrashLoopBackOff se resuelven leyendo bien un solo campo.
+
+Ah, y el exit code 137 no siempre es memoria: es un SIGKILL. Fíate del reason OOMKilled, no del número.
+
+¿Cuál es el CrashLoopBackOff que más tiempo te ha robado? 👇
+
+#AgentesDeIA #Kubernetes #DevOps #Ollama #Python #SRE
