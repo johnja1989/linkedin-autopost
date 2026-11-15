@@ -1,0 +1,24 @@
+El asistente respondió: "La dieta por día es de 54 €. Fuente: política de viajes, página 3".
+
+La página era correcta. La cifra, no. Ponía 45 €.
+
+Me pasó probando un RAG con PDFs internos. El problema no era el modelo, era la tabla: al extraer el texto, filas y columnas se mezclaban y el modelo rellenaba el resto.
+
+Así que el agente #182 en Python con Docling no deja pasar una cifra que no esté en la fuente:
+
+→ Docling convierte el PDF y conserva cada tabla entera, con su cabecera y su página.
+→ Un modelo local en Ollama responde y tiene que citar los fragmentos que usa.
+→ Una regla saca todas las cifras de la respuesta y busca cada una en los fragmentos citados.
+→ Si una sola cifra no aparece, la respuesta no sale: "No puedo confirmar ese dato, revisa la página 3".
+
+Lo que NO hace: corregir la cifra por su cuenta ni decidir qué versión de la política vale.
+
+Mi decisión de ingeniero: quien decide si la cifra vale es una comparación en código, no otro modelo. Es estricta a propósito: prefiero un "no lo sé" de más que un importe inventado con fuente.
+
+Te soy sincero: NotebookLM ya cita la fuente de cada respuesta, y Ragas mide la fidelidad de tus respuestas a los documentos. Si usas una, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Creo que una cita bien puesta da más confianza de la que merece.
+
+Ah, y normaliza los números antes de comparar: 1.250,50 y 1250,50 son la misma cifra.
+
+¿Tu RAG comprueba las cifras o solo que la cita exista? 👇
+
+#AgentesDeIA #RAG #Docling #Python #Ollama #IAGenerativa
