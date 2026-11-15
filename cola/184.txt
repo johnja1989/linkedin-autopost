@@ -1,15 +1,15 @@
 El pod lleva 47 reinicios. kubectl logs no dice nada. Y el problema no estaba en el código.
 
-Me pasó trasteando con un clúster de pruebas: media hora leyendo un log vacío hasta que vi el OOMKilled. Estaba mirando el contenedor nuevo, el que acababa de arrancar.
+Me pasó trasteando con un clúster de pruebas: media hora leyendo un log vacío hasta que vi el OOMKilled. Miraba el contenedor nuevo, no el que se había caído.
 
-Así que el agente #184 en Python, con el cliente oficial de Kubernetes, tría los pods que se reinician antes de que nadie abra una terminal:
+Así que el agente #184 en Python con el cliente oficial de Kubernetes tría los pods que se reinician:
 
 → Lista los pods con reinicios en los namespaces que tú eliges, con un rol de solo lectura.
 → Una regla lee el estado del contenedor: ImagePullBackOff es la imagen, CreateContainerConfigError es la configuración, OOMKilled es la memoria.
 → Solo si ninguna encaja, pide las últimas 50 líneas del contenedor anterior (previous=True).
 → Enmascara tokens, emails e IPs antes de pasárselas al modelo.
 → Un modelo local en Ollama resume la causa probable y tiene que citar una línea literal. Si la cita no está en el log, se descarta.
-→ Deja un parte con pod, causa y reinicios para quien esté de guardia.
+→ Deja un parte para quien esté de guardia.
 
 Lo que NO hace: reiniciar ni borrar pods, cambiar límites de memoria ni hacer rollback.
 
