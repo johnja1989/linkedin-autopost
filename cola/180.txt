@@ -1,0 +1,25 @@
+Le preguntas a la IA por qué se cae un contenedor. Para contestarte, te pide acceso al socket de Docker.
+
+En la práctica, eso es darle root sobre el servidor.
+
+Me pasó en un entorno de pruebas: el worker se reiniciaba cada diez minutos y yo saltaba de docker ps a docker logs, pegando trozos en el chat. Con IPs y algún token dentro.
+
+Así que el agente #180 es un servidor MCP en Python que deja a la IA mirar tus contenedores sin poder tocarlos:
+
+→ No habla con el socket: pasa por docker-socket-proxy con CONTAINERS=1 y POST=0.
+→ Puede listar y leer logs. Arrancar, parar o hacer exec: el proxy lo rechaza.
+→ Solo dos herramientas, contenedores() y logs(), y solo para una lista blanca.
+→ Los logs salen con tope de 200 líneas y con emails, IPs y tokens Bearer enmascarados.
+→ El modelo propone una causa. Reiniciar, si hace falta, lo haces tú.
+
+Lo que NO hace: reiniciar, ejecutar comandos dentro del contenedor ni devolver docker inspect.
+
+Mi decisión de ingeniero: el límite no está en el prompt, está en el proxy. Si el modelo pide un exec, no pasa. Y nunca devuelvo el inspect: ahí van las variables de entorno, contraseñas incluidas.
+
+Te soy sincero: ya hay servidores MCP para Docker, como mcp-server-docker, que gestionan contenedores en lenguaje natural. Si usas uno, mira primero qué permisos tiene: muchos crean y paran contenedores. Yo lo programé para entender dónde se pone el límite. Creo que en infraestructura prefiero que la IA mire y que toque yo.
+
+Ah, y si usas el SDK oficial de MCP en Python, ojo: en la versión 2, FastMCP pasó a llamarse MCPServer.
+
+¿Le darías a una IA acceso a tu Docker? 👇
+
+#AgentesDeIA #MCP #Docker #Python #DevOps #Ciberseguridad
