@@ -1,0 +1,25 @@
+El dashboard de ventas se veía perfecto. Totales cuadrados, cero errores.
+
+Solo que enseñaba los datos del martes. Y era jueves.
+
+Me pasó en un proyecto: la carga nocturna del ERP llevaba dos días fallando sin avisar. Lo descubrió alguien de comercial en una reunión, no nosotros.
+
+Así que el agente #181 en dbt y Python vigila que tus datos sigan llegando:
+
+→ dbt source freshness compara el MAX(loaded_at) de cada fuente con sus umbrales warn_after y error_after.
+→ Python lee target/sources.json: pass es verde, warn es ámbar y todo lo demás, rojo.
+→ Una tabla sin fecha o una consulta que falla no cuentan como frescas: también son rojo.
+→ Con el child_map del manifest.json saca qué modelos dependen de esa fuente.
+→ Un modelo local en Ollama redacta el aviso al responsable. Las horas y los nombres los pone el código.
+
+Lo que NO hace: relanzar cargas, tocar datos ni decidir si el informe se publica.
+
+Mi decisión de ingeniero: el color lo pone una regla, no el modelo. Y el modelo no ve filas: solo el nombre de la tabla, el color y los modelos afectados.
+
+Te soy sincero: dbt Cloud ya muestra la frescura de las fuentes, y Elementary, que es open source, te avisa por Slack. Si usas una, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Creo que un dato viejo que parece bueno es peor que un error que salta.
+
+Ah, y ajusta los umbrales al ritmo real de carga: si el ERP no carga en fin de semana, un error_after de 24 horas te pondrá en rojo cada lunes.
+
+¿Cómo te enteras tú de que un dato lleva días sin actualizarse? 👇
+
+#AgentesDeIA #dbt #DataEngineering #Python #Ollama #CalidadDeDatos
