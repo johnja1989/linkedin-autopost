@@ -1,0 +1,22 @@
+Haces clic en [[Reunion proveedor]] y Obsidian te abre una nota en blanco. No se ha borrado nada. Escribiste el enlace sin tilde hace tres meses.
+
+Yo apunto en Obsidian cada integración que monto: endpoints, certificados, a quién llamar si falla el SFTP. Me pasó con prisa. Y me quedé pensando cuántos enlaces más estarían rotos.
+
+Así que el agente #189 en Python, con Ollama, revisa tu vault de Obsidian cada domingo:
+→ Lee las notas en solo lectura y saca los [[enlaces]] con una regex (alias y secciones incluidos).
+→ Una regla decide: roto si el destino no existe; huérfana si nadie la enlaza y ella no enlaza a nada.
+→ Para cada roto, difflib propone la nota más parecida si pasa de 0,8 (Reunion → Reunión).
+→ Para cada huérfana, embeddings de nomic-embed-text sugieren las 3 notas más cercanas.
+→ Ollama redacta el parte viendo solo títulos. Si cita uno que no existe, se quita.
+
+Lo que NO hace: arreglar enlaces, mover notas ni escribir nada dentro del vault.
+
+Mi decisión de ingeniero: qué está roto lo dice una regla, no el modelo. Y todo corre en local, porque mis notas tienen nombres de clientes.
+
+Te soy sincero: Obsidian ya marca los enlaces sin resolver, y plugins como Find orphaned files and broken links o Smart Connections hacen buena parte de esto. Mira primero esos. Yo lo programé para entender cómo funciona por dentro. Y la verdad, creo que lo útil no son los rotos, sino las huérfanas: notas que escribiste y nunca volviste a encontrar.
+
+Ah, y activa en Archivos y enlaces la opción de actualizar los enlaces internos al renombrar: te ahorras muchos rotos.
+
+¿Cuántas notas huérfanas crees que tiene tu vault? 👇
+
+#AgentesDeIA #Obsidian #Python #Ollama #Productividad #IngenieriaIA
