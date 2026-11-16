@@ -1,0 +1,22 @@
+Te dicen que la v2 de la API es compatible. Migras el viernes. El lunes el ERP no carga pedidos: el importe ahora llega como texto.
+
+A mí me pasó algo parecido en una integración: un servicio nuevo devolvía la fecha en otro formato y el cliente no fallaba, simplemente guardaba un vacío. Lo vimos días después, cuadrando a mano.
+
+Así que el agente #187 en Python, con DeepDiff, compara la API vieja y la nueva con las mismas peticiones antes de migrar:
+→ httpx lanza una lista de GET que tú apruebas contra las dos versiones.
+→ Si el código HTTP cambia (un 200 que pasa a 404), rojo sin mirar más.
+→ DeepDiff compara los cuerpos ignorando el orden de las listas y los campos que cambian siempre, como trace_id o la fecha de generación.
+→ Una regla pone el color: si falta un campo o cambia de tipo, ROJO; si cambia un valor, REVISAR; si solo hay campos nuevos, VERDE.
+→ Ollama redacta la nota para el equipo de la API viendo solo rutas y tipos de cambio.
+
+Lo que NO hace: probar escrituras. Nada de POST, PUT ni DELETE contra producción.
+
+Mi decisión de ingeniero: solo GET de una lista aprobada, porque repetir un alta en dos versiones duplica datos reales. El color lo pone la regla, no el modelo: un campo que desaparece rompe a alguien aunque la nota suene tranquila. Y el modelo ve root['importe'], no el importe.
+
+Te soy sincero: Keploy graba tráfico, lo repite y marca los campos ruidosos, y GoReplay duplica tráfico real hacia la versión nueva. Si usas una, mira primero cómo trata los campos que cambian en cada llamada. Yo lo programé para entender cómo funciona por dentro. Y creo que lo que más me enseñó fue la lista de volátiles: la primera vez todo salía en rojo.
+
+Ah, y guarda respuestas de la versión vieja antes de apagarla. Sin ellas, no tienes con qué comparar.
+
+¿Cómo compruebas tú que una versión nueva de una API no rompe a nadie? 👇
+
+#AgentesDeIA #IntegracionDeSistemas #APIs #Python #DeepDiff #IngenieriaIA
