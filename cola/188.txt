@@ -1,0 +1,21 @@
+Instalas un Ubuntu 24.04 limpio, no tocas el SSH y le pasas ssh-audit. Sale en rojo: curvas NIST y hmac-sha1 siguen en la lista. Nadie lo configuró mal. Es lo que viene.
+
+En integración he conectado muchos SFTP de proveedores. Si conectaba, para mí estaba bien. Nunca miré qué algoritmos negociaba el servidor.
+
+Así que el agente #188 en Python, con ssh-audit, revisa cada noche el SSH de tus servidores:
+→ Lanza ssh-audit -j contra tu inventario. Solo hace el saludo SSH, no inicia sesión.
+→ Una regla pone el color: un algoritmo con fail o un CVE, ROJO; solo avisos, AMARILLO; si no conecta, GRIS, nunca verde.
+→ Compara con ayer: si tras una actualización vuelve un rojo, lo marca como cambio.
+→ Ollama redacta el parte viendo un alias del servidor y nombres de algoritmos. Ni IPs ni nombres reales.
+
+Lo que NO hace: tocar sshd_config ni reiniciar nada.
+
+Mi decisión de ingeniero: el veredicto lo da ssh-audit con su código de salida; el modelo no lo suaviza. Qué quitar sale de sus recomendaciones, no del modelo: una línea inventada en sshd_config te puede dejar fuera. Y salto la prueba de DHEat por las noches, porque abre decenas de conexiones.
+
+Te soy sincero: ssh-audit ya trae políticas integradas (-P) y guías de endurecimiento, y Lynis también revisa SSH. Si usas una, mira primero las políticas: con su código de salida ya tienes semáforo en tu CI. Yo lo programé para entender cómo funciona por dentro. Y la verdad, me sorprendieron los avisos en curve25519: ssh-audit ya lo marca por no proteger frente a ataques post-cuánticos.
+
+Ah, y antes de quitar algoritmos, prueba tus clientes viejos con ssh-audit -c y deja otra sesión abierta al reiniciar sshd.
+
+¿Cuándo miraste por última vez qué algoritmos ofrece tu SSH? 👇
+
+#AgentesDeIA #Ciberseguridad #SSH #Python #Ollama #IngenieriaIA
