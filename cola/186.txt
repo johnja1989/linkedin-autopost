@@ -1,0 +1,22 @@
+Tu modelo saca un 94 % en tu set de evaluación. Lo pones en producción y se queda en un 71 %. Y nadie ha tocado el modelo.
+
+A mí me pasó algo parecido con un clasificador de consultas. Revisando casos a mano vi que varias preguntas del test eran casi copias de los ejemplos que yo mismo había metido en el prompt. El examen venía con las respuestas grapadas.
+
+Así que el agente #186 en Python, con datasketch, busca fugas entre tu test y tus ejemplos antes de medir nada:
+→ Normaliza cada texto (minúsculas, sin tildes ni signos) y lo corta en tejas de 5 palabras.
+→ MinHash LSH propone parejas parecidas entre el test y los ejemplos del prompt o de entrenamiento.
+→ Una regla calcula el Jaccard exacto de cada pareja: desde 0,8 es fuga y sale del test; entre 0,5 y 0,8 lo revisa una persona.
+→ Si más del 2 % del test es fuga, el informe sale en rojo: esas métricas no valen.
+→ Ollama resume el informe viendo solo IDs y cifras.
+
+Lo que NO hace: detectar paráfrasis. Si alguien reescribió la pregunta con otras palabras, se le escapa.
+
+Mi decisión de ingeniero: el LSH es aproximado, así que solo propone; decide un Jaccard exacto calculado en código. Los umbrales son fijos y están escritos, no se bajan para que salga verde. Y el modelo no ve ningún texto del test.
+
+Te soy sincero: Cleanlab ya detecta casi duplicados con Datalab, y text-dedup lo hace a gran escala. Si usas una, mira primero si ya cruzas test y ejemplos con ella. Yo lo programé para entender cómo funciona MinHash por dentro. Y la verdad, ver cómo se deshinchaba mi métrica me bajó un poco el ego.
+
+Ah, y separa el test antes de escribir el prompt, no después. Así no hay tentación de inspirarte en él.
+
+¿Has comprobado alguna vez si tu test se parece demasiado a tus ejemplos? 👇
+
+#AgentesDeIA #EvaluacionLLM #Python #MinHash #IngenieriaIA
