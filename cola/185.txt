@@ -1,0 +1,24 @@
+La factura F-0012 y la F12 son la misma. Para el ERP son dos. Y se pagan las dos.
+
+Lo vi en una integración de facturas de proveedor: la misma factura llegó por correo y por el portal, cada una con su formato de número. Nadie lo notó hasta que el proveedor llamó para devolver el dinero.
+
+Así que el agente #185 en Python con rapidfuzz caza facturas duplicadas antes de la remesa de pagos:
+
+→ Lee las pendientes del ERP y las pagadas en los últimos 12 meses.
+→ Normaliza el número: mayúsculas, sin guiones ni ceros a la izquierda. F-0012 y f12 quedan en F12.
+→ Dentro del mismo NIF, una regla decide: número igual en menos de un año, RETENER.
+→ Número parecido (80 o más en rapidfuzz), mismo total y 20 días o menos entre fechas: REVISAR.
+→ Ollama, en local, redacta la nota para cuentas a pagar con el motivo de la regla.
+→ Una persona libera o anula.
+
+Lo que NO hace: anular facturas, tocar la remesa ni escribir al proveedor.
+
+Mi decisión de ingeniero: el veredicto es de la regla, no del modelo. Los importes los compara Decimal en código. El modelo no ve importes ni IBAN: solo proveedor, los dos números y el motivo.
+
+Te soy sincero: SAP tiene control de facturas duplicadas y Business Central puede exigir el número de factura del proveedor. Si usas uno, mira primero cómo lo tienes configurado. Yo lo programé para entender cómo funciona por dentro. Creo que el fallo casi nunca es del ERP, sino del formato del número.
+
+Ah, y compara contra lo ya pagado, no solo contra el lote de hoy: el duplicado puede llegar semanas después.
+
+¿Te ha tocado pagar una factura dos veces? 👇
+
+#AgentesDeIA #Python #CuentasAPagar #Ollama #ERP #Finanzas
