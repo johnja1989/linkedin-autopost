@@ -1,0 +1,22 @@
+Ejecutas pip-licenses en tu proyecto y requests aparece como "Apache Software License". idna, como BSD-3-Clause. certifi, como MPL 2.0. Tres formas de escribir una licencia, y ninguna te dice si puedes usarla.
+
+Hace años, en una integración, un cliente me pidió la lista de licencias de todo lo que le entregábamos. Tardé dos días en hacerla a mano.
+
+Así que el agente #190 en Python, con Ollama, revisa las licencias de tus dependencias antes de cada release:
+→ pip-licenses las saca del entorno del proyecto en JSON (--from=mixed).
+→ Una tabla de alias en código normaliza nombres: "Apache Software License" pasa a Apache-2.0.
+→ Una regla pone el color: verde si está en tu lista permitida, ámbar para MPL o LGPL, rojo si es GPL o AGPL, gris si sale UNKNOWN o no la conoce.
+→ Rojo o gris paran la release hasta que una persona lo mire.
+→ Ollama redacta el parte viendo nombre, versión y licencia, nunca tu código.
+
+Lo que NO hace: decirte si cumples una licencia. Depende de cómo distribuyes tu software, y no soy abogado.
+
+Mi decisión de ingeniero: el color lo pone una regla, no el modelo. Y una licencia desconocida nunca es verde: prefiero un gris de más que un GPL colado.
+
+Te soy sincero: FOSSA, Snyk, ORT o la dependency-review-action de GitHub (con allow-licenses) ya hacen esto, y el propio pip-licenses tiene --allow-only. Si usas una, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y la verdad, me sorprendió cuánto texto libre hay en los metadatos.
+
+Ah, y ejecútalo dentro del entorno virtual del proyecto: si no, revisas las licencias de tu Python global.
+
+¿Alguien te ha pedido alguna vez la lista de licencias de lo que entregas? 👇
+
+#AgentesDeIA #Python #OpenSource #Licencias #DevOps #Ollama
