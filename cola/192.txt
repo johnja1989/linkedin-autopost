@@ -1,0 +1,22 @@
+Pregunta del DPO: "¿En qué columnas guardamos DNIs?". Respuesta: "En clientes.nif". Y en obs2. Y en una tabla de log que nadie recuerda.
+
+En los ERPs que he integrado, los datos personales casi nunca estaban solo donde decía el diagrama. Acababan en texto libre y en tablas de auditoría.
+
+Así que el agente #192 en Python, con Presidio y Ollama, busca datos personales en tu base de datos:
+→ Un usuario de solo lectura saca 200 filas por tabla, que solo viven en memoria.
+→ presidio-structured propone qué hay en cada columna: NIF, NIE, IBAN, email, nombres…
+→ Una regla pone el color: lo que Presidio valida (letra del DNI, dígito de control del IBAN) va a rojo; lo que sale del NER, a ámbar.
+→ Sin hallazgos, gris. Nunca verde: es una muestra, no una prueba.
+→ Se borra la muestra y Ollama, que solo ve tabla, columna y tipo, redacta el borrador que firma una persona.
+
+Lo que NO hace: decidir la base legal, borrar ni enmascarar nada.
+
+Mi decisión de ingeniero: el rojo depende de un validador, no del NER. En mi prueba, el NER etiquetó la columna id como LOCATION y un IBAN con el dígito mal como PERSON.
+
+Te soy sincero: Microsoft Purview o la clasificación de datos de SQL Server ya hacen esto. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Creo que lo valioso no es el modelo, es la lista de columnas que nadie sabía que tenían DNIs.
+
+Ah, y empieza por las tablas de log: ahí acaba lo que nadie dio de alta.
+
+¿Tu empresa sabría decir hoy en qué columnas guarda DNIs? 👇
+
+#AgentesDeIA #RGPD #Privacidad #Python #SQL #Ollama
