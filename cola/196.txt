@@ -1,0 +1,22 @@
+Lees una oferta y te falta Kubernetes. Lees otra y te falta Rust. A la décima ya no sabes si te falta algo o te falta todo.
+
+Me pasó buscando trabajo como ingeniero de IA. Tenía una carpeta de ofertas guardadas y la sensación de "tengo que aprender de todo". Quería un número.
+
+Así que el agente #196 en Python, con spaCy, mira qué te piden de verdad las ofertas que guardas:
+→ Lee las ofertas que copiaste a mano (nada de scraping) y tu CV.
+→ Un PhraseMatcher de spaCy busca habilidades de un diccionario con alias: k8s cuenta como Kubernetes.
+→ Cuenta en cuántas ofertas sale cada una.
+→ Una regla pone la etiqueta: hueco si sale en el 30% o más y no está en tu CV, ruido si sale poco.
+→ Ollama, en local, ordena los huecos en un plan de cuatro semanas.
+
+Lo que NO hace: tocar tu CV, añadir habilidades que no tienes ni decirte a qué oferta aplicar.
+
+Mi decisión de ingeniero: el diccionario lo escribo yo y la regla decide qué es un hueco, no el modelo, que solo ve nombres y porcentajes. Busca palabras completas: Java no cuenta dentro de JavaScript. Y "Go" no está; choca con demasiado inglés, uso Golang.
+
+Te soy sincero: Jobscan y Teal ya comparan tu CV con una oferta y te sacan las palabras clave. Si usas uno, mira primero si te deja ver muchas ofertas juntas. Yo lo programé para entender cómo funciona por dentro. Creo que una oferta sola engaña; treinta te cuentan el mercado.
+
+Ah, y guarda el texto de la oferta el mismo día: muchas desaparecen pronto.
+
+¿Qué habilidad te piden en casi todas las ofertas y aún no tienes? 👇
+
+#AgentesDeIA #Empleo #Python #spaCy #IngenieriaDeIA
