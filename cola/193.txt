@@ -1,0 +1,22 @@
+Cierre a las 23:00. Apertura a las 7:00. En el Excel del mes esa semana sumaba 40 horas justas y nadie vio nada raro.
+
+Me pasó integrando fichajes con un ERP de nóminas: los totales cuadraban y los descansos no. La suma semanal esconde justo lo que la ley mira jornada a jornada.
+
+Así que el agente #193 en Python, con pandas, Gradio y Ollama, revisa el registro de jornada antes de cerrar el mes:
+→ Subes el CSV de fichajes en una pantalla de Gradio, dentro de tu red. Solo cuatro columnas: ID de empleado, entrada, salida y pausa.
+→ pandas calcula las horas efectivas y el descanso desde la salida anterior de esa misma persona.
+→ Una regla pone el color: menos de 12 horas entre jornadas, rojo. Más de 9 horas, o más de 6 seguidas sin 15 minutos de pausa, ámbar (pueden ser horas extra: que lo mire alguien).
+→ Un fichaje sin salida va a gris: no se da por bueno ni por malo.
+→ Ollama solo ve ID, fecha y código de incidencia, y redacta la nota para el responsable.
+
+Lo que NO hace: corregir fichajes, sancionar a nadie ni tocar la nómina.
+
+Mi decisión de ingeniero: los límites son parámetros, no los adivina el modelo, porque hay convenios y jornadas especiales que los cambian. Y la IA no ve nombres: el ID se cruza después, en RR. HH.
+
+Te soy sincero: Factorial, Sesame o Woffu ya llevan el registro de jornada y marcan incidencias de fichaje. Si usas una, mira primero qué alertas trae. Yo lo programé para entender cómo funciona por dentro. Creo que lo que más enseña es el turno que cruza la medianoche: ahí se rompen los scripts ingenuos.
+
+Ah, y ordena por empleado y hora de entrada, no por fecha: un turno de noche tiene dos fechas.
+
+¿En tu empresa alguien revisa los descansos entre jornadas, o solo el total de horas? 👇
+
+#AgentesDeIA #RRHH #Python #Pandas #Ollama #Gradio
