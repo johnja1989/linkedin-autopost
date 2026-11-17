@@ -1,0 +1,22 @@
+Pides a la IA el diff contra una rama. La "rama" se llama --output=/ruta/a/un/archivo. Y git, obediente, escribe ahí.
+
+Es la CVE-2025-68144, corregida en diciembre de 2025 en el servidor MCP de git de referencia. Revisé mis scripts y yo también pasaba refs sin filtrar a subprocess.
+
+Así que el agente #194 es un servidor MCP en Python, con FastMCP, que deja a la IA leer la historia de tu repo sin poder tocarlo:
+→ Tres herramientas: log, archivo en un commit y blame de unas líneas. Ninguna escribe.
+→ Cada ref pasa por git rev-parse --verify --end-of-options y se convierte en un hash. A git solo le llega ese hash.
+→ Una ruta que sale del repo se rechaza.
+→ .env, claves y certificados están vetados por nombre, en cualquier commit.
+→ git se llama con lista de argumentos, sin shell, con tope de líneas y de tiempo.
+
+Lo que NO hace: commit, checkout, push ni ejecutar nada que proponga el modelo.
+
+Mi decisión de ingeniero: lo que escribe el modelo se trata como entrada de un desconocido. Qué se puede hacer lo decide el servidor, no el prompt. Si el modelo se lía, lo peor es un error, no un archivo sobrescrito.
+
+Te soy sincero: el servidor MCP oficial de GitHub tiene modo de solo lectura y el de referencia ya está corregido. Si usas uno, mira qué herramientas expone y apaga las de escritura. Yo lo programé para entender cómo funciona por dentro. Creo que la lección vale para cualquier MCP que llame a un comando.
+
+Ah, y un secreto borrado del repo sigue en la historia: si llegó a subirse, rótalo.
+
+¿Tus servidores MCP tienen herramientas de escritura que nunca usas? 👇
+
+#AgentesDeIA #MCP #Python #Git #Ciberseguridad
