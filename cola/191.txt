@@ -1,0 +1,22 @@
+El UNT dice 42 segmentos y el fichero trae 38. El pedido EDIFACT llegó cortado, el ERP lo carga igual y nadie se entera hasta que falta mercancía en el muelle.
+
+En integraciones con XML y SFTP he visto mucho este patrón: el proceso dice OK y el problema aparece días después en el almacén. Con EDIFACT, igual.
+
+Así que el agente #191 en Python, con pydifact y Ollama, revisa los pedidos EDIFACT (ORDERS) antes de cargarlos:
+→ pydifact lee el intercambio y el código cuenta los segmentos de UNH a UNT: si no cuadra con el UNT, rojo.
+→ Cada línea (LIN) pasa por el dígito de control del EAN en código. Si falla, rojo.
+→ Una consulta al maestro de artículos: EAN válido pero desconocido, ámbar.
+→ Cantidad 0 o fecha de entrega (DTM+2) ya pasada: ámbar.
+→ Ollama redacta el aviso con pedido, línea y código de incidencia, nunca precios ni direcciones.
+
+Lo que NO hace: cargar nada en el ERP ni contestar al cliente con un APERAK o un ORDRSP.
+
+Mi decisión de ingeniero: el color lo pone una regla, no el modelo. Contar segmentos y validar un dígito de control no necesitan IA. Sin incidencias, al modelo ni se le llama.
+
+Te soy sincero: tu proveedor EDI, Bots (open source) o el módulo EDI de tu ERP ya validan buena parte de esto. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y creo que el dígito de control del EAN es la validación más barata y más olvidada.
+
+Ah, y guarda el fichero original intacto: si hay disputa con el cliente, es tu prueba.
+
+¿Seguís recibiendo pedidos por EDIFACT o ya os pasasteis a API? 👇
+
+#AgentesDeIA #EDI #EDIFACT #Python #Integracion #Ollama
