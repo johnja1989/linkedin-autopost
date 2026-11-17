@@ -1,0 +1,22 @@
+Un proveedor recibe un correo pidiendo cambiar el IBAN de tus facturas. Viene de tu dominio. Bueno, casi: pone rn donde iba una m.
+
+Pasé dnstwist contra un dominio mío por curiosidad. Salió una lista larga de variantes registradas, casi todas aparcadas. El problema no es encontrarlas: es que nadie lee esa lista cada semana.
+
+Así que el agente #195 en Python, con dnstwist, vigila los dominios que se parecen al tuyo:
+→ Cada noche genera variantes (letras cambiadas, homoglifos, otro TLD) y se queda con las registradas.
+→ Mira su DNS: si tienen servidor de correo (MX) o web.
+→ Una regla pone el color: rojo si recibe correo y es nuevo, ámbar si resuelve, gris si solo está registrado.
+→ Tus propios dominios van en una lista y se saltan.
+→ Compara con ayer y Ollama, en local, redacta el aviso solo de lo nuevo.
+
+Lo que NO hace: entrar en esas webs, denunciar dominios ni bloquear correo.
+
+Mi decisión de ingeniero: el color lo pone una regla, no el modelo, que solo ve dominio, técnica y color. Y si el WHOIS no da fecha, cuenta como nuevo: prefiero un rojo de más a un verde falso.
+
+Te soy sincero: dnstwist tiene versión web, URLCrazy hace algo parecido y hay servicios de protección de marca que lo vigilan por ti. Si usas uno, mira primero cada cuánto revisa y si comprueba el MX. Yo lo programé para entender cómo funciona por dentro. Creo que lo valioso no es la lista, es el filtro.
+
+Ah, y registra tú las dos o tres variantes más obvias de tu dominio.
+
+¿Alguien en tu empresa mira qué dominios se parecen al vuestro? 👇
+
+#AgentesDeIA #Ciberseguridad #Phishing #Python #DNS
