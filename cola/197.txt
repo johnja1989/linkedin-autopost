@@ -1,0 +1,21 @@
+Tu RAG contesta "no lo encuentro" y el dato está ahí, en la página 12. El problema no siempre es el modelo. A veces es el trozo.
+
+Me pasó con un manual de procedimientos. Una sección larguísima acabó en un solo fragmento y el modelo de embeddings, que se queda con 256 tokens, solo vio el principio. Nadie avisó: truncar en silencio es lo normal.
+
+Así que el agente #197 en LlamaIndex revisa cómo has troceado tus documentos antes de indexarlos:
+→ MarkdownNodeParser trocea tus documentos en Markdown por encabezados.
+→ Cuenta los tokens con el tokenizer del propio modelo de embeddings.
+→ Una regla pone el color: rojo si pasa del límite, gris si el mismo texto sale en varios documentos (pies, avisos legales), ámbar si tiene menos de 30 tokens, verde el resto.
+→ Ollama, en local, resume el informe a partir de los recuentos.
+
+Lo que NO hace: volver a trocear por ti, indexar ni borrar nada.
+
+Mi decisión de ingeniero: el límite sale del modelo de embeddings que usas, no de un número bonito. Un rojo frena la indexación de ese documento, y eso lo decide la regla. El modelo no ve el contenido: solo archivos, rutas de títulos y cifras.
+
+Te soy sincero: LlamaIndex y LangChain ya traen splitters con tamaño máximo, y el HybridChunker de Docling trocea mirando el tokenizer. Si usas uno, mira primero qué hace con una sección que no cabe. Yo lo programé para entender cómo funciona por dentro. Creo que muchos problemas de un RAG se ven antes de indexar.
+
+Ah, y abre diez trozos al azar y léelos. Enseña más que cualquier métrica.
+
+¿Cómo decides tú el tamaño de los trozos de tu RAG? 👇
+
+#AgentesDeIA #RAG #LlamaIndex #Python #IngenieriaDeIA
