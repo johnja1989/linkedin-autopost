@@ -1,0 +1,22 @@
+Le preguntas en español a tu asistente y te contesta perfecto. En inglés.
+
+Me pasó probando un modelo pequeño en local. En cuanto había código o un error de por medio, se pasaba al inglés sin avisar. Yo no lo vi: lo vio la primera persona que lo usó.
+
+Así que el agente #199 en Python mide si tu modelo te contesta en tu idioma antes de cambiarlo:
+→ lanza tus preguntas aprobadas contra Ollama, en español y en catalán
+→ quita código y URLs, que suelen ir en inglés
+→ Lingua detecta el idioma de lo que queda y da su confianza
+→ una regla pone el color: rojo si gana otro idioma, ámbar si más del 20% del texto va en otro, gris si la confianza baja de 0,6 y verde si no
+→ porcentaje de rojos por modelo e idioma; decides tú
+
+Lo que NO hace: no juzga si la respuesta es correcta. Solo el idioma.
+
+Mi decisión de ingeniero: aquí no hay LLM juez. Un detector estadístico y umbrales fijos, que dan lo mismo hoy y mañana. Y gris no es verde: si el detector duda, lo miras tú.
+
+Te soy sincero: LangWatch ya tiene un evaluador de idioma basado en Lingua, y en promptfoo puedes escribirlo como aserción en JavaScript o Python. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y porque en Figueres el catalán no es un caso raro, es el día a día.
+
+Ah, y dile al detector solo los idiomas que esperas: acierta más y va más rápido que cargándolos todos.
+
+¿Has visto a tu modelo cambiar de idioma a mitad de conversación? 👇
+
+#AgentesDeIA #EvaluacionLLM #Ollama #Python #NLP
