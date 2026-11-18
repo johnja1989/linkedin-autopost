@@ -1,0 +1,22 @@
+Tu servidor funciona perfecto. Nadie lo toca, nadie lo mira. Y lleva un año sin parches de seguridad.
+
+Me pasó con un ERP heredado: la base de datos iba bien... y su versión había salido de soporte hacía meses. Lo descubrimos cuando alguien preguntó por ella en una auditoría. No antes.
+
+Así que el agente #200 en Python vigila cuándo se queda sin soporte lo que tienes instalado:
+→ lee tu inventario: sistema, producto y ciclo (python 3.9, postgresql 13...)
+→ pregunta a la API gratuita de endoflife.date solo por producto y ciclo
+→ una regla pone el color: rojo si ya no tiene soporte, ámbar si le quedan 90 días o menos, gris si no hay datos o fecha anunciada, verde si no
+→ Ollama redacta el aviso semanal viendo solo producto, ciclo, color y fecha
+→ tú decides qué se actualiza
+
+Lo que NO hace: no actualiza nada ni descubre qué tienes instalado. El inventario es tuyo.
+
+Mi decisión de ingeniero: los nombres de tus servidores no salen de tu equipo; a la API solo van producto y ciclo. La fecha la compara el código, no el modelo. Y gris no es verde: un 404 suele ser un nombre mal escrito, no un sistema sano.
+
+Te soy sincero: xeol ya busca software sin soporte en imágenes de contenedores, y Renovate te abre el PR para subir de versión. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y porque los servidores que más miedo me dan son los que nadie toca.
+
+Ah, y guarda el inventario por ciclo (3.9, no 3.9.7): es lo que entiende endoflife.date.
+
+¿Cuál es la versión más antigua que sigue en producción donde trabajas? 👇
+
+#AgentesDeIA #DevOps #Ciberseguridad #Python #Ollama
