@@ -1,0 +1,22 @@
+Lunes, 8:00. El ERP rechaza 40 pedidos seguidos. El proveedor no avisó de nada: solo cambió el precio de 12.5 a "12,50".
+
+Me pasó en una integración: el JSON seguía llegando y el HTTP 200 también. Solo había cambiado el tipo de un campo. Lo supimos por las quejas, no por los logs.
+
+Así que el agente #202 en Python revisa cada JSON del proveedor contra un contrato antes de cargarlo:
+→ el contrato es un JSON Schema que escribe y versiona una persona, no se deduce de ejemplos
+→ jsonschema valida cada pedido y devuelve todas las diferencias
+→ una regla pone el color: rojo si falta un campo o cambia el tipo (el pedido se retiene), ámbar si llega un campo nuevo (entra y alguien revisa el mapeo), gris si el JSON no se puede leer
+→ Ollama resume el día viendo solo ruta, regla y color
+→ tú hablas con el proveedor
+
+Lo que NO hace: no corrige el JSON ni convierte "12,50" en 12.5 por su cuenta.
+
+Mi decisión de ingeniero: el mensaje de error de jsonschema incluye el valor ('12,50' is not of type 'number'), así que ese mensaje no llega al modelo. Solo la ruta y la regla. Quien retiene es la validación, no la IA.
+
+Te soy sincero: Pydantic, un Schema Registry si los datos van por Kafka o la validación de tu API gateway ya hacen esto. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y porque un 200 OK no dice nada del dato.
+
+Ah, y jsonschema no comprueba format: date si no le pasas format_checker. Una fecha imposible pasaría como buena.
+
+¿Qué cambio silencioso de un proveedor te ha roto una integración? 👇
+
+#AgentesDeIA #Integracion #APIs #JSON #Python #Ollama
