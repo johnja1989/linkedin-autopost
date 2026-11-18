@@ -1,0 +1,22 @@
+Viernes, 19:00. El despliegue pasó todas las pruebas en preproducción. En producción falla en el primer INSERT.
+
+Me pasó integrando con un ERP: alguien creó una columna en pre "solo para probar" y nadie la llevó a producción. Los dos entornos se parecían. No eran iguales.
+
+Así que el agente #201 en Python compara el esquema de dos bases de datos antes de desplegar:
+→ SQLAlchemy lee solo metadatos de pre y producción con un usuario de solo lectura: tablas, columnas y tipos
+→ una regla pone el color: rojo si falta en producción algo que pre ya usa, ámbar si cambia el tipo o algo existe solo en producción, gris para las tablas de paso que tú listas (tmp_, etl_)
+→ con un rojo, el despliegue espera
+→ Ollama redacta el resumen viendo solo tabla, columna, tipo y color
+→ tú decides qué script falta
+
+Lo que NO hace: no genera ni ejecuta ALTER TABLE. Y no lee ni una fila.
+
+Mi decisión de ingeniero: la IA nunca ve la cadena de conexión ni datos, solo nombres. Quien frena es la comparación, no el modelo. Y ámbar no es "da igual": una columna que solo existe en producción es un cambio que nadie versionó.
+
+Te soy sincero: SQL Compare de Redgate, Schema Compare de Visual Studio o el diff de Liquibase ya hacen esto. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y porque con los años he aprendido a desconfiar de "en pre funcionaba".
+
+Ah, y compara siempre el mismo motor: un VARCHAR de SQL Server y uno de Oracle no se escriben igual.
+
+¿Qué diferencia entre entornos te ha costado más horas encontrar? 👇
+
+#AgentesDeIA #SQL #BasesDeDatos #Python #Ollama #DevOps
