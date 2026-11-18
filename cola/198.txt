@@ -1,0 +1,22 @@
+Escaneas el QR de una factura recién emitida y te lleva a la web de pruebas de la AEAT. La factura es real. El QR, no.
+
+A mí se me coló una vez una URL de test en una plantilla de producción. Nadie lo vio en semanas: nadie escanea sus propias facturas.
+
+Así que el agente #198 en Python revisa el QR de cotejo de tus facturas antes de enviarlas:
+→ pypdfium2 pasa la página a imagen y zxing-cpp lee el QR
+→ urllib separa la URL: host, nif, numserie, fecha e importe
+→ una regla compara cada campo con el ERP (el importe con Decimal, nunca con float)
+→ rojo si el host no es el de producción de la AEAT o algún dato no cuadra; ámbar si el QR mide fuera de 30-40 mm; gris si el PDF no se puede leer
+→ Ollama solo redacta el resumen con número de factura y código
+
+Lo que NO hace: no consulta la AEAT, no corrige el PDF ni envía nada.
+
+Mi decisión de ingeniero: el veredicto lo da una comparación campo a campo, no el modelo. La IA no ve importes, NIF ni clientes. Y una factura en rojo se queda en la carpeta, no sale.
+
+Te soy sincero: los programas de facturación adaptados a Verifactu ya generan el QR, y quien recibe la factura puede cotejarla en la sede de la AEAT. Si usas uno, mira primero su plantilla de PDF. Yo lo programé para entender cómo funciona por dentro. Después de años integrando ERPs, desconfío de las plantillas que "siempre han funcionado".
+
+Ah, y el importe del QR va con punto y dos decimales: 1210.00, no 1.210,00.
+
+¿Alguna vez has escaneado el QR de tus propias facturas? 👇
+
+#AgentesDeIA #Verifactu #FacturaElectronica #Python #AEAT
