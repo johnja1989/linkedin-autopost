@@ -1,0 +1,22 @@
+Escribes una carta de presentación preciosa. La adaptas para la siguiente oferta. Y en el tercer párrafo sigue diciendo "me encantaría unirme a Nortec". Nortec era la oferta de ayer.
+
+A mí casi me pasa. Lo vi en la vista previa del correo, con el dedo ya en "Enviar". Pura suerte, la verdad.
+
+Así que el agente #207 en Python revisa tu carta antes de enviarla:
+→ python-docx lee el texto de la carta, en tu ordenador
+→ RapidFuzz busca en él los nombres de las otras empresas de tu lista de candidaturas, aunque falte una tilde
+→ Una regla pone rojo si aparece otra empresa, ámbar si no aparece la empresa a la que escribes y gris si casi no hay texto que leer
+→ Gradio te deja arrastrar la carta y escribir la empresa destino
+→ Ollama, en local, redacta el aviso en una línea
+
+Lo que NO hace: reescribir tu carta, opinar sobre si es buena ni enviarla por ti.
+
+Mi decisión de ingeniero: el veredicto es una comparación de texto, no la opinión de un modelo. La IA solo ve empresa, color y código, nunca la carta. Y el gris existe porque python-docx no lee cuadros de texto: prefiero que me diga "no puedo" a un verde falso.
+
+Te soy sincero: Ctrl+F con el nombre de la empresa anterior ya resuelve esto, y LanguageTool o Grammarly revisan el resto del texto. Yo lo programé para entender cómo funciona por dentro. Y porque, con veinte candidaturas abiertas, me olvido del Ctrl+F.
+
+Ah, y revisa también el asunto del correo: ahí el nombre equivocado se cuela igual.
+
+¿Alguna vez enviaste algo con el nombre de otra empresa? 👇
+
+#AgentesDeIA #Python #BusquedaDeEmpleo #RapidFuzz #Ollama #Gradio
