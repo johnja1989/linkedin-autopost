@@ -1,0 +1,22 @@
+El CSV del proveedor llega a las 6:00. El ERP lo carga sin una sola queja. Y a las 9:00 tienes un cliente nuevo llamado "Construcciones MuÃ±oz".
+
+Me ha pasado más de una vez integrando ERPs. El proveedor cambia de servidor, empieza a mandar Windows-1252 en vez de UTF-8 y nadie avisa. Lo descubres cuando ya está en las facturas.
+
+Así que el agente #208 en Python revisa la codificación de cada fichero antes de cargarlo:
+→ Lo lee como UTF-8 estricto y, si falla, apunta la línea exacta
+→ charset-normalizer sugiere en qué codificación viene
+→ ftfy busca mojibake línea a línea, el típico "Ã±" de un texto codificado dos veces
+→ Una regla pone rojo si no es UTF-8 (no se carga), ámbar si hay mojibake o BOM y gris si ni siquiera parece texto
+→ Ollama, en local, redacta el aviso para el proveedor
+
+Lo que NO hace: convertir el fichero, corregir nombres ni tocar el original.
+
+Mi decisión de ingeniero: el rojo lo da una decodificación estricta, que no se equivoca. Detectar el charset es una apuesta: en mi prueba, un fichero en Windows-1252 salió como cp1250, y ahí la ñ se convierte en ń. Por eso solo sugiere y la conversión la aprueba una persona. La IA ve nombre de fichero, línea, color y sugerencia, nunca los datos.
+
+Te soy sincero: file -i, iconv o Notepad++ ya te dicen esto, y muchas herramientas ETL validan la codificación al cargar. Si usas una, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y porque prefiero parar el fichero en la puerta a limpiar el maestro de clientes después.
+
+Ah, y deja la codificación por escrito en la especificación de la interfaz. "Lo de siempre" no es una codificación.
+
+¿Qué carácter te ha roto más integraciones: la ñ, la ç o el €? 👇
+
+#AgentesDeIA #Python #IntegracionDeSistemas #ETL #Ollama #CalidadDeDatos
