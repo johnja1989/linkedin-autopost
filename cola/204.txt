@@ -1,0 +1,22 @@
+Imagina que alguien encuentra un fallo en tu web y quiere avisarte. Busca /.well-known/security.txt. O no está, o el campo Expires caducó hace meses y el correo de contacto ya no lo lee nadie.
+
+A mí me pasó con uno de mis dominios de pruebas: el archivo estaba, pero caducado. No me había dado cuenta porque nadie lo mira hasta el día que hace falta.
+
+Así que el agente #204 en Python revisa el security.txt de tus dominios:
+→ Lee una lista con tus dominios, solo los tuyos, y pide el archivo con sectxt, que lo valida contra la RFC 9116
+→ Una regla pone rojo si no existe, si caducó, si falta Contact o Expires, o si no va por HTTPS con un certificado válido
+→ Ámbar si le quedan 30 días o menos, o si hay otro error de formato
+→ Verde solo si es válido y tiene margen
+→ Ollama redacta una tarea para el equipo web con dominio, color y códigos de error
+
+Lo que NO hace: escribir ni publicar el archivo, ni revisar dominios que no son tuyos.
+
+Mi decisión de ingeniero: el color lo pone una regla, no el modelo. Si el dominio no responde, sale rojo; prefiero un falso rojo a un verde que no lo es. Y el modelo no ve el archivo ni los correos de contacto, solo dominio, color y códigos.
+
+Te soy sincero: internet.nl ya comprueba el security.txt en su test de webs, y securitytxt.org te ayuda a generarlo. Si tienes uno o dos dominios, mira primero ahí. Yo lo programé para entender cómo funciona por dentro y para revisar muchos dominios cada semana. Creo que es de esos archivos que se ponen una vez y se olvidan, y ahí está justo el problema.
+
+Ah, y pon el Expires a menos de un año vista y apunta en el calendario renovarlo un mes antes.
+
+¿Tus dominios tienen security.txt o es la primera vez que oyes hablar de él? 👇
+
+#AgentesDeIA #Ciberseguridad #Python #Ollama #SecurityTxt
