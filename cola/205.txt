@@ -1,0 +1,22 @@
+Un proveedor sube un 4% el precio de un artículo. No avisa. La factura cuadra con el albarán y se paga. Así tres meses.
+
+Lo vi en una integración de ERP: nadie cruzaba el precio unitario con la tarifa pactada, porque esa tarifa vivía en un Excel con fechas que solo entendía una persona.
+
+Así que el agente #205 en Python compara cada línea de factura con la tarifa vigente:
+→ Lee las líneas de factura del ERP y la tarifa con fechas desde y hasta
+→ pandas.merge_asof busca, por proveedor y artículo, la tarifa vigente el día de la factura
+→ Una regla con Decimal pone rojo si supera lo pactado en más de un 2% (se retiene antes de pagar)
+→ Ámbar si cambia la unidad o el artículo no está en la tarifa; gris si la tarifa caducó
+→ Ollama redacta un borrador de correo al proveedor
+
+Lo que NO hace: pagar, bloquear en el ERP ni enviar el correo.
+
+Mi decisión de ingeniero: la cuenta la hace Decimal, no el modelo, y la tolerancia está en la configuración, no en el prompt. El modelo solo ve proveedor, artículo, porcentaje y color, nunca importes ni condiciones del contrato.
+
+Te soy sincero: SAP y Dynamics 365 ya comparan el precio de la factura con el del pedido, con tolerancias. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro, y porque muchas empresas pactan precios fuera del pedido, en ese Excel que nadie cruza.
+
+Ah, y pon fecha de fin a cada tarifa: una tarifa sin caducidad acaba siendo "la de siempre".
+
+¿En tu empresa alguien revisa el precio unitario o solo el total? 👇
+
+#AgentesDeIA #Python #pandas #Ollama #CuentasAPagar #Automatizacion
