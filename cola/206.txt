@@ -1,0 +1,22 @@
+Le das a tu asistente de IA la terminal para que ejecute los tests. Pero quien puede lanzar pytest también puede lanzar cualquier otra cosa.
+
+Lo vi probando un agente en local: le pedí "pasa los tests" y quiso hacer un pip install que nadie había pedido. No pasó nada. Pero podía.
+
+Así que el agente #206 es un servidor MCP en FastMCP con una sola herramienta, ejecutar tests:
+→ La IA solo elige un archivo test_*.py; el servidor resuelve la ruta y rechaza lo que salga de tests/
+→ Lanza pytest con argumentos fijos, sin shell, sin tus tokens en el entorno y con timeout de 120 s
+→ Lee el informe JUnit XML, no la consola
+→ Una regla pone rojo si falla un test, ámbar si alguno se salta y gris si no hay informe o se agota el tiempo
+→ El modelo ve nombre del test, color y la primera línea del error, recortada a 200 caracteres
+
+Lo que NO hace: instalar paquetes, editar código ni aislar lo que hacen tus tests (eso es cosa de un contenedor).
+
+Mi decisión de ingeniero: el límite lo pone el servidor, no el prompt. La IA solo puede dar un nombre de archivo, ni argumentos ni otra ruta. Y el veredicto sale del XML de pytest, no de lo que el modelo crea haber leído.
+
+Te soy sincero: Claude Code, Cursor o GitHub Copilot ya ejecutan tests desde su terminal. Si usas uno, mira primero qué comandos le dejas lanzar sin preguntarte. Yo lo programé para entender cómo funciona por dentro. Y prefiero dar una herramienta estrecha antes que una terminal entera.
+
+Ah, y pon siempre timeout: un test que espera una red que no existe deja al agente colgado.
+
+¿Tú a tu asistente le das la terminal entera o herramientas concretas? 👇
+
+#AgentesDeIA #MCP #Python #pytest #FastMCP #Ciberseguridad
