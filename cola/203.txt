@@ -1,0 +1,22 @@
+Tienes 1.400 marcadores en Chrome. Abres uno de 2019 que te salvó un proyecto y te sale un 404. Justo ese.
+
+A mí me pasó buscando una guía de firmas XAdES que había guardado hace años. La página ya no existía y el dominio ahora vendía relojes.
+
+Así que el agente #203 en Python revisa tus marcadores sin borrar ninguno:
+→ lee una copia del archivo Bookmarks de Chrome, nunca el original
+→ requests prueba cada enlace con HEAD y, si falla, con GET
+→ una regla pone el color: rojo si da 404, 410 o no conecta; ámbar si te lleva a otro dominio; gris si da 403, 429 o tarda demasiado
+→ para los rojos, la API de disponibilidad de la Wayback Machine busca una copia archivada
+→ Ollama resume por carpetas viendo solo título, carpeta y color
+
+Lo que NO hace: no borra ni mueve marcadores. Te deja una lista y decides tú.
+
+Mi decisión de ingeniero: a la Wayback Machine solo le pregunto por los rojos, y sin la parte de la URL que va tras el "?", porque ahí a veces viajan tokens. Al modelo no le llega ninguna URL. El color lo pone la regla, no la IA.
+
+Te soy sincero: Raindrop.io ya detecta enlaces rotos en su plan Pro, y hay extensiones de Chrome que lo hacen. Si usas una, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Y porque mis marcadores son el archivo de lo que he aprendido en 12 años.
+
+Ah, y un 403 no significa que el enlace esté muerto: muchas webs bloquean a los scripts. Por eso va a gris y lo miras tú.
+
+¿Cuántos de tus marcadores crees que siguen vivos? 👇
+
+#AgentesDeIA #Productividad #Python #Ollama #WaybackMachine
