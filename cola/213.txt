@@ -1,0 +1,22 @@
+Esa extensión de cupones que instalaste hace dos años puede leer y cambiar lo que ves en cualquier web. También en la de tu banco.
+
+Lo vi en mi propio Chrome: 14 extensiones, y de 4 ni me acordaba. Una de capturas de pantalla tenía acceso a todos los sitios. Para hacer capturas.
+
+Así que el agente #213 en Python revisa los permisos de tus extensiones sin tocar tu navegación:
+→ Lee el manifest.json de cada extensión en la carpeta de tu perfil de Chrome, en local.
+→ Resuelve los nombres "__MSG_..." con el _locales de la propia extensión.
+→ Una regla pone rojo con acceso a todas las webs más cookies, webRequest o debugger; ámbar con solo lo primero, con nativeMessaging o si no viene de la Chrome Web Store; gris si no puede leer el manifiesto.
+→ Ollama, en local, explica en una línea por qué importa cada rojo.
+→ Gradio te lo enseña en una tabla, ordenado por color.
+
+Lo que NO hace: desinstalar nada, leer tu historial o tus cookies, ni decidir si una extensión es maliciosa.
+
+Mi decisión de ingeniero: el color lo pone la regla, porque el modelo no puede saber si una extensión es de fiar. Solo ve nombre, color y nombres de permisos. Y el agente no abre ni una cookie: le basta con lo que la extensión declara.
+
+Te soy sincero: chrome://extensions ya te enseña los permisos en "Detalles", y en empresa la consola de Google Admin tiene un informe de extensiones instaladas. Si usas eso, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Lo que más me sorprendió: yo tampoco leía el aviso de permisos al instalar.
+
+Ah, y repítelo cada pocos meses: las extensiones se actualizan solas y la que hoy es inofensiva puede cambiar de dueño mañana.
+
+¿Cuántas extensiones tienes instaladas que no usas desde hace meses? 👇
+
+#AgentesDeIA #Ciberseguridad #Privacidad #Chrome #Python #Ollama
