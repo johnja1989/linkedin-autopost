@@ -1,0 +1,22 @@
+La carga de anoche terminó en verde. Cero errores. Y trajo 312 filas de ventas cuando un viernes normal son 48.000.
+
+Me pasó integrando un ERP: el proveedor cambió un filtro de su exportación y el proceso siguió "funcionando" una semana. Lo vimos en el cierre de mes. Un job puede acabar bien y no traer casi nada.
+
+Así que el agente #211 en Python vigila cuántas filas trae cada carga:
+→ SQLAlchemy cuenta las filas del día de cada tabla con un usuario de solo lectura.
+→ Guarda el recuento en un histórico propio en SQLite.
+→ pandas calcula la mediana de los últimos 4 días iguales: un viernes se compara con viernes.
+→ Una regla pone rojo con 0 filas o menos de la mitad, ámbar fuera del 80-150 % y gris si no hay 4 semanas de histórico.
+→ Ollama, en local, redacta el aviso solo para rojos y ámbar.
+
+Lo que NO hace: repetir la carga, borrar filas ni mirar qué hay dentro.
+
+Mi decisión de ingeniero: el color lo pone una división, no el modelo. Gris no es verde: sin histórico no hay "normal" con el que comparar. Y la IA solo ve tabla, filas, mediana, porcentaje y color, nunca datos.
+
+Te soy sincero: Elementary (volume_anomalies en dbt), Great Expectations o Soda ya hacen esto. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Lo que más me costó fue aceptar que un festivo saldrá en rojo. Lo dejo así: prefiero una falsa alarma a una semana sin datos.
+
+Ah, y compara con el mismo día de la semana. Un lunes contra la media de la semana parece un desastre.
+
+¿Tus cargas avisan solo cuando fallan o también cuando traen poco? 👇
+
+#AgentesDeIA #Python #CalidadDeDatos #SQL #IngenieriaDeDatos #Ollama
