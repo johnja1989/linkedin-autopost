@@ -1,0 +1,22 @@
+Le preguntas al asistente interno "¿qué dice el PRC-104?" y te contesta muy seguro... con el PRC-140.
+
+Me pasó probando un RAG con un manual de procedimientos. Los embeddings entienden de qué va la frase, pero un código como PRC-104 para ellos es casi ruido: se parece a cualquier otro código.
+
+Así que el agente #209 en Python busca de dos formas y no se fía de ninguna sola:
+→ rank_bm25 busca por palabras exactas, códigos incluidos.
+→ bge-m3 en Ollama busca por significado, en local.
+→ Une las dos listas con Reciprocal Rank Fusion: suma 1/(60 + posición), sin pesos a ojo.
+→ Una regla: si la pregunta cita un código y no aparece en ninguno de los 5 fragmentos finales, dice "no lo encuentro" y el modelo ni se llama.
+→ Si las dos búsquedas no coinciden en nada, responde pero marca ámbar: revisa la fuente.
+
+Lo que NO hace: inventar el procedimiento más parecido ni corregirte el código "por si acaso".
+
+Mi decisión de ingeniero: el código se comprueba con un re.findall y un "in", no con el modelo. Todo corre en local, así que el manual no sale de la empresa. Y el modelo solo ve los 5 fragmentos que pasaron la regla, con su documento y sección.
+
+Te soy sincero: Elasticsearch, OpenSearch, Qdrant o Weaviate ya traen búsqueda híbrida. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro, y la verdad, la fusión son seis líneas. Lo difícil es decidir cuándo callar.
+
+Ah, y tokeniza igual al indexar que al preguntar, o "PRC-104" y "prc 104" serán dos cosas distintas.
+
+¿Tu RAG distingue un código de otro o solo "se parece"? 👇
+
+#AgentesDeIA #RAG #BusquedaHibrida #Python #Ollama #IALocal
