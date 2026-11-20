@@ -1,0 +1,22 @@
+Tu clasificador de tickets acierta el 94 % en las pruebas. Hasta que un cliente escribe "contraseña" sin eñe.
+
+Me pasó probando un modelo local: el mismo ticket, en mayúsculas, pasó de "seguridad" a "consulta general". En la media no se notaba.
+
+Así que el agente #214 en Python mide si tu modelo cambia de opinión por cómo se escribe el texto:
+→ Genera variantes de tus tickets de prueba con código: minúsculas, mayúsculas, sin tildes ni eñes y con una errata.
+→ En los casos importantes añades tú una paráfrasis escrita a mano.
+→ Ollama clasifica cada versión con structured outputs (solo puede responder una de tus clases) y temperatura 0.
+→ Antes clasifica el original dos veces: si ya cambia ahí, gris. Eso es inestabilidad, no fragilidad.
+→ Una regla compara etiquetas: rojo si cambia y toca una clase crítica (seguridad, baja), ámbar si cambia en otra, gris si la salida no es válida.
+
+Lo que NO hace: medir si acierta, tocar tu prompt ni usar un LLM juez.
+
+Mi decisión de ingeniero: el veredicto es comparar etiquetas, igual o distinta. No le pregunto a otro modelo si "significa lo mismo". Las variantes salen de código, idénticas en cada ejecución, y los tickets no salen de tu equipo.
+
+Te soy sincero: CheckList (Ribeiro y otros, 2020) ya proponía estas pruebas de invariancia, y con promptfoo puedes montar las mismas variantes como casos de prueba. Si ya usas una herramienta de evaluación, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Lo de las mayúsculas, la verdad, me dejó un poco tocado.
+
+Ah, y guarda cada variante que falle como caso fijo: cuando cambies de modelo, es lo primero que pruebas.
+
+¿Has probado tu modelo con el texto tal como lo escriben tus usuarios, faltas incluidas? 👇
+
+#AgentesDeIA #EvaluacionDeLLMs #Python #Ollama #MachineLearning #IAGenerativa
