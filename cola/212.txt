@@ -1,0 +1,22 @@
+Crees que esta semana has programado unas 25 horas. ActivityWatch dice 9 horas y 40 minutos de foco. El resto: correo, chat y pestañas "de un minuto".
+
+A mí me pasó algo parecido. Tenía ActivityWatch instalado desde hacía meses y nunca abría el panel. Los datos estaban ahí; me faltaba que alguien me los dijera claro el viernes.
+
+Así que el agente #212 en Python te hace la revisión semanal de tu tiempo sin sacar nada de tu ordenador:
+→ aw-client consulta el servidor local de ActivityWatch: ventana activa y ausencias.
+→ La consulta cruza las dos y descarta los ratos en que no estabas.
+→ Tus reglas regex clasifican cada app y título en foco, comunicación o distracción.
+→ Una regla pone gris si más del 20 % queda sin clasificar o hay menos de 3 días con datos, rojo con menos de 2 h de foco al día y ámbar con más de 1 h diaria de distracción.
+→ Ollama, en local, escribe un resumen de 3 líneas.
+
+Lo que NO hace: bloquear webs, ponerte nota ni enviar nada fuera de tu equipo.
+
+Mi decisión de ingeniero: los títulos de ventana son muy privados (asuntos de correo, clientes, URLs), así que no pasan del clasificador. El modelo solo ve categoría, horas y color. Y gris no es verde: si tus reglas no reconocen media semana, la cifra no vale.
+
+Te soy sincero: el panel de ActivityWatch ya tiene categorías y RescueTime te manda un informe semanal. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Lo que más me costó fue el navegador: "chrome.exe" no dice nada, el título lo dice todo.
+
+Ah, y ojo con las ausencias: leer un PDF sin tocar el ratón unos minutos cuenta como "no estabas".
+
+¿Tú mides tu tiempo de foco o prefieres no saberlo? 👇
+
+#AgentesDeIA #Productividad #ActivityWatch #Python #Ollama #IALocal
