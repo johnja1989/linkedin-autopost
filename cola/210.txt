@@ -1,0 +1,22 @@
+Tu disco está al 70 % y ninguna alerta salta. Dos días después, /var se llena a las 3 de la mañana y la base de datos se para.
+
+Me pasó con un servidor de facturación electrónica. El aviso del 90 % saltó cuando los logs crecían tan rápido que ya no daba tiempo. El porcentaje te dice dónde estás, no a qué velocidad vas.
+
+Así que el agente #210 en n8n te dice cuántos días le quedan a cada disco:
+→ Cada hora, un HTTP Request pide a Prometheus el espacio libre.
+→ Otro pide la pendiente de las últimas 6 h con deriv(), solo si hay al menos 180 muestras.
+→ Un nodo Code divide libre entre pendiente: días hasta llenarse.
+→ Una regla pone rojo con menos de 3 días, ámbar con menos de 14 y gris si no hay datos suficientes.
+→ Ollama redacta el aviso, solo para rojos y ámbar.
+
+Lo que NO hace: borrar logs, ampliar volúmenes ni entrar en el servidor.
+
+Mi decisión de ingeniero: los días los calcula una división en JavaScript, no el modelo. Gris no es verde: un disco sin datos se revisa, no se da por bueno. Y el modelo solo ve servidor, punto de montaje, días y color, nunca ficheros.
+
+Te soy sincero: predict_linear en una alerta de Prometheus, Grafana o los monitores de previsión de Datadog ya hacen esto. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro, y la verdad, la división es lo fácil. Lo difícil es aceptar que 6 horas pueden engañar: una copia puntual parece una tendencia.
+
+Ah, y usa node_filesystem_avail_bytes, no free_bytes: free cuenta el espacio reservado para root, que tus aplicaciones no pueden usar.
+
+¿Tus alertas de disco miran el porcentaje o la velocidad? 👇
+
+#AgentesDeIA #n8n #Prometheus #DevOps #Observabilidad #Ollama
