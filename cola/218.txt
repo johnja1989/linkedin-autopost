@@ -1,0 +1,24 @@
+Grabas tu respuesta a "háblame de ti" y se la pasas a Whisper. Transcripción impecable, ni un solo "eh".
+
+Luego te escuchas. Había unos cuantos.
+
+Me pasó preparando entrevistas. Whisper tiende a limpiar las muletillas, así que si cuentas los "eh" en su texto parece que hablas como un locutor.
+
+Así que el agente #218 en Python con faster-whisper te escucha antes que el entrevistador:
+→ Transcribe tu grabación en local, con marcas de tiempo por palabra.
+→ Un initial_prompt con "Eh... o sea, mmm" le pide que no limpie las muletillas.
+→ Python calcula palabras por minuto, muletillas por minuto y pausas de más de 2 segundos.
+→ Una regla pone el color: gris con menos de 30 s o una transcripción poco segura, rojo con 6 o más muletillas por minuto, ámbar fuera de 110-170 palabras por minuto o con más de 3 pausas largas.
+→ Ollama solo ve las cifras y el color, y escribe dos consejos.
+
+Lo que NO hace: juzgar lo que dices ni adivinar si te van a contratar.
+
+Mi decisión de ingeniero: las muletillas salen como "al menos N", porque Whisper todavía se come algunas. El color lo pone una regla con mis umbrales, no el modelo. Y tu voz no sale de tu ordenador.
+
+Te soy sincero: Speaker Coach de PowerPoint y Yoodli ya miden ritmo y muletillas. Si usas uno, mira primero eso. Yo lo programé para entender cómo funciona por dentro. Y la verdad, lo que más me enseñó fueron las pausas: no eran nervios, era que no sabía cómo seguir.
+
+Ah, y graba con el mismo micrófono que usarás en la entrevista: el del portátil y unos cascos no transcriben igual.
+
+¿Te has escuchado alguna vez respondiendo a una entrevista? 👇
+
+#AgentesDeIA #Entrevistas #Python #Whisper #Ollama #IALocal
