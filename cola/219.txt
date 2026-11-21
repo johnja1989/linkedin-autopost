@@ -1,0 +1,22 @@
+Cambias la contraseña después de un phishing y respiras tranquilo. Pero el filtro que reenvía tus facturas a otra cuenta sigue ahí.
+
+Me pasó ayudando a un compañero tras un susto con su correo. Contraseña nueva, verificación en dos pasos, todo bien. Nadie había mirado los filtros. Yo tampoco, hasta el día siguiente.
+
+Así que el agente #219 en Python revisa los filtros y reenvíos de tu Gmail:
+→ La API de Gmail lee, solo lectura, el reenvío automático, las direcciones de reenvío y los filtros.
+→ Tú das una lista blanca con tus direcciones, en un archivo local.
+→ Rojo si algo reenvía fuera de esa lista o un filtro esconde avisos con palabras como contraseña o banco.
+→ Ámbar si un filtro borra o archiva al llegar. Gris si la API no responde, nunca verde.
+→ Ollama, en local, explica cada hallazgo y dónde mirarlo en Gmail.
+
+Lo que NO hace: borrar filtros, desactivar reenvíos ni leer tus correos.
+
+Mi decisión de ingeniero: el permiso es gmail.readonly, así que aunque falle no puede cambiar nada. El color lo pone la regla, no el modelo. Y el modelo solo ve número de filtro, color y motivo, nunca direcciones.
+
+Te soy sincero: en Gmail lo miras tú en dos minutos, en Ajustes, pestañas Filtros y Reenvío. Y con Google Workspace, el administrador puede bloquear el reenvío automático para todos. Mira eso primero. Yo lo programé para entender la API por dentro, y porque una revisión semanal que corre sola no se olvida.
+
+Ah, y si encuentras un filtro que no creaste, cambia la contraseña y cierra sesiones antes de borrarlo, o puede volver.
+
+¿Cuándo miraste tus filtros de correo por última vez? 👇
+
+#AgentesDeIA #Ciberseguridad #Gmail #Python #Ollama
