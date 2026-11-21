@@ -1,0 +1,22 @@
+Un abono de -1.500 € que rectifica una factura de 1.200 €. Y nadie lo mira: los abonos parecen inofensivos.
+
+En un proyecto de facturación electrónica vi salir una rectificativa que apuntaba a una factura inexistente: el número estaba bien, la fecha no. Contabilidad lo cazó semanas después, al cuadrar.
+
+Así que el agente #215 en LangGraph revisa cada factura rectificativa antes de emitirla:
+→ Busca la original en tus emitidas, por número y fecha.
+→ Rojo si no existe, si una R5 no apunta a una simplificada o si, sumando abonos, devuelves más de lo facturado.
+→ Ámbar si han pasado más de 4 años o el NIF no es el del cliente original.
+→ Gris si faltan número o fecha. Sin datos no hay verde.
+→ Si no sale verde, un nodo con Ollama escribe la nota para administración.
+
+Lo que NO hace: emitir, anular ni enviar nada a la AEAT. Tampoco decide si la rectificación procede.
+
+Mi decisión de ingeniero: el color lo pone una función de Python, no el modelo. El LLM solo ve número, color y motivo: ni importes ni NIF. Si sale verde, el grafo termina sin llamar a la IA.
+
+Te soy sincero: tu programa de facturación (Holded, Sage, A3…) probablemente ya valida buena parte de esto, más aún con Verifactu. Si usas uno, mira primero qué comprueba al crear un abono. Yo lo programé para entender cómo funciona por dentro y porque muchos ERPs a medida generan abonos en procesos nocturnos que nadie revisa.
+
+Ah, y los 4 años cuentan desde el devengo y hay excepciones: el ámbar es para preguntar a tu asesor, no una sentencia.
+
+¿Quién revisa los abonos en tu empresa antes de que salgan? 👇
+
+#AgentesDeIA #FacturaElectronica #Verifactu #LangGraph #Ollama #Python
