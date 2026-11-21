@@ -1,0 +1,22 @@
+El disco del servidor al 100 % un sábado por la mañana. Y no eran los datos: era el log de transacciones, cinco veces más grande que la base.
+
+Me pasó hace años con un ERP. Modelo de recuperación FULL y nadie copiaba el log. Un SHRINK salvó la mañana y el lunes volvía a crecer.
+
+Así que el agente #220 en Python vigila el log de cada base de SQL Server:
+→ pyodbc consulta, en solo lectura, sys.dm_db_log_stats de todas las bases.
+→ Python calcula qué parte del log está activa y cuántas horas lleva sin copia.
+→ Rojo si espera una copia de log desde hace más de 24 h, o si pasa del 80 % retenido por una transacción abierta o la replicación.
+→ Ámbar por encima del 60 %. Gris si falta el permiso o no hay datos.
+→ Ollama, en local, redacta el aviso con el motivo que da SQL Server.
+
+Lo que NO hace: lanzar SHRINK, cambiar el modelo de recuperación ni matar sesiones.
+
+Mi decisión de ingeniero: el color lo pone la regla, no el modelo. El login solo puede ver el estado del servidor, no las tablas. Y la IA solo ve base, color, porcentaje y motivo.
+
+Te soy sincero: dbatools (Get-DbaDbLogSpace), Redgate Monitor o una alerta del SQL Server Agent ya hacen esto. Si usas una, mira primero ahí. Yo lo programé para entender cómo funciona por dentro, y aprendí que el porcentaje solo no dice nada: importa por qué el log no se vacía.
+
+Ah, y si una base está en FULL y nadie copia el log, quizá no necesita FULL. Decídelo con quien sepa cuántos datos puede perder el negocio.
+
+¿Cuál es el log más grande que te has encontrado y qué lo retenía? 👇
+
+#AgentesDeIA #SQLServer #Python #Ollama #BasesDeDatos
