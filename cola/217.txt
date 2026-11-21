@@ -1,0 +1,24 @@
+Pides a tu IA un plazo de 10 días hábiles desde el 18 de diciembre. Te contesta: 1 de enero. Festivo.
+
+Era el 5 de enero. Y lo dijo con total seguridad.
+
+En integraciones lo he visto mil veces: plazos en días hábiles que cada sistema contaba a su manera. Un modelo de lenguaje no calcula fechas. Predice texto que parece una fecha.
+
+Así que el agente #217 es un servidor MCP en FastMCP que hace las cuentas:
+→ Dos herramientas: días hábiles entre dos fechas y sumar N días hábiles.
+→ La librería holidays da los festivos nacionales y los de tu comunidad.
+→ Python cuenta día a día, sin fines de semana ni festivos.
+→ Una regla rechaza regiones desconocidas y rangos absurdos.
+→ Cada respuesta lleva un aviso: sin festivos locales, o ámbar si el año aún no está confirmado.
+
+Lo que NO hace: conocer los festivos de tu municipio ni decidir si un plazo legal va en hábiles o naturales.
+
+Mi decisión de ingeniero: el modelo nunca suma fechas, solo llama a la herramienta y explica el resultado. Región desconocida es un error, no una suposición. Y el aviso va siempre en la respuesta.
+
+Te soy sincero: DIAS.LAB y DIA.LAB de Excel ya hacen esto. Si te basta, usa eso. Yo lo programé para entender MCP por dentro. Y creo que la lección es esta: una herramienta aburrida es más fiable que un modelo listo haciendo cuentas.
+
+Ah, y revisa el calendario laboral de tu comunidad cada año: los festivos cambian.
+
+¿Qué cálculo ya no le dejas hacer a tu IA sin una herramienta? 👇
+
+#AgentesDeIA #MCP #FastMCP #Python #IA
