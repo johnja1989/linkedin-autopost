@@ -1,0 +1,22 @@
+Tu artículo que más se vende tiene stock para 9 días. El proveedor tarda 15 en servirlo. Y nadie lo ve hasta que falta.
+
+Lo vi en un proyecto de integración con un ERP: compras revisaba cada lunes una hoja con miles de artículos, ordenada por stock. Pero el stock solo no dice nada. Lo que importa es cuánto vendes al día y cuánto tarda en llegar.
+
+Así que el agente #216 en n8n te dice qué reponer antes de quedarte sin nada:
+→ Cada mañana, el nodo Microsoft SQL trae ventas de 28 días, stock, pendiente de recibir, plazo y lote de cada artículo.
+→ Un nodo Code calcula los días de cobertura: disponible entre venta diaria.
+→ Una regla pone rojo si la cobertura no llega al plazo del proveedor, ámbar si no llega al plazo más 7 días, y gris con menos de 28 días de histórico o sin plazo.
+→ La cantidad sugerida se redondea hacia arriba al lote del proveedor.
+→ Ollama redacta un borrador por proveedor y el nodo de Gmail lo deja en borradores.
+
+Lo que NO hace: enviar pedidos, tocar el ERP ni prever campañas o estacionalidad.
+
+Mi decisión de ingeniero: el color y la cantidad los calcula JavaScript, no el modelo. El LLM solo ve proveedor, código, cantidad y color: ni precios ni márgenes. Y gris no es verde: un artículo nuevo lo mira una persona.
+
+Te soy sincero: las reglas de reabastecimiento mínimo/máximo de Odoo o la planificación de Business Central ya hacen esto. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro, y la verdad, la fórmula es lo fácil. Lo difícil es que el plazo que tiene el ERP casi nunca es el real.
+
+Ah, y calcula el plazo con tus albaranes, de la fecha de pedido a la de recepción, no con el que promete el proveedor.
+
+¿Cómo decide tu empresa cuándo reponer? 👇
+
+#AgentesDeIA #n8n #Ollama #Automatizacion #Compras #SQLServer
