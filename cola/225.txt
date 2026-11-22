@@ -1,0 +1,23 @@
+Le pides a un modelo tres referencias para un informe. Las tres traen autor, año, título y DOI.
+Una no existe.
+
+Me pasó preparando unas diapositivas: el título sonaba bien y la revista era real. Pegué el DOI en el navegador: "DOI Not Found".
+
+Así que el agente #225 en Python revisa las referencias que cita tu LLM:
+→ una regex saca los DOI; Ollama, en local, separa el título de cada referencia
+→ una regla comprueba que ese título aparece literal en la respuesta
+→ la API de doi.org (/api/handles/) dice si el DOI existe: un 404 es rojo
+→ si existe, Crossref da el título real y rapidfuzz lo compara con el citado
+→ verde con 90 o más de parecido, ámbar de 70 a 89, rojo por debajo (el DOI es de otro artículo); gris si no hay título o la API no responde
+
+Lo que NO hace: corregir la referencia ni buscarte el DOI "bueno".
+
+Mi decisión de ingeniero: el veredicto sale de dos consultas y una comparación de texto, no de preguntarle a otra IA. Y uso token_sort_ratio, no token_set_ratio: este da 100 si el título inventado contiene el real y añade palabras.
+
+Te soy sincero: Zotero ya te avisa si añades por identificador un DOI que no existe. Si lo usas, mira eso primero. Yo lo programé para entender cómo funciona por dentro. Creo que un gris honesto vale más que un verde por defecto.
+
+Ah, y que el DOI exista no prueba que el artículo diga lo que el modelo dice.
+
+¿Te ha colado alguna vez un LLM una cita que no existía? 👇
+
+#AgentesDeIA #LLM #Python #EvaluacionDeLLMs #Crossref #IA
