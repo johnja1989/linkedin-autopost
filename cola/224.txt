@@ -1,0 +1,23 @@
+Abres Gmail un domingo y ves un "¿me confirmas lo del jueves?" de hace nueve días.
+El jueves ya pasó.
+
+A mí me ha pasado más de una vez: lo leo en el móvil, pienso "luego contesto" y Gmail lo da por leído. Y yo también.
+
+Así que el agente #224 en Python busca los correos que esperan tu respuesta:
+→ la API de Gmail, solo con gmail.readonly, lista los hilos de la bandeja de entrada de los últimos 30 días, sin promociones
+→ de cada hilo lee solo metadatos: etiquetas, fecha y si trae List-Unsubscribe; los borradores no cuentan
+→ si el último mensaje es tuyo (etiqueta SENT) o es una newsletter, fuera
+→ una regla pone rojo con 7 días sin respuesta, o con 3 si ya habías escrito tú en ese hilo; ámbar de 3 a 6; gris si no se pudo leer
+→ Ollama, en local, resume qué te piden; solo ve el asunto y el fragmento corto que da Gmail
+
+Lo que NO hace: contestar, marcar como leído ni archivar.
+
+Mi decisión de ingeniero: con solo lectura no puede tocar tu bandeja aunque quiera. El color lo pone una cuenta de días, no el modelo: si la IA cree que no te piden nada, el correo sigue en la lista.
+
+Te soy sincero: Gmail ya tiene los recordatorios (nudges), que te sugieren correos a los que responder. Si los tienes activados, mira eso primero. Yo lo programé para entender cómo funciona por dentro. Creo que lo útil es lo contrario de una bandeja "inteligente": una lista corta y aburrida.
+
+Ah, y pásalo el lunes por la mañana, no el viernes por la tarde.
+
+¿Cuántos días tarda un correo en ser "demasiado tarde" para ti? 👇
+
+#AgentesDeIA #Gmail #Python #Ollama #Productividad #IA
