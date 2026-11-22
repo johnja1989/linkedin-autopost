@@ -1,0 +1,23 @@
+Un cliente nuevo te manda sus datos por correo. Copias el IBAN al ERP. Tiene un dígito cambiado.
+Lo descubres cuando vuelve el primer recibo.
+
+Integrando ERPs he visto fichas impecables, sin un campo vacío, con un NIF cuya letra no cuadraba con los números. Nadie lo había comprobado.
+
+Así que el agente #226 en Python revisa las altas de clientes antes de crearlas:
+→ Ollama, en local, copia del correo razón social, NIF, IBAN, código postal y provincia a un JSON
+→ una regla exige que cada valor aparezca tal cual en el correo
+→ python-stdnum comprueba la letra del NIF, NIE o CIF y los dígitos de control del IBAN
+→ el CP debe empezar por el código de la provincia (17 es Girona) y una consulta de solo lectura busca duplicados en el ERP
+→ rojo si falla un dígito o un valor no está en el correo, ámbar si el CP no casa o ya existe, gris si falta un campo; con verde, un borrador que aprueba una persona
+
+Lo que NO hace: comprobar que el NIF esté de alta en Hacienda ni que la cuenta sea de esa empresa. Los dígitos de control solo cazan erratas.
+
+Mi decisión de ingeniero: el modelo copia, no valida ni corrige. Si "arregla" una letra del NIF, el valor ya no está en el correo y sale rojo. Y el alta nunca se crea sola.
+
+Te soy sincero: Odoo y muchos ERP ya validan el NIF al crear el contacto (base_vat, en Odoo, usa esta misma librería). Si usas uno, mira primero si lo tienes activado. Yo lo programé para entender cómo funciona por dentro. Creo que lo que más vale aquí es la regla de "está en el correo", no la IA.
+
+Ah, y normaliza antes de validar: "12.345.678-z" y "12345678Z" son el mismo NIF, pero no para un script ingenuo.
+
+¿Qué error en los datos de un cliente te ha salido más caro? 👇
+
+#AgentesDeIA #Python #ERP #Ollama #CalidadDeDatos #Automatizacion
