@@ -1,0 +1,22 @@
+Haces ollama pull de tu modelo de embeddings. Misma etiqueta, y el RAG sigue respondiendo sin errores.
+Pero trae fragmentos que no pintan nada.
+
+A mí me pasó en un prototipo: cambié de modelo, las mismas 768 dimensiones, Chroma no se quejó y medio índice venía del modelo viejo. Tardé una tarde en ver que no era el prompt.
+
+Así que el agente #223 en Python vigila que el índice y el modelo de embeddings sigan hablando el mismo idioma:
+→ al indexar guarda en la colección de Chroma el modelo, su digest de Ollama, la dimensión y los vectores de 20 frases canario
+→ cada hora compara esa huella con ollama.list() y recalcula los canarios
+→ una regla pone rojo si cambia el modelo o la dimensión, o si algún canario baja de 0,95 de similitud; ámbar si cambió el digest o queda por debajo de 0,99; gris sin huella o sin Ollama
+→ en rojo el RAG se calla; el LLM redacta el aviso y solo ve color, motivo y cifras
+
+Lo que NO hace: reindexar por su cuenta, borrar la colección ni leer tus documentos.
+
+Mi decisión de ingeniero: prefiero un RAG callado a uno que contesta seguro desde fragmentos equivocados. Lo decide una comparación de números, no el modelo. Los umbrales son míos: ajústalos.
+
+Te soy sincero: Chroma 1.x ya guarda con la colección qué función de embeddings usaste, y Qdrant permite vectores con nombre, uno por modelo. Si usas alguno, mira eso primero. Yo lo programé para entender cómo funciona por dentro. Creo que lo que más vale es el canario: el nombre puede ser el mismo y los vectores no.
+
+Ah, y fija la etiqueta exacta del modelo (nada de :latest) al indexar y al preguntar.
+
+¿Has visto un RAG empeorar sin tocar nada "tuyo"? 👇
+
+#AgentesDeIA #RAG #Python #Ollama #Embeddings #IA
