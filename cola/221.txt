@@ -1,24 +1,24 @@
 El consumidor de pedidos vuelve a arrancar el lunes sin un solo error en el log.
-Lo que el log no cuenta: la retención de Kafka ya había borrado mensajes que ese grupo nunca llegó a leer.
+Lo que el log no cuenta: la retención de Kafka ya había borrado mensajes que ese grupo nunca leyó.
 
 Me pasó algo parecido en una integración con un ERP. El servicio estaba en verde y los pedidos llevaban horas sin entrar. Nadie miraba si la cola avanzaba, solo si el proceso seguía vivo.
 
 Así que el agente #221 en Python vigila el lag de tus grupos de consumidores de Kafka:
-→ confluent-kafka (AdminClient) lee los offsets confirmados de cada grupo, sin unirse a él
+→ AdminClient de confluent-kafka lee los offsets confirmados, sin unirse al grupo
 → list_offsets da el primer y el último offset de cada partición
-→ toma dos lecturas separadas 5 minutos y una regla pone el color
-→ rojo si el offset confirmado está por debajo del primero disponible (la retención ya borró mensajes sin leer), si el grupo no tiene consumidores y hay lag, o si el offset no se mueve en esos 5 minutos
-→ ámbar si el lag crece aunque avance; gris sin offset confirmado o sin permiso
-→ Ollama redacta el aviso y solo ve grupo, topic, cifras, color y motivo
+→ dos lecturas separadas 5 minutos y una regla pone el color
+→ rojo si el offset quedó por debajo del primero disponible, si el grupo no tiene consumidores y hay lag, o si no se mueve en 5 minutos
+→ ámbar si el lag crece aunque avance; gris sin offset o sin permiso
+→ Ollama redacta el aviso y solo ve grupo, topic, cifras y color
 
-Lo que NO hace: no lee el contenido de los mensajes ni mueve offsets. Nunca.
+Lo que NO hace: leer mensajes ni mover offsets.
 
-Mi decisión de ingeniero: el color lo pone una regla, no el modelo. Un lag de 50.000 por sí solo no dice nada; lo que importa es si baja, sube o está parado. Y uso AdminClient para mirar desde fuera, sin provocar rebalanceos.
+Mi decisión de ingeniero: el color lo pone una regla, no el modelo. Un lag de 50.000 solo no dice nada; importa si baja, sube o está parado. Y miro desde fuera, sin provocar rebalanceos.
 
-Te soy sincero: Burrow, AKHQ o el propio kafka-consumer-groups.sh ya te dan el lag. Si usas uno, mira primero si te avisa de la tendencia y no solo del número. Yo lo programé para entender cómo funciona por dentro. Y la verdad, la comprobación contra la retención es la que más me ha hecho pensar: es la que nadie mira hasta que ya es tarde.
+Te soy sincero: Burrow, AKHQ o el propio kafka-consumer-groups.sh ya te dan el lag. Si usas uno, mira primero si te avisa de la tendencia y no solo del número. Yo lo programé para entender cómo funciona por dentro. La comprobación contra la retención es la que más me hizo pensar: nadie la mira hasta que es tarde.
 
-Ah, y no mires el lag con un Consumer que use el group.id del grupo: si se suscribe, entra en el grupo y fuerza un rebalanceo.
+Ah, y no mires el lag con un Consumer que use el group.id del grupo: si se suscribe, entra y fuerza un rebalanceo.
 
-¿Cuál es la alarma de Kafka que más te ha salvado, o la que más echaste de menos? 👇
+¿Qué alarma de Kafka te ha salvado, o cuál echaste de menos? 👇
 
 #AgentesDeIA #Kafka #Python #IntegracionDeSistemas #Ollama #Observabilidad
