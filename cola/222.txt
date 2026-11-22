@@ -1,0 +1,23 @@
+El pipeline falla a las 9:02. Pulsas "Re-run failed jobs" y a las 9:09 está en verde.
+Mismo commit, mismo código. Ese test no te ha dicho nada; solo te ha costado siete minutos.
+
+Yo tuve meses un test de integración con un timeout que fallaba "a veces". Todos sabíamos cuál era y nadie lo apuntaba, así que cada pocas semanas alguien perdía la mañana creyendo que había roto algo.
+
+Así que el agente #222 en Python busca los tests inestables (flaky) de tu CI:
+→ junitparser lee los informes JUnit XML de las últimas 30 ejecuciones, cada uno con su commit
+→ si un test falla y pasa en el mismo commit, cuenta un salto
+→ una regla pone rojo con saltos en 2 o más commits, ámbar con uno, gris con menos de 5 ejecuciones
+→ si falla siempre en un commit no es inestable: está roto, y va aparte
+→ Ollama redacta el borrador de la incidencia y solo ve test, color y cifras
+
+Lo que NO hace: marcar tests como skip, reintentar nada ni tocar tu código.
+
+Mi decisión de ingeniero: qué es inestable lo decide una comparación, no el modelo. Al LLM no le paso trazas, que a veces llevan URLs internas o datos de prueba. Y nada va a cuarentena sin que lo apruebe una persona.
+
+Te soy sincero: Trunk Flaky Tests, Datadog Test Optimization o CircleCI Test Insights ya lo hacen. Si usas uno, mira primero cómo define "flaky". Yo lo programé para entender cómo funciona por dentro. Creo que lo más útil no es el detector, sino tener por fin una lista con nombres.
+
+Ah, y sube el informe JUnit también cuando el job falla (if: always() en GitHub Actions); si no, solo guardas los verdes.
+
+¿Qué test sabe todo tu equipo que falla "a veces"? 👇
+
+#AgentesDeIA #Python #DevOps #Testing #CICD #Ollama
