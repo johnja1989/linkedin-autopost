@@ -1,0 +1,22 @@
+Le pides a la IA el total de la hoja de ventas y te da una cifra, con decimales y todo. La celda tenía una fórmula que nadie había calculado nunca. El número se lo inventó.
+
+Me pasó con un Excel que generaba un script: las fórmulas estaban, pero ningún Excel lo había abierto. openpyxl devolvía None y el asistente rellenó el hueco.
+
+Así que el agente #229 es un servidor MCP en Python (FastMCP + openpyxl) que deja a la IA leer tus Excel sin tocarlos:
+→ solo abre archivos de una carpeta: la ruta se resuelve en el servidor y, si sale fuera, error
+→ listar_hojas da nombres y tamaño, y marca las hojas ocultas
+→ leer_rango tiene un tope de 500 celdas por llamada
+→ carga el libro dos veces: fórmulas y valores guardados (data_only=True)
+→ si una fórmula no tiene valor guardado devuelve SIN_CALCULAR, nunca 0, y la instrucción obliga a decir "no lo sé"
+
+Lo que NO hace: escribir, guardar, ejecutar macros ni recalcular fórmulas.
+
+Mi decisión de ingeniero: la IA no calcula, lee lo que Excel guardó. La carpeta y el tope los pone el servidor, no el modelo. Y una celda sin calcular no es un cero.
+
+Te soy sincero: Copilot en Excel y servidores como excel-mcp-server ya hacen esto, y más. Si usas uno, mira primero si le das permiso de escritura. Yo lo programé para entender cómo funciona por dentro. Creo que el riesgo no es que la IA lea mal, es que rellene huecos con mucha seguridad.
+
+Ah, y si generas Excel desde código, las fórmulas no tienen valor hasta que Excel o LibreOffice las recalculan.
+
+¿Tu IA lee tus Excel o se los imagina? 👇
+
+#AgentesDeIA #MCP #Python #Excel #IAGenerativa
