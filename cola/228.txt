@@ -1,0 +1,22 @@
+Tu ERP tiene el mismo cliente dos veces: una con el NIF con guion y otra con "ES" delante. Por separado, ninguno pasa de 3.005,06 €. Juntos, sí. Y en el modelo 347 no aparece.
+
+Me lo encontré integrando un ERP: un proveedor con tres formas de escribir el mismo NIF. Cada factura, por sí sola, estaba bien.
+
+Así que el agente #228 en Python revisa el borrador del 347 antes de presentarlo:
+→ pandas lee el export de facturas emitidas y recibidas del año, en solo lectura
+→ normaliza el NIF (sin guiones, espacios ni "ES") y python-stdnum comprueba la letra de control
+→ deja fuera las intracomunitarias, que van al 349, y suma con Decimal, IVA incluido, por tercero, clave y trimestre
+→ una regla compara con el borrador: rojo si falta un tercero que supera el umbral, si el anual no cuadra o si un NIF no es válido; ámbar si un trimestre no cuadra; gris si una factura no tiene NIF
+→ Ollama, en local, solo ve tercero, color y motivo, y redacta la nota para la gestoría
+
+Lo que NO hace: presentar el 347 ni corregir el borrador.
+
+Mi decisión de ingeniero: los importes los suma el código, nunca el modelo. Una factura sin NIF no se da por buena. Y la IA no ve importes.
+
+Te soy sincero: tu programa de contabilidad ya genera el 347. Si el tuyo lo hace, mira primero ese listado. Yo lo programé para entender cómo funciona por dentro. Creo que el problema casi nunca es la suma, es el maestro de terceros.
+
+Ah, y normaliza los NIF al dar de alta el cliente, no en enero.
+
+¿Cuántas formas de escribir el mismo NIF tiene tu ERP? 👇
+
+#AgentesDeIA #Python #FacturacionElectronica #Modelo347 #ERP #Ollama
