@@ -1,0 +1,23 @@
+Un compañero se fue de la empresa hace dos años. Su clave SSH todavía puede hacer push a tu repositorio de producción.
+No me preocupa él. Me preocupa su portátil viejo.
+
+Revisando repos de integraciones me he encontrado deploy keys con escritura que nadie recordaba haber creado. Se llamaban "test" o "servidor". Ni dueño ni fecha.
+
+Así que el agente #227 en Python revisa quién puede tocar tus repos de GitHub:
+→ con un token de solo lectura, la API REST lista por repo las deploy keys (read_only, last_used, added_by) y los colaboradores externos con su permiso
+→ en la organización, pide los colaboradores externos sin 2FA (filter=2fa_disabled)
+→ tu lista blanca local dice qué está aprobado
+→ rojo si una clave o un externo escribe sin estar aprobado, o si un externo no tiene 2FA; ámbar si una clave nunca se usó o lleva 90 días parada; gris si la API responde 403 o 404
+→ Ollama, en local, solo ve repo, color y motivo, y redacta el informe
+
+Lo que NO hace: quitar accesos ni borrar claves. Eso lo decides tú, repo por repo.
+
+Mi decisión de ingeniero: el token solo lee y el agente nunca cambia nada. Una lista vacía por falta de permiso no es una buena noticia: sale gris, nunca verde. Y la IA no ve claves ni nombres de usuario.
+
+Te soy sincero: GitHub ya te enseña esto en los ajustes de cada repo, y la organización tiene su registro de auditoría. Si tienes pocos repos, mira primero ahí. Yo lo programé para entender cómo funciona por dentro, y porque revisar 40 repos a mano no lo hace nadie. Creo que lo que vale aquí es la lista blanca, no el informe.
+
+Ah, y ponle a cada deploy key un título con dueño y fecha ("ci-facturas · Ana · 2026-11"). Dentro de un año te lo agradecerás.
+
+¿Cuándo revisaste por última vez quién puede hacer push a tu repo? 👇
+
+#AgentesDeIA #Ciberseguridad #GitHub #Python #DevSecOps #Ollama
