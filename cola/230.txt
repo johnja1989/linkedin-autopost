@@ -1,0 +1,22 @@
+Un UPDATE sin WHERE se escribe igual de rápido que uno con WHERE. Solo que el primero cambia todas las filas, y nadie lo nota hasta mañana.
+
+Lo vi de cerca hace años: el WHERE estaba en la línea de abajo y en SSMS solo se seleccionó la de arriba. Nos salvó la copia de seguridad.
+
+Así que el agente #230 en Python (sqlglot + Ollama) revisa los scripts SQL antes de ejecutarlos:
+→ corre como hook de pre-commit y sqlglot parsea cada sentencia en T-SQL
+→ rojo con UPDATE o DELETE sin WHERE, WHERE 1=1, DROP o TRUNCATE
+→ ámbar si hay WHERE: genera un SELECT COUNT_BIG(*) con esa condición para ver cuántas filas toca
+→ gris si no parsea; rojo o gris paran el commit
+→ Ollama en local solo ve sentencia, código y color, y redacta la nota para quien revisa
+
+Lo que NO hace: conectarse a la base, ejecutar nada ni corregir el script.
+
+Mi decisión de ingeniero: el color lo pone el árbol de sintaxis, no el modelo. Nada de buscar "WHERE" con una regex: un comentario también lo contiene. Y la IA no ve los valores del script.
+
+Te soy sincero: SQL Prompt de Redgate, DataGrip y Bytebase ya avisan de un DELETE sin WHERE. Si usas uno, mira primero si el aviso bloquea o solo subraya. Yo lo programé para entender cómo funciona por dentro. Creo que lo valioso no es el aviso, es saber cuántas filas vas a tocar antes de tocarlas.
+
+Ah, y ejecuta el script dentro de BEGIN TRAN y compara @@ROWCOUNT con el conteo antes del COMMIT.
+
+¿Cuál es el script que más miedo te ha dado ejecutar? 👇
+
+#AgentesDeIA #SQL #SQLServer #Python #DevOps
