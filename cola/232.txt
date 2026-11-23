@@ -1,0 +1,22 @@
+Tu CV dice github.com/johnvargas. El clic lleva a github.com/jonvargas. Una letra, y el reclutador aterriza en el perfil de otra persona.
+
+Me pasó algo parecido: cambié mi usuario de un portafolio, retoqué el texto del CV y el enlace seguía apuntando al viejo. Lo vi semanas después.
+
+Así que el agente #232 en Python revisa los enlaces de tu CV antes de enviarlo:
+→ pypdf lee las anotaciones de enlace: la URL del clic, no la que se ve.
+→ Una regex saca las URLs del texto. Mismo dominio y distinta ruta que el clic: rojo.
+→ httpx abre cada enlace: 404 o dominio inexistente, rojo (un repo privado de GitHub también da 404).
+→ Redirige a otro dominio: ámbar. 403, 429 o el 999 que LinkedIn da a los scripts: gris, lo miras tú.
+→ Ollama en local solo ve URL, color y motivo, y escribe qué arreglar.
+
+Lo que NO hace: no toca el PDF ni juzga lo que hay en tu portafolio.
+
+Mi decisión de ingeniero: el color lo pone una regla con el código HTTP, no el modelo. El texto del CV no llega a la IA, solo las URLs. Y lo que no se deja comprobar queda en gris, porque "no lo sé" no es "funciona".
+
+Te soy sincero: pasar el ratón por cada enlace del PDF ya te dice a dónde va, y lychee o el W3C Link Checker comprueban enlaces de páginas web en segundos. Con cinco enlaces, hazlo a mano. Yo lo programé para entender cómo guarda un PDF sus enlaces por dentro, y para pasarlo a cada versión del CV.
+
+Ah, y en Word el texto que se ve y la dirección del enlace son campos distintos: cambiar uno no cambia el otro.
+
+¿Cuándo hiciste clic por última vez en los enlaces de tu propio CV? 👇
+
+#AgentesDeIA #Python #BusquedaDeEmpleo #CV #IngenieriaDeIA
