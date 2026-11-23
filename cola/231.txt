@@ -1,0 +1,22 @@
+Tu integración CRM → ERP lleva meses en verde. El job dice OK cada noche. Pero, ¿alguien ha contado si están todos los clientes?
+
+Me pasó una vez: un alta fallaba una validación en el ERP y el error acababa en un log que nadie leía. Lo supimos cuando facturación no encontró al cliente.
+
+Así que el agente #231 en Python (DuckDB + Ollama) cuadra los dos sistemas cada mañana:
+→ DuckDB lee los dos exports en solo lectura y normaliza (mayúsculas; NIF e IBAN sin espacios ni guiones)
+→ un md5 por fila resume los campos que deben coincidir y un FULL JOIN por id cruza los dos lados
+→ rojo si no llegó al ERP; ámbar si sobra en el ERP o el hash difiere (dice qué campo, no el valor)
+→ gris si el id falta o se repite, nunca verde; lo tocado hace menos de 15 minutos no se juzga
+→ Ollama en local solo ve id, color y campo, y redacta la nota
+
+Lo que NO hace: corregir, reenviar ni escribir en ningún sistema.
+
+Mi decisión de ingeniero: el color lo pone un JOIN, no el modelo. Un NULL pasa a texto vacío antes del hash: concat_ws se salta los NULL y dos filas distintas darían el mismo md5. Y la IA no ve NIF, emails ni IBAN.
+
+Te soy sincero: datacompy y audit_helper de dbt ya comparan tablas fila a fila. Si usas uno, mira primero cómo trata los NULL y los ids repetidos. Yo lo programé para entender cómo funciona por dentro. Creo que un OK dice que el proceso terminó, no que los datos llegaron.
+
+Ah, y empieza contando filas por día en los dos lados: es barato.
+
+¿Cada cuánto cuadras los datos entre tus sistemas? 👇
+
+#AgentesDeIA #Integracion #DuckDB #Python #ERP #DataQuality
