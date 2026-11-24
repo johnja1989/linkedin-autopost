@@ -1,0 +1,22 @@
+El 25 de octubre, en España, las 02:30 existieron dos veces. Si tu integración guarda la hora sin offset, dos pedidos separados por una hora parecen del mismo minuto.
+
+Me pasó integrando fichajes con un ERP: un turno de noche salía con una hora de más, un día al año. Lo último que miré fue el reloj.
+
+Así que el agente #237 en Python revisa las fechas de un export antes de cargarlo:
+→ pandas lee el CSV en solo lectura y fromisoformat interpreta cada fecha (si no es ISO 8601, no adivina)
+→ zoneinfo va y vuelve de UTC con Europe/Madrid: si la hora cambia, no existe (29 de marzo, 02:30)
+→ Si fold=0 y fold=1 dan distinto offset, pasó dos veces (25 de octubre, 02:30)
+→ Una regla pone rojo si no existe, ámbar si es ambigua o el offset no es el de Madrid ese día, gris si no se lee (03/04/2026: ¿marzo o abril?)
+→ Ollama solo ve fila, campo, color y motivo, y redacta la nota al proveedor
+
+Lo que NO hace: corregir horas ni cargar nada en el ERP.
+
+Mi decisión de ingeniero: si una hora existe lo decide zoneinfo, no el modelo, que puede dar por buena una hora que nunca pasó. Las fechas no salen de tu equipo. Y qué hora era de verdad lo confirma quien la generó.
+
+Te soy sincero: pandas ya lo hace con tz_localize(ambiguous="raise", nonexistent="raise"), y guardar en UTC con offset evita casi todo. Yo lo programé para entender cómo funciona por dentro. Creo que el cambio de hora es el bug más predecible que seguimos sin probar.
+
+Ah, y el próximo es el 28 de marzo de 2027: mete ya esa fecha en tus tests.
+
+¿Te ha mordido el cambio de hora en una integración? 👇
+
+#AgentesDeIA #IntegracionDeSistemas #Python #APIs #Ollama
