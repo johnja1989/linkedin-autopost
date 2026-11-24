@@ -1,0 +1,22 @@
+Diapositiva 7, delante de todo el comité: "Ahorro anual: XXX €". Nadie dice nada. Todos lo han visto.
+
+A mí me pasó en una demo: un "TODO: poner datos reales" que llevaba ahí desde la primera versión. La había leído cinco veces. Ya no lo veía.
+
+Así que el agente #235 en Python y Gradio revisa tu presentación antes de la reunión:
+→ Arrastras el .pptx a una página de Gradio que corre en tu ordenador
+→ python-pptx recorre cada diapositiva: textos, marcadores, imágenes y si está oculta
+→ Una regla pone rojo con TODO, XXX, lorem o letra de menos de 14 pt, y ámbar con diapositivas ocultas, marcadores vacíos o imágenes sin texto alternativo
+→ Si el tamaño de letra viene heredado del patrón, no lo da por bueno: lo cuenta aparte como sin comprobar
+→ Ollama en local solo ve número de diapositiva, color y motivo, y te escribe la lista de arreglos
+
+Lo que NO hace: tocar el archivo, corregir textos ni opinar sobre tu diseño.
+
+Mi decisión de ingeniero: el contenido de las diapositivas no sale de tu equipo ni llega al modelo, porque las cifras de un comité son justo lo que no quieres pegar en un chat. El color lo pone una regla. Y un texto alternativo que es solo el nombre del archivo (foto1.png) cuenta como vacío.
+
+Te soy sincero: PowerPoint ya trae el Comprobador de accesibilidad, que avisa de las imágenes sin texto alternativo, y el Inspector de documento, que encuentra comentarios y notas. Si usas PowerPoint, pásalos primero. Yo lo programé para entender cómo funciona por dentro, y porque ninguno de los dos busca un XXX olvidado. La verdad, lo que más me ha salvado no es la IA: es una regex de tres palabras.
+
+Ah, y ensaya una vez en voz alta con el modo presentador: los errores se oyen antes de verse.
+
+¿Te ha pasado proyectar algo que no tocaba? 👇
+
+#AgentesDeIA #Python #Gradio #Productividad #Ollama
