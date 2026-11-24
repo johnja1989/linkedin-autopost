@@ -1,0 +1,22 @@
+El manual de bienvenida dice 22 días de vacaciones. La política de RR. HH. dice 23. Tu RAG cita uno de los dos, con toda la seguridad del mundo.
+
+Me pasó probando un asistente de políticas internas: contestaba distinto según cómo preguntaba. Pensé que era el modelo. No. Eran dos documentos vigentes que se contradecían.
+
+Así que el agente #236 en Python y Ollama busca contradicciones entre tus documentos antes de indexarlos:
+→ bge-m3 en Ollama, en local, calcula el embedding de cada fragmento
+→ numpy cruza todos con todos y se queda con los pares de documentos distintos con coseno de 0,80 o más
+→ Una regex saca las cifras con unidad: días, horas, meses, % y €
+→ Una regla pone rojo si la misma unidad trae otra cifra, ámbar si usan unidades distintas y gris si uno no tiene cifras (nunca dice "sin contradicciones")
+→ Ollama redacta la nota para el responsable, y la regla exige que cite las dos cifras literales
+
+Lo que NO hace: corregir documentos ni decidir cuál tiene razón.
+
+Mi decisión de ingeniero: el color lo pone una comparación de números, no el modelo, porque un LLM puede leer "22" y "23" como lo mismo. Todo corre en local. Y qué documento manda lo decide una persona.
+
+Te soy sincero: SharePoint o Confluence guardan versiones y dueños, pero no te avisan de que dos páginas dicen cosas distintas. Si ya tienes un dueño por documento, empieza por ahí. Yo lo programé para entender cómo funciona por dentro. Creo que muchos "el RAG alucina" son en realidad esto.
+
+Ah, y el 0,80 no lo copies: calíbralo con 20 pares marcados a mano.
+
+¿Te has encontrado dos documentos oficiales que se contradecían? 👇
+
+#AgentesDeIA #RAG #Python #Ollama #GestionDocumental
