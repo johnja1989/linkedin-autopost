@@ -1,0 +1,22 @@
+Le pasas a tu modelo local un manual de 40 páginas y responde con toda seguridad. No te dice que solo leyó una parte.
+
+En Ollama, con menos de 24 GB de VRAM, la ventana por defecto es de 4k tokens y lo que sobra se recorta sin avisar. Me pasó con un manual interno: citaba la sección equivocada y el único aviso estaba en el log del servidor.
+
+Así que el agente #238 en Python mide hasta dónde lee de verdad tu modelo local:
+→ Genera textos de relleno de 2k a 32k tokens con un código aleatorio al 10, 50 y 90 %
+→ Llama a Ollama con num_ctx fijado en cada petición y temperatura 0, y pregunta por el código
+→ Compara prompt_eval_count con lo esperado: si leyó menos del 90 %, recortó
+→ Una regla pone rojo si recortó o no da el código exacto, ámbar si acierta usando más del 80 % de la ventana, gris si Ollama no responde
+→ Te da el tamaño máximo en verde de cada modelo
+
+Lo que NO hace: medir si entiende. Encontrar un código no es comprender un contrato.
+
+Mi decisión de ingeniero: decide una comparación exacta, no un LLM juez. El relleno es sintético, ningún documento real entra en la prueba. Y cada texto empieza distinto, para que la caché no falsee el recuento.
+
+Te soy sincero: RULER de NVIDIA y los tests "needle in a haystack" ya hacen esto, y más completo. Si eliges modelo, mira primero sus resultados. Yo lo programé para entender cómo funciona por dentro, con mi GPU. Creo que la ventana de contexto es el ajuste que más damos por supuesto.
+
+Ah, y por la ruta compatible con OpenAI el num_ctx de la petición no sirve: ponlo en el Modelfile o en OLLAMA_CONTEXT_LENGTH.
+
+¿Sabes con qué ventana trabaja hoy tu modelo local? 👇
+
+#AgentesDeIA #Ollama #LLM #Python #EvaluacionLLM
