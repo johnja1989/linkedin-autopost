@@ -1,0 +1,22 @@
+El despliegue salió verde y el panel de errores ni se movió. Pero en el log había una línea que no había existido nunca, repetida 400 veces.
+
+Me pasó con una integración de facturas: un error de firma nuevo entre miles de INFO. El total parecía normal porque otro error de siempre había bajado. Lo vimos cuando llamó un cliente.
+
+Así que el agente #233 en Python y Drain3 busca las líneas de log que nunca habías visto:
+→ Drain3 aprende las plantillas de 7 días de logs previos, con IPs, emails y números enmascarados
+→ Tras el despliegue, cada línea pasa por match(): si no encaja en ninguna plantilla, es nueva
+→ Otro TemplateMiner agrupa y cuenta las nuevas
+→ Una regla pone rojo si llevan ERROR o FATAL y salen 10 veces o más, ámbar si menos, gris si la base no llega a 1.000 líneas (nunca verde)
+→ Ollama en local solo ve plantilla, cifra y color, y titula la alerta
+
+Lo que NO hace: rollback, reinicios ni decidir si el error importa.
+
+Mi decisión de ingeniero: el modelo nunca lee el log en bruto, solo cosas como "timeout al firmar factura <NUM>". El color lo pone una regla con su test. Y sin histórico, mejor un gris honesto que un verde inventado.
+
+Te soy sincero: Datadog (Log Patterns), Elastic y Grafana ya agrupan logs por patrones. Si usas uno, mira primero si te avisa de un patrón nuevo tras desplegar. Yo lo programé para entender cómo funciona por dentro, y ver que Drain es un árbol con un umbral de parecido le quitó bastante magia.
+
+Ah, y enmascara antes de entrenar: una IP que no salió en la base hace que una línea de siempre parezca nueva.
+
+¿Tú vigilas cuántos errores hay o cuáles son nuevos? 👇
+
+#AgentesDeIA #Python #Observabilidad #DevOps #Logs #Ollama
