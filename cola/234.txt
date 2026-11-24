@@ -1,0 +1,22 @@
+Le pides a la IA un script para leer un Excel raro y te suelta: pip install excel-parser-pro. Ese paquete no existe. Todavía.
+
+Me pasó revisando el script de un compañero: un import que nadie conocía y que no estaba en PyPI. Si alguien registra ese nombre mañana, el siguiente pip install instala lo que él quiera. Le llaman slopsquatting.
+
+Así que el agente #234 en Python revisa tu requirements.txt antes de instalar nada:
+→ packaging lee cada línea y normaliza el nombre (Foo_Bar es foo-bar)
+→ La API JSON de PyPI dice si existe y cuándo se subió su primer fichero
+→ rapidfuzz mide la distancia con los 8.000 paquetes más descargados
+→ Una regla pone rojo si no existe o si tiene menos de 90 días y está a 1-2 letras de uno popular, ámbar si solo es nuevo o solo se parece, gris si PyPI no responde
+→ El rojo para el commit y Ollama en local solo ve nombre, color y motivo
+
+Lo que NO hace: pip install, descargar el paquete ni decidir si es malicioso.
+
+Mi decisión de ingeniero: nunca instala nada para comprobarlo, porque instalar ya puede ejecutar código. Solo lee metadatos. Y el color lo pone una regla, no el modelo: preguntarle a una IA si un paquete existe es justo como empezó el problema.
+
+Te soy sincero: Socket y GuardDog (de Datadog) ya hacen esto, y más, porque analizan el código. Si usas uno, mira primero si revisa las dependencias nuevas de cada PR. Yo lo programé para entender cómo funciona por dentro, y me sorprendió que la comprobación que más protege sea la más tonta: ver si existe.
+
+Ah, y si el nombre te lo dio una IA, búscalo tú en pypi.org antes de copiar el pip install.
+
+¿Revisas los paquetes que te sugiere la IA antes de instalarlos? 👇
+
+#AgentesDeIA #Ciberseguridad #Python #PyPI #SupplyChain #Ollama
