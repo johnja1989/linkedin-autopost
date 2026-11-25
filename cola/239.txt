@@ -1,0 +1,22 @@
+Un proveedor te factura tres semanas después de entregarte el material. Tu ERP cuenta el plazo desde la factura. La ley, desde la entrega.
+
+Lo vi en un proyecto de integración: una remesa pagaba a 75 días a un proveedor sin ningún pacto. Nadie lo hizo a propósito, el vencimiento salía de la fecha equivocada.
+
+Así que el agente #239 en Python y Polars revisa los plazos de pago antes de la remesa:
+→ Lee en solo lectura facturas recibidas, fecha de recepción y fecha de pago prevista
+→ Cruza con el plazo pactado del maestro de proveedores
+→ Cuenta días naturales desde la recepción (Ley 3/2004: 30 días, hasta 60 con pacto)
+→ Una regla pone rojo si pasa de 60, ámbar si supera lo pactado o 30 sin pacto, gris si falta la recepción
+→ Ollama solo ve factura, color y motivo, y redacta la nota a tesorería
+
+Lo que NO hace: mover pagos ni tocar la remesa. Tampoco es asesoría legal.
+
+Mi decisión de ingeniero: el color lo pone una resta de fechas, no el modelo. Si falta la recepción no usa la fecha de factura, porque ahí está justo el error. Y la IA no ve importes ni proveedores.
+
+Te soy sincero: muchos ERP ya traen informes de vencimientos y de periodo medio de pago. Si usas uno, mira primero desde qué fecha calcula. Yo lo programé para entender cómo funciona por dentro. Creo que en pagos el fallo casi nunca es la suma, es la fecha de partida.
+
+Ah, y si tu ERP no guarda la fecha de recepción, es el primer campo que añadiría.
+
+¿Desde qué fecha calcula tu empresa los vencimientos a proveedores? 👇
+
+#AgentesDeIA #Python #Polars #Ollama #Tesoreria #Automatizacion
