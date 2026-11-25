@@ -1,0 +1,22 @@
+En una base de datos heredada, que no haya claves foráneas no significa que no haya relaciones. Significa que nadie comprueba que se cumplan.
+
+Me pasó en una migración: cientos de pedidos apuntaban a clientes borrados por una limpieza de hace años.
+
+Así que el agente #240 en Python y SQLAlchemy busca filas huérfanas en una base de datos sin claves foráneas:
+→ inspect lee tablas, claves primarias y FK declaradas
+→ Propone relaciones por nombre (pedidos.cliente_id con clientes.id) donde no hay FK
+→ Un LEFT JOIN de solo lectura cuenta los valores que no encuentran a su padre
+→ Una regla pone rojo si casa el 99 % o más y hay huérfanas, ámbar entre 90 y 99 %, gris por debajo
+→ Ollama solo ve tabla, columna, cifras y color, y redacta la nota al responsable
+
+Lo que NO hace: borrar huérfanas, crear claves foráneas ni enseñar valores al modelo.
+
+Mi decisión de ingeniero: la consulta la construye el código con nombres del catálogo, nunca el modelo. Usuario de solo lectura y COUNT, no SELECT *. Y con un 70 % de coincidencia no afirmo nada: gris, y lo mira una persona.
+
+Te soy sincero: los tests relationships de dbt o las reference checks de Soda ya hacen esto. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Creo que lo difícil no es la consulta, es saber qué columnas son una relación.
+
+Ah, y limpia las huérfanas antes de crear la FK: si no, el ALTER TABLE falla, o con WITH NOCHECK en SQL Server queda una FK que no es de confianza.
+
+¿Cuántas relaciones de tu base de datos viven solo en la cabeza de alguien? 👇
+
+#AgentesDeIA #Python #SQLAlchemy #SQL #CalidadDeDatos #Ollama
