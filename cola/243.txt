@@ -1,0 +1,22 @@
+Presupuesto de 40 líneas, total razonable. En la línea 23, un 20 % de descuento deja el producto por debajo de coste. Nadie lo ve: todos miran el total.
+
+Me pasó algo parecido en una integración con un ERP: la oferta cuadraba, el margen no. Lo vimos al facturar. Tarde.
+
+Así que el agente #243 en Python revisa el Excel del presupuesto antes de enviarlo:
+→ openpyxl lo abre en solo lectura con data_only=True: valores, no fórmulas
+→ Cruza cada referencia con el coste del maestro de artículos
+→ Una regla pone rojo si el neto no cubre el coste o el descuento pasa del autorizado, ámbar si el margen baja del 15 %
+→ Gris si falta el coste o la celda es una fórmula sin valor guardado (nunca la da por buena)
+→ Ollama solo ve línea, color y motivo, y redacta la nota al comercial
+
+Lo que NO hace: cambiar precios, aprobar descuentos ni enviar el presupuesto al cliente.
+
+Mi decisión de ingeniero: el margen lo calcula una resta, no el modelo, y los costes nunca llegan a la IA. Si el Excel lo generó un programa y nadie lo abrió, las fórmulas vuelven como None: gris, no cero.
+
+Te soy sincero: Odoo ya enseña el margen por línea, y HubSpot o Salesforce CPQ piden aprobación de descuentos. Si usas uno, mira primero su configuración. Yo lo programé para entender cómo funciona por dentro. Creo que el problema casi nunca es el total, sino la línea que nadie mira.
+
+Ah, y no confundas margen con recargo: un 25 % sobre el coste es un 20 % de margen.
+
+¿Tu equipo revisa los presupuestos línea a línea o solo el total? 👇
+
+#AgentesDeIA #Python #AutomatizacionDeNegocio #Excel #Ventas
