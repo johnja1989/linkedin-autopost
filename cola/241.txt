@@ -1,0 +1,22 @@
+Das de baja la web de una campaña en Azure. El CNAME promo.tudominio.es sigue apuntando a un nombre que ya no existe. Y ese nombre lo puede reclamar cualquiera.
+
+Me pasó revisando la zona DNS de un proyecto: tres CNAME apuntaban a servicios borrados hacía meses.
+
+Así que el agente #241 en Python y dnspython busca CNAME colgantes en tus propios dominios:
+→ dns.zone lee el export de tu zona y saca cada CNAME
+→ Consulta el destino de cada uno con una petición DNS normal
+→ Una regla pone rojo si el destino da NXDOMAIN, ámbar si resuelve en un proveedor como GitHub Pages o Azure, gris si no responde
+→ Verde solo significa "el DNS resuelve", no "estás a salvo"
+→ Ollama solo ve subdominio, color y motivo, y redacta la nota a quien lleva el DNS
+
+Lo que NO hace: borrar registros, reclamar el recurso "para probar" ni mirar dominios que no son tuyos.
+
+Mi decisión de ingeniero: el color lo pone la respuesta DNS, no el modelo. Un timeout es gris, nunca verde. Y el ámbar existe porque en algunos proveedores el nombre resuelve aunque el recurso ya no sea tuyo.
+
+Te soy sincero: dnsReaper, las plantillas de takeover de nuclei o la protección de DNS colgante de Microsoft Defender para App Service ya hacen esto. Si usas una, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Creo que el problema casi nunca es técnico: se borra el servicio y nadie toca el DNS.
+
+Ah, y al dar de baja algo, primero quita el CNAME y después borra el recurso. Al revés dejas una ventana abierta.
+
+¿Cuándo fue la última vez que alguien revisó tu zona DNS entera? 👇
+
+#AgentesDeIA #Ciberseguridad #DNS #Python #Ollama
