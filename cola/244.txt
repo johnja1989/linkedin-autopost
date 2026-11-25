@@ -1,0 +1,22 @@
+Viernes, despliegue a producción. Todo verde en CI. A los dos minutos, KeyError: 'SMTP_HOST'. Alguien añadió la variable al .env.example, pero nadie la puso en producción.
+
+A mí me pasó con una integración SFTP: en pruebas funcionaba, en producción faltaba una ruta. El código estaba bien. La configuración, no.
+
+Así que el agente #244 en Python compara lo que tu código necesita con lo que hay en producción:
+→ python-dotenv lee .env.example y el .env de producción; el script se queda solo con los nombres y si están vacías
+→ ast recorre el código y saca cada os.environ["X"], os.getenv("X") y os.environ.get("X")
+→ Una regla pone rojo si falta una variable sin valor por defecto (os.environ["X"] revienta al arrancar) o una del .env.example
+→ Ámbar si está vacía o el código la usa sin documentarla; gris si el nombre se construye en tiempo de ejecución
+→ Ollama solo ve nombre, color y motivo, y redacta el comentario para el PR
+
+Lo que NO hace: leer ni enseñar valores, rellenar variables ni desplegar.
+
+Mi decisión de ingeniero: los valores no salen de la función que lee el archivo; al modelo le llega DB_URL, nunca la contraseña. Y el color lo pone una regla: el modelo no decide si se puede desplegar.
+
+Te soy sincero: dotenv-linter ya compara archivos .env y dotenv-diff revisa su uso en el código (pensado para JavaScript). Si usas uno, mira primero su configuración. Yo lo programé para entender cómo funciona por dentro. Creo que muchos "fallos de código" en producción son configuración.
+
+Ah, y en el .env.example deja la clave con el valor vacío, nunca un secreto real "de ejemplo".
+
+¿Cómo comprobáis las variables de entorno antes de desplegar? 👇
+
+#AgentesDeIA #Python #DevOps #Despliegue #Configuracion
