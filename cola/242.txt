@@ -1,0 +1,22 @@
+Le pides a la IA un script con httpx y te escribe httpx.Client(proxies=...). Funcionaba hasta la 0.27. En la 0.28 que tienes instalada: TypeError.
+
+Me pasó con un script de hace unos meses. El código era correcto para la versión que el modelo recordaba, no para la mía.
+
+Así que el agente #242 en FastMCP es un servidor MCP que le da a la IA la firma real de tus librerías:
+→ importlib.metadata dice qué versión tienes instalada, sin importar el paquete
+→ griffe lee el código fuente y saca parámetros y docstring, sin ejecutarlo
+→ Solo responde sobre los paquetes de tu requirements.txt
+→ Una regla pone verde con la firma, rojo si la función no está en tu versión, gris si no puede saberlo (partes compiladas en C)
+→ El asistente consulta antes de escribir la llamada, no después del error
+
+Lo que NO hace: importar ni ejecutar tus paquetes, instalar versiones ni corregir tu código.
+
+Mi decisión de ingeniero: si una función existe o no lo dice el código que tienes en disco, no el modelo. Un gris es "no lo sé", nunca un sí. Y griffe va con allow_inspection=False: leer no es ejecutar.
+
+Te soy sincero: Context7 ya da documentación actualizada a la IA por MCP, y Pyright o Pylance te marcan el parámetro que no existe en el editor. Si usas uno, mira primero ahí. Yo lo programé para entender cómo funciona por dentro. Creo que la pregunta buena no es "qué dice la documentación", sino "qué tengo instalado".
+
+Ah, y fija versiones en requirements.txt. Sin eso, ni tú ni la IA sabéis contra qué estáis programando.
+
+¿Cuántas veces te ha dado la IA un parámetro que ya no existía? 👇
+
+#AgentesDeIA #MCP #Python #IngenieriaDeSoftware #LLM
