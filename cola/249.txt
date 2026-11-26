@@ -1,0 +1,22 @@
+Tu LLM juez dice que gana la respuesta del modelo nuevo. Cambias el orden de las dos respuestas y ahora gana la del viejo.
+
+Me pasó comparando dos prompts en local: invertí el orden por curiosidad y varios veredictos se dieron la vuelta. Tiene nombre, sesgo de posición, y ya sale en el paper de MT-Bench (2023).
+
+Así que el agente #249 en Python con Ollama mide si tu juez prefiere la respuesta que va primero:
+→ Lee pares.jsonl: pregunta y dos respuestas, sin nombre de modelo.
+→ Juzga cada par dos veces, 1-2 y 2-1, con temperatura 0 y salida con esquema JSON (A, B o empate).
+→ El código traduce A y B a respuesta 1 o 2: si el ganador real cambia, el par es inestable.
+→ Una regla pone rojo si cambian más del 20 % de los pares, ámbar del 10 al 20 %, verde por debajo; gris con menos de 30 pares.
+→ Escribe inestables.csv con cada par que cambia.
+
+Lo que NO hace: decidir qué respuesta es mejor ni tocar tu prompt de juez.
+
+Mi decisión de ingeniero: temperatura 0, para que si cambia sea por el orden y no por azar. El juez no sabe qué modelo escribió cada respuesta. Y el color lo pone una cuenta, no otro LLM.
+
+Te soy sincero: promptfoo y DeepEval ya te montan un LLM juez en minutos. Si usas uno, mira primero si prueba también el orden inverso. Yo lo programé para entender el problema por dentro, y desde entonces no me creo un "gana B" sin ver el orden cambiado.
+
+Ah, y un par inestable a veces son dos respuestas igual de buenas: lo honesto es contarlo como empate.
+
+¿Tu LLM juez ha pasado la prueba de cambiarle el orden? 👇
+
+#AgentesDeIA #LLMasJudge #Ollama #EvaluacionLLM #Python
