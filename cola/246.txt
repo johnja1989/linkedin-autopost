@@ -1,0 +1,22 @@
+Tienes 2 respuestas de 7 candidaturas con el CV nuevo y 1 de 31 con el viejo. Parece clarísimo. No lo es.
+
+Me pasó hace unas semanas. Cambié el CV, llegaron dos correos seguidos y ya me veía con la tecla encontrada. Con 7 envíos eso es una anécdota, no un dato.
+
+Así que el agente #246 en Python mide qué funciona en tu búsqueda de empleo sin engañarte:
+→ pandas lee en tu ordenador tu registro de candidaturas: canal, versión del CV, fecha y si contestó una persona.
+→ Solo cuenta las enviadas hace 21 días o más.
+→ statsmodels calcula la tasa de respuesta de cada grupo con un intervalo de Wilson al 95 %.
+→ Una regla compara: gris con menos de 10 candidaturas, ámbar si los intervalos se solapan, verde solo si no se solapan.
+→ Ollama recibe cifras y colores y redacta el resumen de la semana.
+
+Lo que NO hace: elegir tu CV con 7 envíos, enviar candidaturas ni leer tus correos.
+
+Mi decisión de ingeniero: si una diferencia es real no lo decide el modelo, lo decide la regla. El modelo solo ve grupo, cifras y color, nunca empresas. Prefiero un "aún no lo sé" a una conclusión bonita.
+
+Te soy sincero: Huntr ya tiene métricas de tu búsqueda, y una hoja de cálculo da casi lo mismo. Si usas una, mira primero cuántas candidaturas hay detrás de cada porcentaje. Yo lo programé para entender cómo funciona por dentro y porque desconfío de un porcentaje sin su muestra.
+
+Ah, y apunta canal y versión del CV el mismo día que envías. Reconstruirlo un mes después es inventar un poco.
+
+¿Tú sabes qué canal te da más respuestas, o lo intuyes? 👇
+
+#AgentesDeIA #Python #BusquedaDeEmpleo #Estadistica #IngenieriaDeIA
