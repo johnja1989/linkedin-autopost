@@ -1,0 +1,22 @@
+Subes 40 PDFs al RAG, el indexador dice "completado". Hasta que alguien pregunta por el contrato de 2019 y el asistente contesta "no lo encuentro". Estaba ahí. Era una foto.
+
+Me pasó con una carpeta de procedimientos escaneados. No había ningún error: esas páginas no tenían texto. El índice estaba "bien" y medio vacío.
+
+Así que el agente #247 en Python revisa tus PDFs antes de indexarlos en el RAG:
+→ PyMuPDF abre cada PDF en tu equipo y lee el texto página a página.
+→ Una página con imagen y menos de 20 caracteres cuenta como escaneada.
+→ Una regla pone rojo si la mitad o más de las páginas son escaneadas, ámbar si hay alguna, verde si todas tienen texto y gris si no abre o está cifrado.
+→ Rojos y ámbar van a cola_ocr.csv con sus páginas.
+→ Ollama solo ve nombre, color y cifras y redacta la nota para quien lleva la documentación.
+
+Lo que NO hace: OCR, indexar ni comprobar que el texto que sí hay sea correcto.
+
+Mi decisión de ingeniero: el ámbar me preocupa más que el rojo. Un documento con 3 páginas escaneadas de 40 parece indexado y le faltan justo esas. Verde solo significa que hay capa de texto, nada más.
+
+Te soy sincero: OCRmyPDF con --skip-text ya hace OCR solo de las páginas sin texto, y Docling puede hacer OCR al convertir. Si usas uno, mira primero cuántas páginas pasó por OCR. Yo lo programé para entender cómo funciona por dentro y porque prefiero saber qué falta antes que un usuario.
+
+Ah, y apunta cuántas páginas indexas de cada documento. Si no cuadra, algo se quedó fuera.
+
+¿Has revisado alguna vez cuánto de tus PDFs ve de verdad tu RAG? 👇
+
+#AgentesDeIA #RAG #Python #PyMuPDF #IngenieriaDeIA
