@@ -1,0 +1,22 @@
+El lunes la web no carga y el correo rebota. No es el servidor ni el DNS. El dominio caducó el sábado y la tarjeta del registrador era de alguien que ya no está.
+
+Lo vi de cerca en una integración: los avisos de renovación llegaban a un buzón que nadie leía. Nadie hizo nada mal. Simplemente nadie miraba.
+
+Así que el agente #248 en n8n vigila cuándo caducan tus dominios:
+→ Cada lunes lee tu lista de dominios con su responsable.
+→ Consulta RDAP en rdap.org, que redirige al registro oficial, a 1 petición cada 2 segundos.
+→ Un nodo Code saca la fecha del evento expiration y los estados del dominio.
+→ Una regla pone rojo con 30 días o menos, redemption period o pending delete; ámbar con 60 o sin client transfer prohibited; gris si RDAP no da fecha (nunca verde).
+→ Ollama solo ve dominio, color, días y motivo y deja un borrador en Gmail para quien paga.
+
+Lo que NO hace: renovar, pagar, tocar el registrador ni enviar nada solo.
+
+Mi decisión de ingeniero: el gris importa. Algunos dominios de país no tienen RDAP en IANA y rdap.org da 404. Si eso saliera en verde, el agente mentiría justo donde nadie mira.
+
+Te soy sincero: tu registrador ya te avisa y UptimeRobot vigila la caducidad de dominios. Si usas uno, mira primero a qué correo llegan esos avisos. Yo lo programé para entender RDAP por dentro, y porque el fallo casi nunca es técnico: es de responsable.
+
+Ah, y activa la renovación automática, pero revisa la tarjeta que tiene guardada.
+
+¿Sabes a qué correo llegan los avisos de renovación de tus dominios? 👇
+
+#AgentesDeIA #n8n #RDAP #Ciberseguridad #DevOps
