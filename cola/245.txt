@@ -1,0 +1,22 @@
+Vuelves de vacaciones con 1.400 fotos. Unas 300 son la misma puesta de sol en ráfaga. Nunca encuentras el rato de elegir.
+
+A mí me pasa cada verano: el móvil lleno y yo pasando fotos casi iguales con el dedo un domingo entero.
+
+Así que el agente #245 en Python ordena la galería sin borrar nada:
+→ Pillow abre cada foto, la endereza y lee la fecha de captura del EXIF
+→ imagehash calcula un pHash de 64 bits; dos fotos son de la misma ráfaga si se tomaron con menos de 60 segundos y difieren en 8 bits o menos
+→ OpenCV mide la nitidez con la varianza del Laplaciano a la misma escala (1024 px)
+→ Una regla pone verde la más nítida de cada grupo, rojo la borrosa que tiene una gemela nítida, ámbar la casi igual o la borrosa sin pareja, gris si no se puede abrir o no tiene fecha
+→ Ollama solo ve grupos, colores y cifras y redacta el resumen
+
+Lo que NO hace: borrar, mover ni subir ninguna foto.
+
+Mi decisión de ingeniero: la IA no ve tus fotos; deciden un hash y una regla. La fecha va primero: sin ella, dos playas distintas con el mismo cielo acabarían juntas. Y una borrosa sin pareja nunca es roja: puede ser el único recuerdo.
+
+Te soy sincero: digiKam busca duplicados por similitud y Czkawka encuentra imágenes parecidas. Si usas uno, mira primero su umbral de similitud. Yo lo programé para entender cómo funciona por dentro. Creo que lo difícil no es encontrarlas, es atreverse a borrarlas.
+
+Ah, y calibra el umbral de nitidez con 20 fotos tuyas: un cielo con niebla también "parece" borroso.
+
+¿Cuántas fotos casi iguales tienes ahora mismo en el móvil? 👇
+
+#AgentesDeIA #Python #OpenCV #Productividad #Fotografia
