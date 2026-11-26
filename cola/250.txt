@@ -1,0 +1,22 @@
+Tu sincronización leyó 10.000 registros de la API. Cero errores. Tres venían repetidos y otros tres no llegaron.
+
+Me pasó integrando un ERP con una API paginada por offset: mientras leíamos, alguien daba de alta clientes y el último de cada página volvía a salir en la siguiente.
+
+Así que el agente #250 en Python revisa una lectura paginada antes de darla por buena:
+→ requests sigue el rel="next" de la cabecera Link (RFC 8288) y guarda solo los id.
+→ Corta si una URL se repite o si pasa de 500 páginas.
+→ Cuenta id repetidos y compara los distintos con X-Total-Count, si la API lo da.
+→ Al final relee la primera página: si cambió, los datos se movieron mientras leía.
+→ Una regla pone rojo con repetidos, faltantes o bucle; ámbar si cambió la primera página o llegó al tope; gris sin total con qué comparar (nunca verde).
+
+Lo que NO hace: cargar nada en el ERP ni reintentar por su cuenta.
+
+Mi decisión de ingeniero: solo GET y solo id, la IA no ve ni un dato de cliente. Un repetido delata una alta, pero un borrado se salta un registro sin dejar rastro: por eso compara con el total. Ollama recibe cifras, color y motivo, y redacta la nota a integración.
+
+Te soy sincero: muchas herramientas de integración ya paginan por ti, y la solución de fondo es paginar por cursor, no por offset. Si usas una, mira primero cómo pagina. Yo lo programé para entender por qué una lectura "sin errores" puede mentir.
+
+Ah, y si la API deja elegir orden, pide por id: ordenada por fecha de modificación, la lista se mueve sola.
+
+¿Tu integración comprueba que leyó todo, o solo que no falló? 👇
+
+#AgentesDeIA #Integracion #APIs #Python #Ollama
