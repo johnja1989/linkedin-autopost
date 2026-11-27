@@ -1,0 +1,22 @@
+Es 24 de diciembre y en soporte solo queda una persona. Las vacaciones de las otras tres se aprobaron una a una, y cada una tenía sentido.
+
+Algo así lo vi en un proyecto. Nadie se equivocó: nadie miraba el calendario entero al decir que sí.
+
+Así que el agente #252 en LangGraph revisa cada solicitud de vacaciones antes de que llegue al responsable:
+→ Lee la solicitud y el saldo de días del export de RRHH, en solo lectura.
+→ Cuenta los laborables con la librería holidays (Cataluña) más tus dos festivos locales, que no trae.
+→ Una regla pone rojo si supera el saldo o algún día el equipo baja del mínimo, ámbar si cae en cierre de mes, gris si falta el saldo.
+→ Ollama solo ve color y cifras, y redacta la nota al responsable.
+→ interrupt() para el grafo: decide una persona y queda en decisiones.csv.
+
+Lo que NO hace: aprobar nada ni escribir en el sistema de RRHH.
+
+Mi decisión de ingeniero: el motivo que escribe la persona (un médico, un tema familiar) no entra al modelo. Verde no significa aprobado, significa que los números cuadran. Y el modelo va en un nodo antes del interrupt: al reanudar, LangGraph repite ese nodo desde el principio.
+
+Te soy sincero: Factorial, Personio o Sesame ya gestionan vacaciones con calendario de equipo. Si usas una, mira primero si tiene configurado un mínimo de personas por día. Yo lo programé para entender cómo se combina una regla con alguien que decide. Creo que lo difícil no es contar días, es acordar el mínimo.
+
+Ah, y con InMemorySaver, si reinicias el proceso pierdes las pendientes. Para algo real, un checkpointer en base de datos.
+
+¿En tu equipo quién mira el calendario entero antes de decir que sí? 👇
+
+#AgentesDeIA #LangGraph #Python #Automatizacion #RRHH #Ollama
