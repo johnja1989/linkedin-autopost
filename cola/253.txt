@@ -1,0 +1,22 @@
+Una factura con IVA al 0 % y una casilla en blanco: la del texto legal. Se paga igual y nadie la mira, hasta que alguien pregunta por qué no lleva IVA.
+
+Lo vi más de una vez integrando facturación: el ERP calculaba bien el 0 %, pero la plantilla del texto estaba vacía para ese tipo de operación.
+
+Así que el agente #253 en Gradio revisa las facturas sin IVA antes de emitirlas:
+→ Subes el export de facturas emitidas en una pantalla de Gradio, en local.
+→ pandas se queda solo con las de cuota 0.
+→ Una regla pide lo del artículo 6.1 del Reglamento de facturación: la exención o su artículo, "inversión del sujeto pasivo" y el NIF del cliente cuando toca.
+→ Rojo si falta la mención o el NIF, ámbar si va a 0 sin tipo de operación, gris si la cuota viene vacía.
+→ Ollama solo ve número, color y motivo, y redacta la nota a facturación.
+
+Lo que NO hace: decidir si una operación está exenta, corregir ni emitir facturas.
+
+Mi decisión de ingeniero: verde significa que la mención está, no que el 0 % sea correcto. Eso lo decide tu asesor. El texto lo lee una regla, y el modelo no ve importes ni clientes.
+
+Te soy sincero: Holded, Sage o A3 suelen añadir el texto según el tipo de IVA que eliges. Si usas uno, mira primero que cada tipo de operación tenga el suyo. Yo lo programé para entender cómo un artículo se convierte en una regla. Creo que el fallo casi nunca está en el cálculo, está en la plantilla.
+
+Ah, y en una intracomunitaria no basta con que haya NIF: compruébalo en VIES.
+
+¿Quién revisa en tu empresa las facturas que salen sin IVA? 👇
+
+#AgentesDeIA #FacturaElectronica #Gradio #Python #IVA #Ollama
