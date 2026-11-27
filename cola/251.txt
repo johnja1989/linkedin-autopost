@@ -1,0 +1,22 @@
+La consulta no cambió. El índice tampoco. Pero el informe de facturación pasó de 2 segundos a 4 minutos.
+
+Me pasó en un ERP tras la carga de fin de mes: las estadísticas de la tabla tenían NORECOMPUTE desde una migración antigua. SQL Server planificaba para una tabla que ya no existía.
+
+Así que el agente #251 en Python revisa las estadísticas de SQL Server:
+→ mssql-python consulta sys.stats y sys.dm_db_stats_properties con un usuario de solo lectura.
+→ De cada una saca filas, modificaciones, fecha y si tiene NORECOMPUTE.
+→ Calcula el umbral de actualización automática (compatibilidad 130 o más): el menor entre 500 + 20 % de las filas y la raíz de 1.000 por las filas.
+→ Una regla pone rojo si pasó el umbral y no se actualizará sola (NORECOMPUTE o AUTO_UPDATE_STATISTICS desactivado), ámbar si lo pasó pero se actualizará al compilar (quizá en hora punta), gris si last_updated es NULL, verde por debajo.
+→ Ollama redacta la nota al DBA y el UPDATE STATISTICS propuesto queda en un .sql.
+
+Lo que NO hace: ejecutar UPDATE STATISTICS ni quitar NORECOMPUTE.
+
+Mi decisión de ingeniero: solo lee metadatos, nunca filas. El color lo pone la fórmula, no el modelo. Ollama ve tabla, estadística, cifras y color.
+
+Te soy sincero: el IndexOptimize de Ola Hallengren ya actualiza estadísticas en el mantenimiento nocturno de mucha gente. Si lo usas, mira primero qué hace con las que tienen NORECOMPUTE. Yo lo programé para entender por qué un plan se vuelve malo "de repente".
+
+Ah, y tras una carga masiva, actualiza las estadísticas de esa tabla al terminar. No esperes a que SQL Server lo decida a media mañana.
+
+¿Revisáis las estadísticas o solo los índices? 👇
+
+#AgentesDeIA #SQLServer #BasesDeDatos #Python #Ollama
