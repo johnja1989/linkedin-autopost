@@ -1,0 +1,22 @@
+Abres la configuración de Claude Desktop para añadir un servidor MCP y ahí está tu token de GitHub, en texto plano. Desde hace meses.
+
+Me pasó a mí. Lo pegué una tarde "para probar" y se quedó. Y el servidor arrancaba con npx sin versión fijada: cada reinicio podía bajar código nuevo sin que me enterase.
+
+Así que el agente #254 en Python revisa la configuración de tus servidores MCP sin arrancar ninguno:
+→ Lee en local el JSON de Claude Desktop y Cursor (mcpServers) y el de VS Code (servers).
+→ Rojo si ve un secreto en claro en env o en los argumentos (ghp_, github_pat_, sk-, AKIA…).
+→ Ámbar si un paquete de npx va sin versión o con @latest, o si el servidor de ficheros recibe toda tu carpeta de usuario.
+→ Gris si el JSON no se lee o el servidor es remoto.
+→ Ollama solo ve servidor, color y motivo, y redacta qué cambiar.
+
+Lo que NO hace: arrancar servidores, conectarse a ellos, rotar tokens ni tocar tu configuración.
+
+Mi decisión de ingeniero: no ejecuta nada de la lista, porque arrancar un servidor para revisarlo ya es confiar en él. El modelo no ve ningún valor de env. Y verde significa configuración ordenada, no servidor seguro.
+
+Te soy sincero: Snyk Agent Scan (antes mcp-scan) ya hace esto y más, porque también revisa las descripciones de las herramientas. Si lo usas, mira primero cómo escanea: arranca los servidores para leerlas. Yo lo programé para entender qué se sabe solo leyendo el archivo. Y es más de lo que pensaba.
+
+Ah, y en VS Code el token puede ir en "inputs" con password: true, así no queda escrito.
+
+¿Cuándo abriste por última vez tu configuración de MCP? 👇
+
+#AgentesDeIA #MCP #Python #Ciberseguridad #Ollama
