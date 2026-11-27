@@ -1,0 +1,23 @@
+Tu todo.txt tiene 63 líneas. Unas 20 llevan ahí desde septiembre.
+No son tareas: es culpa en formato texto.
+
+Me pasó con "Revisar la póliza del coche". La copiaba de semana en semana y la vi el día que me llegó la renovación automática.
+
+Así que el agente #255 en CrewAI revisa tu todo.txt cada viernes:
+→ Lee el archivo en local y salta las líneas que empiezan por "x ".
+→ Una regla pone rojo si la fecha de due: ya pasó, ámbar si la tarea tiene más de 30 días, gris si no tiene fecha de creación (no sé cuánto lleva ahí) y verde el resto.
+→ Un solo agente de CrewAI con Ollama recibe solo el texto de las rojas y ámbar.
+→ Para cada una propone una de tres: un primer paso de 10 minutos, partirla en dos o soltarla.
+→ Lo deja en revision.csv. Tú decides.
+
+Lo que NO hace: marcar nada como hecho, borrar líneas ni tocar tu todo.txt.
+
+Mi decisión de ingeniero: el color lo pone la fecha, no el modelo. Las tareas hechas y las verdes nunca llegan a la IA. Y un solo agente: montar tres "expertos" pasándose la lista entre ellos sería teatro para una revisión de viernes.
+
+Te soy sincero: Todoist, TickTick o Simpletask ya te enseñan las vencidas. Si usas una, mira primero su vista de atrasadas. Yo lo programé para entender cómo funciona CrewAI por dentro con un modelo local. Y la verdad, la opción que más me ha servido es "soltarla".
+
+Ah, y gris no es un error: es una tarea que no sabes cuánto lleva ahí. Ponle fecha al crearla.
+
+¿Cuál es la tarea más antigua de tu lista? 👇
+
+#AgentesDeIA #CrewAI #Ollama #Python #Productividad
