@@ -1,0 +1,23 @@
+Un servicio con Restart=always y RestartSec=30 puede caerse 400 veces en un fin de semana sin salir nunca en systemctl --failed.
+
+Me pasó con un conector SFTP de facturación. Siempre en "active (running)" y dos días sin mandar nada. NRestarts lo sabía. Yo no lo miraba.
+
+Así que el agente #256 en Python vigila systemd sin tocar nada:
+→ systemctl list-units saca los servicios cargados y systemctl show lee Result, NRestarts, ActiveState y LoadState
+→ una regla pone rojo si falló por oom-kill, core-dump, watchdog o start-limit-hit
+→ ámbar si falló por exit-code o timeout, o si sigue activo con 5 reinicios o más
+→ gris si la unidad ya no existe o no hay datos; verde solo significa que systemd no ve un fallo
+→ journalctl guarda 30 líneas de cada roja y ámbar en un archivo
+→ Ollama en local solo ve unidad, color y motivo, y redacta la nota
+
+Lo que NO hace: reiniciar servicios, ejecutar reset-failed ni editar unidades.
+
+Mi decisión de ingeniero: corre con un usuario sin sudo, en el grupo systemd-journal. El color lo pone la regla, no el modelo. Y los logs no pasan por la IA: pueden llevar rutas, usuarios o tokens.
+
+Te soy sincero: node_exporter con su colector de systemd, Netdata o Monit ya hacen esto. Si usas uno, mira primero si alertas por reinicios y no solo por estado. Yo lo programé para entender cómo funciona por dentro. Me quedo con una idea: "running" no es lo mismo que "funcionando".
+
+Ah, y cuando arregles una unidad que falló, systemctl reset-failed limpia el estado. Si no, seguirá en la lista.
+
+¿Tú miras cuántas veces se reinician tus servicios o solo si están en verde? 👇
+
+#AgentesDeIA #DevOps #Linux #Systemd #Observabilidad #Python
