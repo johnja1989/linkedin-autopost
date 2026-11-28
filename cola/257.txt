@@ -1,0 +1,22 @@
+Preguntas por las vacaciones, por la VPN o por una factura. Tu RAG devuelve en los tres casos el mismo fragmento: el aviso legal del pie de página.
+
+Me pasó con un RAG de procedimientos internos. Las respuestas salían bien, pero el "Este documento es confidencial…" aparecía entre los 5 primeros una y otra vez. Yo miraba las respuestas, no lo recuperado.
+
+Así que el agente #257 en Python busca los fragmentos acaparadores de tu RAG:
+→ lee el registro de búsquedas: un hash de la pregunta y los 5 IDs que devolvió Qdrant
+→ cuenta cada búsqueda distinta una vez y en qué porcentaje sale cada fragmento
+→ una regla pone rojo desde el 20 %, ámbar desde el 10 %, gris con menos de 100 búsquedas o 500 fragmentos
+→ client.retrieve trae el texto de los rojos y ámbar
+→ Ollama en local ve ID, porcentaje y 300 caracteres, y dice si parece un pie, un índice o una portada
+
+Lo que NO hace: borrar fragmentos, reindexar ni tocar la colección.
+
+Mi decisión de ingeniero: las preguntas no se guardan en claro, solo su hash. Pueden llevar nombres o temas de RRHH. El color lo pone la regla, no el modelo, y verde solo significa que nadie acapara.
+
+Te soy sincero: Langfuse, Arize Phoenix o LangSmith ya guardan qué devuelve cada búsqueda. Si usas uno, mira primero si puedes agruparlos por ID. Yo lo programé para entender cómo funciona por dentro. Y creo que el arreglo casi nunca está en el modelo, sino en cómo troceas.
+
+Ah, y en colecciones pequeñas el porcentaje engaña: con 50 fragmentos y top 5, cada uno sale de media en el 10 % de las búsquedas.
+
+¿Tú miras qué fragmentos recupera tu RAG o solo las respuestas? 👇
+
+#AgentesDeIA #RAG #Qdrant #Ollama #Python #IA
