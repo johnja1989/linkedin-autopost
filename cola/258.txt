@@ -1,0 +1,22 @@
+Envías tu CV a 40 ofertas. Debajo de tu nombre: DNI, fecha de nacimiento y estado civil. Ninguna lo necesita para decidir si te llama.
+
+Me di cuenta revisando el mío. La cabecera venía de una plantilla de hace años y llevaba el DNI completo. Y lo había enviado muchas veces sin mirarlo, la verdad.
+
+Así que el agente #258 en Gradio revisa tu CV antes de enviarlo:
+→ lo subes en una página local (launch() sin share: nada sale de tu equipo)
+→ pypdf extrae el texto y cuenta las imágenes
+→ busca DNI o NIE y comprueba la letra de control
+→ una regla pone rojo con un DNI o NIE válido, ámbar con fecha de nacimiento, edad, estado civil o foto, gris si no hay texto
+→ Ollama en local recibe solo el color y qué encontró, nunca el número, y redacta qué quitar
+
+Lo que NO hace: editar tu CV, guardarlo ni subirlo a ninguna web.
+
+Mi decisión de ingeniero: la letra la comprueba una cuenta (el resto de dividir entre 23), no el modelo. Así un expediente casi nunca salta como DNI. Y verde solo significa "no encontré esos datos", no "CV limpio".
+
+Te soy sincero: Microsoft Presidio ya detecta NIF y NIE, y muchos revisores de CV online avisan de esto. Si usas uno, mira primero a dónde suben tu CV, con el DNI dentro. Yo lo programé para entender cómo funciona por dentro. Y creo que la foto es decisión tuya: por eso es ámbar y no rojo.
+
+Ah, y si te sale gris, ojo: si tu CV es una imagen dentro de un PDF, puede que el programa de selección tampoco lea tu experiencia.
+
+¿Tú todavía llevas el DNI en el CV o ya lo quitaste? 👇
+
+#AgentesDeIA #BusquedaDeEmpleo #Privacidad #Gradio #Ollama #Python
