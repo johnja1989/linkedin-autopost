@@ -1,0 +1,21 @@
+El job de copias de seguridad lleva meses en verde. Y la base que más importa no está en su lista.
+
+Me pasó revisando un SQL Server heredado: alguien creó una base nueva y nadie la añadió al plan de mantenimiento. El job no falla por lo que no sabe que existe.
+
+Así que el agente #260 en n8n mira las copias desde las bases, no desde el job:
+→ cada mañana, el nodo Microsoft SQL lanza una consulta de solo lectura
+→ sys.databases y msdb.dbo.backupset dan, por base, los minutos desde la última copia completa, diferencial y de log
+→ un nodo Code pone rojo sin completa en 8 días o, en modelo FULL, sin log en 24 horas; ámbar si pasan 26 horas sin copia de datos o una hora sin log; gris si la base no está ONLINE o va en Always On
+→ Ollama en local recibe solo base, color y horas, y redacta la nota
+
+Lo que NO hace: lanzar copias, cambiar el modelo de recuperación ni tocar los jobs.
+
+Mi decisión de ingeniero: el color lo pone una regla con umbrales que eliges tú, no el modelo. Gris en Always On porque la copia puede estar en el msdb de otra réplica. Y verde solo significa que msdb registra una copia reciente, no que se pueda restaurar.
+
+Te soy sincero: sp_Blitz y Get-DbaLastBackup de dbatools ya hacen esto. Si usas uno, mira primero sus avisos. Yo lo monté en n8n para entender cómo funciona por dentro. Y creo que el rojo de "FULL sin log" es el que más sorpresas da.
+
+Ah, y una copia que nunca has restaurado es una esperanza, no una copia.
+
+¿Cuándo restauraste por última vez una copia de producción? 👇
+
+#AgentesDeIA #SQLServer #n8n #BasesDeDatos #Ollama
