@@ -1,0 +1,21 @@
+Un bucket de S3 se llama "export-temporal". Lleva tres años en la cuenta. Y nadie recuerda si es público.
+
+Me pasó en un proyecto de ERP en AWS: heredé una cuenta con buckets que nadie sabía explicar. Antes de mirar qué había dentro, quise saber si alguien de fuera podía leerlo.
+
+Así que el agente #259 en Python revisa qué buckets de S3 podrían estar abiertos:
+→ boto3 lista los buckets con un usuario IAM de solo lectura
+→ lee el estado de la política (IsPublic), la ACL y el Block Public Access del bucket y de la cuenta
+→ una regla pone rojo si la política es pública o la ACL da acceso a AllUsers o AuthenticatedUsers, ámbar si falta alguno de los 4 bloqueos, gris si AWS le niega la lectura
+→ Ollama en local recibe solo nombre, color y motivo, y redacta la nota para quien lleva la cuenta
+
+Lo que NO hace: cambiar políticas, ACLs ni bloqueos, ni abrir un solo objeto.
+
+Mi decisión de ingeniero: "público" lo decide AWS con IsPublic y una regla, no el modelo. Y verde solo significa que política y ACL no lo abren: no mira CloudFront ni URLs prefirmadas.
+
+Te soy sincero: IAM Access Analyzer y Prowler ya hacen esto, y mejor. Si usas uno, mira primero sus hallazgos de S3. Yo lo programé para entender cómo funciona por dentro. Y creo que el ámbar es el más útil: hoy no es público, pero nada impide que mañana lo sea.
+
+Ah, y desde abril de 2023 los buckets nuevos nacen con Block Public Access activado y las ACL desactivadas. Los que dan sustos suelen ser los de antes.
+
+¿Cuántos buckets tienes que nadie sabe explicar? 👇
+
+#AgentesDeIA #AWS #Ciberseguridad #CloudSecurity #Python #Ollama
